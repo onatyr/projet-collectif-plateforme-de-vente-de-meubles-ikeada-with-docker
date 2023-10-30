@@ -1,5 +1,11 @@
 # IKEADA
 
+### Team F 
+Claire, Louis, Onat
+
+### Team B 
+Guillaume, Eda, Jérémie, Margot 
+
 ## Introduction
 Ce repository GitHub est dédié à la création d'une plateforme de gestion au doux nom de "IkeAda", l'entreprise de Lauréline Fleury spécialisée dans la vente de meubles de seconde main. Le projet vise à créer un site web interactif permettant aux utilisateurs de consulter et d'acheter des meubles, ainsi qu'à l'administrateur d'ajouter, gérer et supprimer des produits.
 
