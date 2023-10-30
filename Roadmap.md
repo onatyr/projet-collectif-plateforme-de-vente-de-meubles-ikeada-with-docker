@@ -14,7 +14,9 @@
 2.  Intégration des Détails du Produit
     - Conception de la page de détail pour chaque meuble avec des photos, informations détaillées (type, prix, dimensions, couleurs, matières), et un bouton "Acheter".
 
-
+3. Interface Backoffice
+    - Creation de page admin
+   
 ### Phase 2: Personnalisation de l'Interface Utilisateur
 1. Création de Comptes Utilisateurs
     - Développement du système d'inscription (email + mot de passe) pour les utilisateurs.
@@ -38,6 +40,9 @@
     - Création d'API pour l'accès aux données des meubles, des utilisateurs et de leurs préférences.
 
     - Mise en place des API pour gérer les produits et les propositions de meubles.
+  
+3.  Mise en Place de la Page de Connexion pour admin
+    - Développement de la page de connexion pour les administrateurs.
 
 
 ### Phase 2: Sécurité et Authentification
