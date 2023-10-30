@@ -16,6 +16,7 @@ Le projet est développé en utilisant les technologies suivantes :
 2. Node.js : Environnement d'exécution pour le côté serveur.
 3. Express.js : Framework web pour Node.js, facilitant la création d'API.
 4. Bootstrap : Framework CSS pour le développement rapide et la stylisation.
+5. Supabase : Système de gestion de base de données.
 
 ## Objectifs
 L'objectif principal est de créer une plateforme web où les utilisateurs peuvent consulter, acheter, et proposer des meubles à vendre. Les fonctionnalités clés incluent :
