@@ -2,6 +2,8 @@
 
 ## Roadmap Front-end :
 
+### MVP = Phase 1
+
 ### Phase 1: Développement de l'Interface Utilisateur (UI)
 1.  Conception de la Page d'Accueil
 
@@ -47,7 +49,6 @@
     - Gestion des propositions de meubles soumises par les utilisateurs.
     - Intégration d'un système de validation avant d'être proposées à la vente.
 
-#### Fin de MVP
 
 ### Phase 3: Optimisation et Performance
 1.  Optimisation des Performances
