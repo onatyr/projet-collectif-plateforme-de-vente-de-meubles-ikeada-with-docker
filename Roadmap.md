@@ -15,7 +15,7 @@
     - Conception de la page de détail pour chaque meuble avec des photos, informations détaillées (type, prix, dimensions, couleurs, matières), et un bouton "Acheter".
 
 3. Interface Backoffice
-    - Creation de page admin
+    - Creation de page admin (CRUD)
    
 ### Phase 2: Personnalisation de l'Interface Utilisateur
 1. Création de Comptes Utilisateurs
