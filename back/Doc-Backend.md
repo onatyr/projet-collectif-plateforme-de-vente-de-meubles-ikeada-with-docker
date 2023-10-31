@@ -85,6 +85,25 @@ Le serveur démarrera, et vous pourrez accéder à l'API à l'adresse http://loc
   - POST /api/stuff: Créer un objet.
   - GET /api/stuff: Récupérer une liste d'objets.
 Exemple :
-```bash
-curl -X POST http://localhost:3000/api/stuff -d '{"key":"value"}' -H 'Content-Type: application/json'
+```javascript
+app.get('/api/stuff', async (req, res) => {
+    const {data, error} = await supabase
+        .from('item')
+        .select()
+    res.send(data);
+});
+
+app.post('/api/stuff', async (req, res) => {
+    const {error} = await supabase
+        .from('item')
+        .insert({
+            name: req.body.name,
+            description: req.body.description,
+            price: req.body.price,
+        })
+    if (error) {
+        res.send(error);
+    }
+    res.send("created!!");
+});
 ```
