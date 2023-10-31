@@ -1,0 +1,12 @@
+{
+    "categ": [
+        {
+            "id": 1,
+            "name": "Meuble en bois"
+        },
+        {
+            "id": 2,
+            "name": "Meuble en mousse"
+        }
+    ]
+}
