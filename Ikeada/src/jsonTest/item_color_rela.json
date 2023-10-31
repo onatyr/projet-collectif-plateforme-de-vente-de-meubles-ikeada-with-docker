@@ -1,0 +1,12 @@
+{
+    "item_color_rela": [
+        {
+            "item_id": 1,
+            "color_id": 1
+        },
+        {
+            "item_id": 2,
+            "color_id": 2
+        }
+    ]
+}

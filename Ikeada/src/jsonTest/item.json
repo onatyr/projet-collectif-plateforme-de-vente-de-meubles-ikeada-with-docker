@@ -1,0 +1,28 @@
+{
+    "item": [
+        {
+            "id": 1,
+            "name": "Table basse",
+            "desc": "Magnifique table basse",
+            "subcateg_id": 1,
+            "price integer": 130,
+            "materials": "Du bois du bois du bois",
+            "available": true,
+            "picture": "https://i.pinimg.com/originals/88/2b/79/882b792fd824530f5348d43c81edc03a.jpg",
+            "status": true,
+            "user_id": 1
+        },
+        {
+            "id": 2,
+            "name": "Chaisse en mousse",
+            "desc": "Pas très pratique",
+            "subcateg_id": 2,
+            "price integer": 1,
+            "materials": "De la mousse de la mousse de la mousse",
+            "available": false,
+            "picture": "https://www.infobatir.fr/wp-content/uploads/2019/09/mousse-acoustique-alveolee1.jpg",
+            "status": false,
+            "user_id": 1
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "color": [
+        {
+            "id": 1,
+            "name": "Brun cassé",
+            "RGB": "#BC8F8F",
+            "description": "Useless cette ligne en vrai"
+        },
+        {
+            "id": 2,
+            "name": "Jaune Mousse",
+            "RGB": "#FFFF00",
+            "description": "La couleur jaune mousse, douce et délicate, évoque une palette de tons qui rappellent les nuances apaisantes de la nature. Cette teinte, semblable à la lueur dorée qui filtre à travers les feuilles d'arbres luxuriantes, instille une sensation de calme et de tranquillité. Elle capture l'essence subtile du printemps, rappelant les premières fleurs qui émergent avec délicatesse. Le jaune mousse incarne une beauté discrète, évoquant des images de prairies paisibles baignées par une lumière tendre. Associé à la sérénité, il crée une atmosphère accueillante et réconfortante. Cette couleur délicate peut également symboliser la croissance et le renouveau, représentant le cycle infini de la nature. Utilisé dans la décoration, le jaune mousse apporte une touche de fraîcheur et d'élégance subtile, créant un équilibre entre la vitalité et la délicatesse. En résumé, la couleur jaune mousse évoque une esthétique naturelle et raffinée, invitant à la contemplation et à la paix."
+        }
+    ]
+}
