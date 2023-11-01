@@ -41,5 +41,17 @@ app.get('/sub_category', async (req, res) => {
     }
 });
 
+app.get('/search_bar', async (req, res) => {
+    const {data, error} = await supabase   
+        .from('ITEM')
+        .select()
+        .textSearch('name', 'Malauquhu');
+    if (error) {
+        res.status(500).json({ error: "Une erreur s'est produite" });
+    } else {
+        res.status(200).json(data);
+    }
+});
+
 
 export default app;
