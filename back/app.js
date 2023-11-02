@@ -3,6 +3,7 @@ import express from 'express';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 
+
 const app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({extended:true}));
@@ -18,72 +19,37 @@ app.use((req,res,next) => {
     next();
 });
 
-
-// textSearch permet de faire une recherche par mot-clé (en lien avec la navbar côté front-end). 
-// Celle-ci renvoie les chaises.
-// La recherche est faite à partir de la description de l'article car par nom c'est trop "pointilleux".
-app.get('/search_bar/chaise', async (req, res) => {
+// Recherche par motclé des catégories
+app.get('/search_bar/category/:motcle', async(req, res) => {
+    const motCle = req.params.motcle;
+    console.log(motCle);
+    if (!motCle) {
+        return res.status(400).json({ error: "Le paramètre 'motcle' est manquant dans l'URL." });
+    } else {
     const { data, error } = await supabase
-        .from('ITEM')
-        .select()
-        .textSearch('desc', 'chaise');
-    if (error) {
-        res.status(500).json({ error: "Une erreur s'est produite" });
-    } else {
+    .from('CATEG')
+    .select()
+    .textSearch('name', motCle)
+    console.log("resultat:", data);
         res.status(200).json(data);
     }
 });
 
-// textSearch pour les armoires.
-app.get('/search_bar/armoire', async (req, res) => {
-const { data, error } = await supabase
-        .from('ITEM')
-        .select()
-        .textSearch('desc', 'armoire');
-    if (error) {
-        res.status(500).json({ error: "Une erreur s'est produite" });
+// Sous catégories
+app.get("/search_bar/sub_categ/:motcle", async (req,res)=>{
+    const motCle = req.params.motcle;
+    console.log(motCle);
+    if (!motCle) {
+       return res.status(400).json({ error: "Le paramètre 'motcle' est manquant dans l'URL." });
     } else {
+        const { data, error } = await supabase
+        .from('SUB_CATEG')
+        .select()
+        .textSearch('name', motCle);
+        console.log("resultat:", data);
         res.status(200).json(data);
     }
 });
 
-// textSearch pour les tables.
-app.get('/search_bar/table', async (req, res) => {
-const { data, error } = await supabase
-        .from('ITEM')
-        .select()
-        .textSearch('desc', 'table');
-    if (error) {
-        res.status(500).json({ error: "Une erreur s'est produite" });
-    } else {
-        res.status(200).json(data);
-    }
-});
-
-// textSearch pour les lits
-app.get('/search_bar/lit', async (req, res) => {
-const { data, error } = await supabase
-        .from('ITEM')
-        .select()
-        .textSearch('desc', 'lit');
-    if (error) {
-        res.status(500).json({ error: "Une erreur s'est produite" });
-    } else {
-        res.status(200).json(data);
-    }
-});
-
-// textSearch pour les canapés.
-app.get('/search_bar/canape', async (req, res) => {
-const { data, error } = await supabase
-        .from('ITEM')
-        .select()
-        .textSearch('desc', 'canapé');
-    if (error) {
-        res.status(500).json({ error: "Une erreur s'est produite" });
-    } else {
-        res.status(200).json(data);
-    }
-});
 
 export default app;
