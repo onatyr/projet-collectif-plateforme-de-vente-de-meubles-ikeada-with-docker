@@ -19,6 +19,7 @@ app.use((req,res,next) => {
     next();
 });
 
+// GET Public catégories
 // Recherche par motclé des catégories
 app.get('/search_bar/category/:motcle', async(req, res) => {
     const motCle = req.params.motcle;
@@ -33,8 +34,11 @@ app.get('/search_bar/category/:motcle', async(req, res) => {
     console.log("resultat:", data);
         res.status(200).json(data);
     }
-});
+}); 
+// Fin GET Public catégories
 
+
+// GET Public Sous catégories
 // Sous catégories
 app.get("/search_bar/sub_categ/:motcle", async (req,res)=>{
     const motCle = req.params.motcle;
@@ -50,6 +54,7 @@ app.get("/search_bar/sub_categ/:motcle", async (req,res)=>{
         res.status(200).json(data);
     }
 });
+// Fin GET Public catégories
 
 
 export default app;
