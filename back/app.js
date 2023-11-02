@@ -18,30 +18,6 @@ app.use((req,res,next) => {
     next();
 });
 
-// Public GET category
-app.get('/category', async (req, res) => {
-    const {data, error} = await supabase
-        .from('CATEG')
-        .select();
-    if (error) {
-        res.status(500).json({ error: "Une erreur s'est produite" });
-    } else {
-            res.status(200).json(data);
-    }
-});
-
-
-// Public GET sub_categ 
-app.get('/sub_category', async (req, res) => {
-    const {data, error} = await supabase   
-        .from('SUB_CATEG')
-        .select();
-    if (error) {
-        res.status(500).json({ error: "Une erreur s'est produite" });
-    } else {
-        res.status(200).json(data);
-    }
-});
 
 // textSearch permet de faire une recherche (en lien avec la navbar côté front-end). 
 // Celle-ci renvoie les chaises.
