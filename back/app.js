@@ -17,4 +17,56 @@ app.use((req,res,next) => {
     next();
 });
 
+//Requête d'ajout d'un item dans le BackOffice
+app.post('/postContent', async (req, res) => {
+    const jsonData = req.body;
+
+    const { data, error } = await supabase.from('ITEM').insert([jsonData]);
+
+    if (error) {
+        return res.status(500).send('Erreur lors de l\'enregistrement des données dans Supabase.');
+    }
+
+    return res.send('Données enregistrées avec succès dans Supabase. Nouveau meuble ajouté dans le BackOffice.');
+});
+
+//Requête d'ajout d'un item dans le BackOffice
+app.post('/postColor', async (req, res) => {
+    const jsonData = req.body;
+
+    const { data, error } = await supabase.from('COLOR').insert([jsonData]);
+
+    if (error) {
+        return res.status(500).send('Erreur lors de l\'enregistrement des données dans Supabase.');
+    }
+
+    return res.send('Données enregistrées avec succès dans Supabase. Nouvelle couleur ajoutée dans le BackOffice.');
+});
+
+//Requête d'ajout de catégories dans le BackOffice
+app.post('/postCateg', async (req, res) => {
+    const jsonData = req.body;
+
+    const { data, error } = await supabase.from('CATEG').insert([jsonData]);
+
+    if (error) {
+        return res.status(500).send('Erreur lors de l\'enregistrement des données dans Supabase.');
+    }
+
+    return res.send('Données enregistrées avec succès dans Supabase. Nouvelle catégorie ajoutée dans le BackOffice.');
+});
+
+//Requête d'ajout d'une sous-catégorie dans le BackOffice
+app.post('/postSubCateg', async (req, res) => {
+    const jsonData = req.body;
+
+    const { data, error } = await supabase.from('SUB_CATEG').insert([jsonData]);
+
+    if (error) {
+        return res.status(500).send('Erreur lors de l\'enregistrement des données dans Supabase.');
+    }
+
+    return res.send('Données enregistrées avec succès dans Supabase. Nouvelle sous-catégorie ajoutée dans le BackOffice.');
+})
+
 export default app;
