@@ -19,8 +19,9 @@ app.use((req,res,next) => {
 });
 
 
-// textSearch permet de faire une recherche (en lien avec la navbar côté front-end). 
+// textSearch permet de faire une recherche par mot-clé (en lien avec la navbar côté front-end). 
 // Celle-ci renvoie les chaises.
+// La recherche est faite à partir de la description de l'article car par nom c'est trop "pointilleux".
 app.get('/search_bar/chaise', async (req, res) => {
     const { data, error } = await supabase
         .from('ITEM')
