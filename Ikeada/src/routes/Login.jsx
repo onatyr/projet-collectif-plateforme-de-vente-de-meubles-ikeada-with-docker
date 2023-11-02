@@ -14,13 +14,13 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   const handleLogin = async (e) => {
+    // empêche le rafraichissement de la page
     e.preventDefault();
     try {
       let { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
-
       if (error) {
         console.error("Erreur de connexion :", error.message);
       } else {

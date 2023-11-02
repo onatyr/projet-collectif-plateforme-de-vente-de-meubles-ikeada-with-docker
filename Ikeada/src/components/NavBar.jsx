@@ -1,6 +1,5 @@
 import { Container, Navbar, Nav, Form } from 'react-bootstrap'
 import { Link } from "react-router-dom";
-
 import { HouseDoorFill, PersonFill, GearFill } from 'react-bootstrap-icons';
 
 export function NavBar() {

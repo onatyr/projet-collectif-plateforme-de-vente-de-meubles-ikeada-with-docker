@@ -1,13 +1,12 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "./Auth";
-
-
+import useLocalStorage from "./useLocalStorage";
 // en chantier
-export const ProtectedRoute = ({ children }) => {
-  const { user } = useAuth();
+export async function ProtectedRoute({ children }) {
+  const { user } = useLocalStorage()
   if (!user) {
     // user is not authenticated
     return <Navigate to="/login" />;
+  } else {
+    return children;
   }
-  return children;
-};
+}

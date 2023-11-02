@@ -3,8 +3,12 @@ import CardList from './routes/CardList'
 import ProductPage from './routes/ProductPage.jsx'
 import BackOffice from './routes/BackOffice.jsx'
 import Login from './routes/Login'
+import { ProtectedRoute } from './auth/ProtectedRoute'
 import { Routes, Route } from "react-router-dom";
-import {  } from './auth/ProtectedRoute'
+
+//future route privée qui sécurisera le back office
+import { } from './auth/ProtectedRoute'
+
 export default function App() {
   return (
     <div>
@@ -20,11 +24,15 @@ export default function App() {
             element={<ProductPage />}
           >
           </Route>
+          {/* route vers le back office */}
 
           <Route path="back-office" element={
-            <BackOffice />
+            <ProtectedRoute>
+              <BackOffice />
+            </ProtectedRoute>
           }>
           </Route>
+          {/* route vers la page de login */}
           <Route path="login" element={<Login />}>
           </Route>
         </Route>

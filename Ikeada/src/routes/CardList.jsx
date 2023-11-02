@@ -1,12 +1,5 @@
-import { Card } from 'react-bootstrap'
-import { Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
-
 import { useState, useEffect } from 'react'
 import ProductPage from './ProductPage.jsx'
-
-import { Stack } from 'react-bootstrap';
-
 
 export default function CardList() {
 
