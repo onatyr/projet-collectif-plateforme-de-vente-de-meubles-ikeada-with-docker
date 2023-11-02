@@ -29,7 +29,9 @@ app.get('/category', async (req, res) => {
             res.status(200).json(data);
     }
 });
- 
+
+
+// Public GET sub_categ 
 app.get('/sub_category', async (req, res) => {
     const {data, error} = await supabase   
         .from('SUB_CATEG')
@@ -41,11 +43,13 @@ app.get('/sub_category', async (req, res) => {
     }
 });
 
-app.get('/search_bar', async (req, res) => {
-    const {data, error} = await supabase   
+// textSearch permet de faire une recherche (en lien avec la navbar côté front-end). 
+// Celle-ci renvoie les chaises.
+app.get('/search_bar/chaise', async (req, res) => {
+    const { data, error } = await supabase
         .from('ITEM')
         .select()
-        .textSearch('name', 'Malauquhu');
+        .textSearch('desc', 'chaise');
     if (error) {
         res.status(500).json({ error: "Une erreur s'est produite" });
     } else {
@@ -53,5 +57,56 @@ app.get('/search_bar', async (req, res) => {
     }
 });
 
+// textSearch pour les armoires.
+app.get('/search_bar/armoire', async (req, res) => {
+const { data, error } = await supabase
+        .from('ITEM')
+        .select()
+        .textSearch('desc', 'armoire');
+    if (error) {
+        res.status(500).json({ error: "Une erreur s'est produite" });
+    } else {
+        res.status(200).json(data);
+    }
+});
+
+// textSearch pour les tables.
+app.get('/search_bar/table', async (req, res) => {
+const { data, error } = await supabase
+        .from('ITEM')
+        .select()
+        .textSearch('desc', 'table');
+    if (error) {
+        res.status(500).json({ error: "Une erreur s'est produite" });
+    } else {
+        res.status(200).json(data);
+    }
+});
+
+// textSearch pour les lits
+app.get('/search_bar/lit', async (req, res) => {
+const { data, error } = await supabase
+        .from('ITEM')
+        .select()
+        .textSearch('desc', 'lit');
+    if (error) {
+        res.status(500).json({ error: "Une erreur s'est produite" });
+    } else {
+        res.status(200).json(data);
+    }
+});
+
+// textSearch pour les canapés.
+app.get('/search_bar/canape', async (req, res) => {
+const { data, error } = await supabase
+        .from('ITEM')
+        .select()
+        .textSearch('desc', 'canapé');
+    if (error) {
+        res.status(500).json({ error: "Une erreur s'est produite" });
+    } else {
+        res.status(200).json(data);
+    }
+});
 
 export default app;
