@@ -18,35 +18,37 @@ app.use((req,res,next) => {
     next();
 });
 
+
 // Public GET category
 // Affiche toutes les catégories de mobilier
 app.get('/category', async (req, res) => {
-    const { data, error } = await supabase
-    .from('CATEG')
-    .select()
-   // .eq('name', 'Cuisine') // Permet d'affiner l'affichage par catégorie.
-    if (error) {
-        res.status(500).json({ error: "Une erreur s'est produite" });
-    } else {
-        res.status(200).json(data);
-    }
+  const { data, error } = await supabase
+  .from('CATEG')
+  .select()
+ // .eq('name', 'Cuisine') // Permet d'affiner l'affichage par catégorie.
+  if (error) {
+      res.status(500).json({ error: "Une erreur s'est produite" });
+  } else {
+      res.status(200).json(data);
+  }
 });
 
 
- 
+
 // Public GET sub_category
 // Affiche toutes les sous-catégories de mobilier
 app.get('/sub_category', async (req, res) => {
-      const { data, error } = await supabase
-    .from('SUB_CATEG')
-    .select()
-    // .eq('name', 'Canapés') // Permet d'affiner l'affichage par sous catégorie.
-    if (error) {
-        res.status(500).json({ error: "Une erreur s'est produite" });
-    } else {
-        res.status(200).json(data);
-    }
+    const { data, error } = await supabase
+  .from('SUB_CATEG')
+  .select()
+  // .eq('name', 'Canapés') // Permet d'affiner l'affichage par sous catégorie.
+  if (error) {
+      res.status(500).json({ error: "Une erreur s'est produite" });
+  } else {
+      res.status(200).json(data);
+  }
 });
+
 
 
 export default app;
