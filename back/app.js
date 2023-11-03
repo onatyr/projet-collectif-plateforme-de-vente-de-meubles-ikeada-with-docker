@@ -37,6 +37,7 @@ app.use((req, res, next) => {
   next();
 });
 
+
 // GET Public catégories
 // Recherche par motclé des catégories
 app.get('/search_bar/category/:motcle', async(req, res) => {
@@ -45,10 +46,10 @@ app.get('/search_bar/category/:motcle', async(req, res) => {
     if (!motCle) {
         return res.status(400).json({ error: "Le paramètre 'motcle' est manquant dans l'URL." });
     } else {
-    const { data, error } = await supabase
-    .from('CATEG')
-    .select()
-    .textSearch('name', motCle)
+  const { data, error } = await supabase
+  .from('CATEG')
+  .select()
+  .textSearch('name', motCle)
     console.log("resultat:", data);
         res.status(200).json(data);
     }
@@ -59,18 +60,18 @@ app.get('/search_bar/category/:motcle', async(req, res) => {
 // GET Public Sous catégories
 // Sous catégories
 app.get("/search_bar/sub_categ/:motcle", async (req,res)=>{
-    const motCle = req.params.motcle;
+  const motCle = req.params.motcle;
     console.log(motCle);
     if (!motCle) {
-       return res.status(400).json({ error: "Le paramètre 'motcle' est manquant dans l'URL." });
-    } else {
+     return res.status(400).json({ error: "Le paramètre 'motcle' est manquant dans l'URL." });
+  } else {
         const { data, error } = await supabase
         .from('SUB_CATEG')
         .select()
         .textSearch('name', motCle);
         console.log("resultat:", data);
-        res.status(200).json(data);
-    }
+      res.status(200).json(data);
+  }
 });
 
 // Fin GET Public catégories
@@ -172,6 +173,23 @@ app.post('admin/postCateg', async (req, res) => {
 
     return res.send('Données enregistrées avec succès dans Supabase. Nouvelle catégorie ajoutée dans le BackOffice.');
 });
+
+
+//Requête d'ajout d'une sous-catégorie dans le BackOffice
+app.post('admin/postSubCateg', async (req, res) => {
+    const jsonData = req.body;
+
+    const { data, error } = await supabase.from('SUB_CATEG').insert([jsonData]);
+
+    if (error) {
+        return res.status(500).send('Erreur lors de l\'enregistrement des données dans Supabase.');
+    }
+
+    return res.send('Données enregistrées avec succès dans Supabase. Nouvelle sous-catégorie ajoutée dans le BackOffice.');
+})
+
+app.use("/admin/*", checkAuth, checkAdmin, (req, res, next) => {
+  next();
 
 //Requête d'ajout d'une sous-catégorie dans le BackOffice
 app.post('admin/postSubCateg', async (req, res) => {
