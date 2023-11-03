@@ -5,7 +5,6 @@ import bodyParser from "body-parser";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
-
 dotenv.config();
 const app = express();
 
@@ -37,97 +36,144 @@ app.use((req, res, next) => {
   next();
 });
 
-
-
 // Public GET category
 // Affiche toutes les catégories de mobilier
-app.get('/category', async (req, res) => {
-  const { data, error } = await supabase
-  .from('CATEG')
-  .select()
- // .eq('name', 'Cuisine') // Permet d'affiner l'affichage par catégorie.
+app.get("/category", async (req, res) => {
+  const { data, error } = await supabase.from("CATEG").select();
+  // .eq('name', 'Cuisine') // Permet d'affiner l'affichage par catégorie.
   if (error) {
-      res.status(500).json({ error: "Une erreur s'est produite" });
+    res.status(500).json({ error: "Une erreur s'est produite" });
   } else {
-      res.status(200).json(data);
+    res.status(200).json(data);
   }
 });
 
 // Public GET sub_category
 // Affiche toutes les sous-catégories de mobilier
-app.get('/sub_category', async (req, res) => {
-    const { data, error } = await supabase
-  .from('SUB_CATEG')
-  .select()
+app.get("/sub_category", async (req, res) => {
+  const { data, error } = await supabase.from("SUB_CATEG").select();
   // .eq('name', 'Canapés') // Permet d'affiner l'affichage par sous catégorie.
   if (error) {
-      res.status(500).json({ error: "Une erreur s'est produite" });
+    res.status(500).json({ error: "Une erreur s'est produite" });
   } else {
-      res.status(200).json(data);
+    res.status(200).json(data);
   }
 });
-
 
 // GET Public catégories
 // Recherche par motclé des catégories
-app.get('/search_bar/category/:motcle', async(req, res) => {
-    const motCle = req.params.motcle;
-    console.log(motCle);
-    if (!motCle) {
-        return res.status(400).json({ error: "Le paramètre 'motcle' est manquant dans l'URL." });
-    } else {
-  const { data, error } = await supabase
-  .from('CATEG')
-  .select()
-  .textSearch('name', motCle)
+app.get("/search_bar/category/:motcle", async (req, res) => {
+  const motCle = req.params.motcle;
+  console.log(motCle);
+  if (!motCle) {
+    return res
+      .status(400)
+      .json({ error: "Le paramètre 'motcle' est manquant dans l'URL." });
+  } else {
+    const { data, error } = await supabase
+      .from("CATEG")
+      .select()
+      .textSearch("name", motCle);
     console.log("resultat:", data);
-        res.status(200).json(data);
-    }
-}); 
+    res.status(200).json(data);
+  }
+});
 // Fin GET Public catégories
-
 
 // GET Public Sous catégories
 // Sous catégories
-app.get("/search_bar/sub_categ/:motcle", async (req,res)=>{
+app.get("/search_bar/sub_categ/:motcle", async (req, res) => {
   const motCle = req.params.motcle;
-    console.log(motCle);
-    if (!motCle) {
-     return res.status(400).json({ error: "Le paramètre 'motcle' est manquant dans l'URL." });
+  console.log(motCle);
+  if (!motCle) {
+    return res
+      .status(400)
+      .json({ error: "Le paramètre 'motcle' est manquant dans l'URL." });
   } else {
-        const { data, error } = await supabase
-        .from('SUB_CATEG')
-        .select()
-        .textSearch('name', motCle);
-        console.log("resultat:", data);
-      res.status(200).json(data);
-  }
-});
-
-
-
-// Routing de test pour Admin
-app.get("/admin/items", checkAdmin, async (req, res) => {
-  const { data, error } = await supabase.from("ITEM").select();
-  if (error) {
-    res.send(error);
-  }
-  res.send(data);
-});
-
-app.get("/admin/colors", checkAdmin, async (req, res) => {
-  try {
-    const { data, error } = await supabaseAd.from("COLOR").select();
-    if (error) {
-      throw error;
-    }
+    const { data, error } = await supabase
+      .from("SUB_CATEG")
+      .select()
+      .textSearch("name", motCle);
+    console.log("resultat:", data);
     res.status(200).json(data);
-  } catch (error) {
-    console.error("Error fetching colors:", error);
-    res.status(500).json({ error: "Internal Server Error" });
   }
 });
-// Fin des routing test Admin
+// Fin GET Public catégories
+
+// DEBUT requetes du Back-Office
+app.use("/admin/*", checkAuth, checkAdmin, (req, res, next) => {
+  next();
+});
+
+//Requête d'ajout d'un item dans le BackOffice
+app.post("admin/postItem", checkAdmin, async (req, res) => {
+  const jsonData = req.body;
+
+  const { data, error } = await supabase.from("ITEM").insert([jsonData]);
+
+  if (error) {
+    return res
+      .status(500)
+      .send("Erreur lors de l'enregistrement des données dans Supabase.");
+  }
+
+  return res.send(
+    "Données enregistrées avec succès dans Supabase. Nouveau meuble ajouté dans le BackOffice."
+  );
+});
+
+//Requête d'ajout d'un item dans le BackOffice
+app.post("admin/postColor", checkAdmin, async (req, res) => {
+  const jsonData = req.body;
+
+  const { data, error } = await supabase.from("COLOR").insert([jsonData]);
+
+  if (error) {
+    return res
+      .status(500)
+      .send("Erreur lors de l'enregistrement des données dans Supabase.");
+  }
+
+  return res.send(
+    "Données enregistrées avec succès dans Supabase. Nouvelle couleur ajoutée dans le BackOffice."
+  );
+});
+
+//Requête d'ajout de catégories dans le BackOffice
+app.post("admin/postCateg", checkAdmin, async (req, res) => {
+  const jsonData = req.body;
+
+  const { data, error } = await supabase.from("CATEG").insert([jsonData]);
+
+  if (error) {
+    return res
+      .status(500)
+      .send("Erreur lors de l'enregistrement des données dans Supabase.");
+  }
+
+  return res.send(
+    "Données enregistrées avec succès dans Supabase. Nouvelle catégorie ajoutée dans le BackOffice."
+  );
+});
+
+//Requête d'ajout d'une sous-catégorie dans le BackOffice
+app.post("admin/postSubCateg", checkAdmin, async (req, res) => {
+  const jsonData = req.body;
+
+  const { data, error } = await supabase.from("SUB_CATEG").insert([jsonData]);
+
+  if (error) {
+    return res
+      .status(500)
+      .send("Erreur lors de l'enregistrement des données dans Supabase.");
+  }
+
+  return res.send(
+    "Données enregistrées avec succès dans Supabase. Nouvelle sous-catégorie ajoutée dans le BackOffice."
+  );
+});
+
+// Fin des routing Back-Office
 
 // Fonctions Check pour les requetes BO
 
@@ -138,10 +184,7 @@ function checkAuth(req, res, next) {
     const token = req.headers.authorization.split(" ")[1];
     try {
       // Verifie le token avec la clef secrète
-      const decoded = jwt.verify(
-        token,
-        "YTzJl/+pHrxr6BZkR+KA12wyrqhVvgl8lmuBX58oXZNKRc4JrmDOX1TrdgJB0jGazXmmzi7s0A/rqpg9TOQJ9g=="
-      );
+      const decoded = jwt.verify(token, process.env.SUPABASE_TOKEN);
       req.userData = decoded;
       // S'il est possible de le decoder alors on passe au prochains middleware
       next();
@@ -163,79 +206,5 @@ function checkAdmin(req, res, next) {
     res.status(401);
   }
 }
-
-//Requête d'ajout d'un item dans le BackOffice
-app.post('admin/postItem', async (req, res) => {
-    const jsonData = req.body;
-
-    const { data, error } = await supabase.from('ITEM').insert([jsonData]);
-
-    if (error) {
-        return res.status(500).send('Erreur lors de l\'enregistrement des données dans Supabase.');
-    }
-
-    return res.send('Données enregistrées avec succès dans Supabase. Nouveau meuble ajouté dans le BackOffice.');
-});
-
-//Requête d'ajout d'un item dans le BackOffice
-app.post('admin/postColor', async (req, res) => {
-    const jsonData = req.body;
-
-    const { data, error } = await supabase.from('COLOR').insert([jsonData]);
-
-    if (error) {
-        return res.status(500).send('Erreur lors de l\'enregistrement des données dans Supabase.');
-    }
-
-    return res.send('Données enregistrées avec succès dans Supabase. Nouvelle couleur ajoutée dans le BackOffice.');
-});
-
-//Requête d'ajout de catégories dans le BackOffice
-app.post('admin/postCateg', async (req, res) => {
-    const jsonData = req.body;
-
-    const { data, error } = await supabase.from('CATEG').insert([jsonData]);
-
-    if (error) {
-        return res.status(500).send('Erreur lors de l\'enregistrement des données dans Supabase.');
-    }
-
-    return res.send('Données enregistrées avec succès dans Supabase. Nouvelle catégorie ajoutée dans le BackOffice.');
-});
-
-
-
-//Requête d'ajout d'une sous-catégorie dans le BackOffice
-app.post('admin/postSubCateg', async (req, res) => {
-    const jsonData = req.body;
-
-    const { data, error } = await supabase.from('SUB_CATEG').insert([jsonData]);
-
-    if (error) {
-        return res.status(500).send('Erreur lors de l\'enregistrement des données dans Supabase.');
-    }
-
-    return res.send('Données enregistrées avec succès dans Supabase. Nouvelle sous-catégorie ajoutée dans le BackOffice.');
-})
-
-app.use("/admin/*", checkAuth, checkAdmin, (req, res, next) => {
-  next();
-
-//Requête d'ajout d'une sous-catégorie dans le BackOffice
-app.post('admin/postSubCateg', async (req, res) => {
-    const jsonData = req.body;
-
-    const { data, error } = await supabase.from('SUB_CATEG').insert([jsonData]);
-
-    if (error) {
-        return res.status(500).send('Erreur lors de l\'enregistrement des données dans Supabase.');
-    }
-
-    return res.send('Données enregistrées avec succès dans Supabase. Nouvelle sous-catégorie ajoutée dans le BackOffice.');
-})
-
-app.use("/admin/*", checkAuth, checkAdmin, (req, res, next) => {
-  next();
-
 
 export default app;
