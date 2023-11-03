@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
+
 dotenv.config();
 const app = express();
 
@@ -36,9 +37,42 @@ app.use((req, res, next) => {
   next();
 });
 
-// Check le jeton JWT de toutes les requètes du BO avant de les traiter
-app.use("/admin/*", checkAuth, checkAdmin, (req, res, next) => {
-  next();
+// GET Public catégories
+// Recherche par motclé des catégories
+app.get('/search_bar/category/:motcle', async(req, res) => {
+    const motCle = req.params.motcle;
+    console.log(motCle);
+    if (!motCle) {
+        return res.status(400).json({ error: "Le paramètre 'motcle' est manquant dans l'URL." });
+    } else {
+    const { data, error } = await supabase
+    .from('CATEG')
+    .select()
+    .textSearch('name', motCle)
+    console.log("resultat:", data);
+        res.status(200).json(data);
+    }
+}); 
+// Fin GET Public catégories
+
+
+// GET Public Sous catégories
+// Sous catégories
+app.get("/search_bar/sub_categ/:motcle", async (req,res)=>{
+    const motCle = req.params.motcle;
+    console.log(motCle);
+    if (!motCle) {
+       return res.status(400).json({ error: "Le paramètre 'motcle' est manquant dans l'URL." });
+    } else {
+        const { data, error } = await supabase
+        .from('SUB_CATEG')
+        .select()
+        .textSearch('name', motCle);
+        console.log("resultat:", data);
+        res.status(200).json(data);
+    }
 });
+// Fin GET Public catégories
+
 
 export default app;
