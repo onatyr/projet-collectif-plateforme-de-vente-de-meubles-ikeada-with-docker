@@ -72,6 +72,7 @@ app.get("/search_bar/sub_categ/:motcle", async (req,res)=>{
         res.status(200).json(data);
     }
 });
+
 // Fin GET Public catégories
 
 
