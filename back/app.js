@@ -18,7 +18,7 @@ app.use((req,res,next) => {
 });
 
 //Requête d'ajout d'un item dans le BackOffice
-app.post('/postContent', async (req, res) => {
+app.post('admin/postItem', async (req, res) => {
     const jsonData = req.body;
 
     const { data, error } = await supabase.from('ITEM').insert([jsonData]);
@@ -31,7 +31,7 @@ app.post('/postContent', async (req, res) => {
 });
 
 //Requête d'ajout d'un item dans le BackOffice
-app.post('/postColor', async (req, res) => {
+app.post('admin/postColor', async (req, res) => {
     const jsonData = req.body;
 
     const { data, error } = await supabase.from('COLOR').insert([jsonData]);
@@ -44,7 +44,7 @@ app.post('/postColor', async (req, res) => {
 });
 
 //Requête d'ajout de catégories dans le BackOffice
-app.post('/postCateg', async (req, res) => {
+app.post('admin/postCateg', async (req, res) => {
     const jsonData = req.body;
 
     const { data, error } = await supabase.from('CATEG').insert([jsonData]);
@@ -57,7 +57,7 @@ app.post('/postCateg', async (req, res) => {
 });
 
 //Requête d'ajout d'une sous-catégorie dans le BackOffice
-app.post('/postSubCateg', async (req, res) => {
+app.post('admin/postSubCateg', async (req, res) => {
     const jsonData = req.body;
 
     const { data, error } = await supabase.from('SUB_CATEG').insert([jsonData]);
