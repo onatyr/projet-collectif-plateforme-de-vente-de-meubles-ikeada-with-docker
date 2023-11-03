@@ -185,4 +185,7 @@ app.post('admin/postSubCateg', async (req, res) => {
     return res.send('Données enregistrées avec succès dans Supabase. Nouvelle sous-catégorie ajoutée dans le BackOffice.');
 })
 
+app.use("/admin/*", checkAuth, checkAdmin, (req, res, next) => {
+  next();
+
 export default app;
