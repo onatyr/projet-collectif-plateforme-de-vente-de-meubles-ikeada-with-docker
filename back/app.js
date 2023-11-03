@@ -32,6 +32,7 @@ app.get('/category', async (req, res) => {
     }
 });
 
+
  
 // Public GET sub_category
 // Affiche toutes les sous-catégories de mobilier
