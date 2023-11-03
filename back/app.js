@@ -38,6 +38,8 @@ app.use((req, res, next) => {
 });
 
 
+
+
 // GET Public catégories
 // Recherche par motclé des catégories
 app.get('/search_bar/category/:motcle', async(req, res) => {
@@ -172,6 +174,7 @@ app.post('admin/postCateg', async (req, res) => {
 
     return res.send('Données enregistrées avec succès dans Supabase. Nouvelle catégorie ajoutée dans le BackOffice.');
 });
+
 
 
 //Requête d'ajout d'une sous-catégorie dans le BackOffice
