@@ -18,7 +18,6 @@ app.use((req,res,next) => {
     next();
 });
 
-
 // Public GET category
 // Affiche toutes les catégories de mobilier
 app.get('/category', async (req, res) => {
@@ -33,8 +32,6 @@ app.get('/category', async (req, res) => {
   }
 });
 
-
-
 // Public GET sub_category
 // Affiche toutes les sous-catégories de mobilier
 app.get('/sub_category', async (req, res) => {
@@ -48,7 +45,5 @@ app.get('/sub_category', async (req, res) => {
       res.status(200).json(data);
   }
 });
-
-
 
 export default app;
