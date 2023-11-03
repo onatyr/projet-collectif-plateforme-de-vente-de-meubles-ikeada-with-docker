@@ -74,7 +74,6 @@ app.get("/search_bar/sub_categ/:motcle", async (req,res)=>{
   }
 });
 
-// Fin GET Public catégories
 
 
 // Routing de test pour Admin
