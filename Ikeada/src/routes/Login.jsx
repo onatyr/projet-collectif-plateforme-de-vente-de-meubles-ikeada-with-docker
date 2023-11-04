@@ -1,19 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { createClient } from '@supabase/supabase-js'
-
-// attention c'est dans GitIgnore pour pas que ça se retrouve sur le net
-// donc il faut vous faire la votre :
-// creer un fichier "myKey.js"
-// dedans : const key = '...whatever'
-// -> on importe
-import key from '../auth/myKey';
-const url = 'https://bbrfovbvfzeszrjnhsdp.supabase.co'
 import { useContext } from "react"
 import { observer } from 'mobx-react-lite'
 import { sessionContext } from '../auth/session';
 import { useNavigate } from 'react-router';
+import supabase from '../auth/supabaseClient';
 
 // syntaxe reloue avec "observer" pour accèder et actualiser les données de session
 const Login = observer(() => {
@@ -22,14 +14,6 @@ const Login = observer(() => {
   // on récupère ce que l'utilisateur tape dans les champs de formulaire
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [supabase, setSupabase] = useState(null)
-
-  // on crée le client Supabase s'il n'a pas déjà été lancé
-  useEffect(() => {
-    if (!supabase) {
-      setSupabase(createClient(url, key))
-    }
-  }, [supabase])
 
 
   // c'est juste pour faire plus court

@@ -1,19 +1,22 @@
 import { Table } from "react-bootstrap";
-import BackOfficeItem from "../components/BackOfficeItem"
 import { useContext, useEffect, useState } from "react";
 import { itemsContext } from "../stores/itemStore";
+import { observer } from "mobx-react-lite";
+import BackOfficeItem from "../components/BackOfficeItem"
 
-export default function BackOffice() {
+// syntaxe observer pour accéder au store
+const BackOffice = observer(() => {
     // récupère les items stockés dans le store
     const itemsStore = useContext(itemsContext);
     const items = itemsStore.items
-
-    //  met à jour le store
-    useEffect(() => {
-        itemsStore.getItems()
-    })
-
     const [entries, setEntries] = useState([])
+
+    //  met à jour le store 
+    useEffect(() => {
+        if (entries.length < 1) {
+            itemsStore.getItems()
+        }
+    }, [entries.length, itemsStore])
 
     // crée les lignes du tableau par rapport à la liste des items, et met à jour si ça change
     useEffect(() => {
@@ -25,13 +28,13 @@ export default function BackOffice() {
                     price={item.data.price}
                     key={item.data.name} />)
             }))
-    }, [entries, items])
+    }, [items])
 
     return (
         <>
             {/* eslint-disable-next-line react/no-unescaped-entities */}
-            <row><h1>Panneau d'administration</h1></row>
-            <row><Table bordered striped>
+            <h1>Panneau d'administration</h1>
+            <Table bordered striped>
                 <thead >
                     <tr >
                         <th className="bg-secondary text-white fs-4">Produit</th>
@@ -44,7 +47,9 @@ export default function BackOffice() {
                     {/* insère les lignes du tableau */}
                     {entries}
                 </tbody>
-            </Table></row>
+            </Table>
         </>
     )
-}
+})
+
+export default BackOffice

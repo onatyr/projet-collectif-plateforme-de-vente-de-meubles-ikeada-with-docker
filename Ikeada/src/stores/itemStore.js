@@ -10,12 +10,12 @@ class itemStore {
     // on lui dis que "user" et "session" sont des trucs auxquels on va vouloir accèder
     // et que setSession est une méthode pour y assigner des données
     constructor(service) {
+        // on instancie le service chargé des requêtes API directement dans le constructeur, comme ça les deux sont liés de manière permanente
         this.#service = service
         makeObservable(this, {
             items: observable,
             currentItem: observable,
-            setItems: action,
-            setCurrentItem: action
+            setItems: action
         })
     }
     async getItems() {
@@ -28,26 +28,23 @@ class itemStore {
     }
     async searchItemById(id) {
         const data = await this.#service.searchItemById(id)
-        this.setCurrentItem(data)
+        this.setItems(data)
     }
     setItems(data) {
-        this.items = data.map((el) => {return new Item(el)})
-    }
-    setCurrentItem(item) {
-        this.currentItem = new Item(item)
+        this.items = data.map((el) => { return new Item(el) })
     }
 }
 
- class Item {
-     data = {}
-     constructor(data) {
-         this.data = data
-     }
- }
+class Item {
+    data = {}
+    constructor(data) {
+        this.data = data
+    }
+}
 
 
-// on instancie le Store
+// on instancie le Store avec le service back-end en paramètre
 export const itemsStore = new itemStore(interfaceBackEnd);
 
-// on l'initialize pour pouvoir y accèder partout avec React
+// on l'initialise pour pouvoir y accèder partout avec React
 export const itemsContext = createContext(itemsStore);

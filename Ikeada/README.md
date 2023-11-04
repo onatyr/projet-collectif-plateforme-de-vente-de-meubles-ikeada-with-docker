@@ -37,3 +37,9 @@ On crée un Store sous la forme d'une classe, qui va contenir le State et donner
 Ensuite, on peut y accèder depuis n'importe ou, ce qui est très pratique, par exemple pour gérer l'accès à une route privée
 
 > regardez session.js dans src/auth/, c'est notre Store pour les données de session après la connexion avec Supabase, ça nous sert notament à autoriser l'accès au back-office
+
+## Accèder au store
+
+La logique pour fournir un accès au store dans React est un peu complexe :
+
+Le store est instancié (c'est à dire créé avec le mot-clé "new" suivi de la classe) directement dans le fichier ou il a été défini et exporté tel quel.
