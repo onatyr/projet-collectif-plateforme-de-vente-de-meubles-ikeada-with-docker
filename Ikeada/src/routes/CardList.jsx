@@ -1,14 +1,12 @@
 import ProductCard from '../components/ProductCard'
-import { useContext, useEffect } from 'react';
-import { itemsContext } from '../stores/itemStore'
 import { observer } from 'mobx-react-lite';
 import { useParams } from 'react-router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { itemsStore } from '../stores/itemStore';
 
 // syntaxe observer pour l'utilisation du store
 const CardList = observer(() => {
-  // récupère le store
-  const itemsStore = useContext(itemsContext);
+
   // récupère le chemin URL
   const urlParams = useParams()
   // récupère les items
@@ -16,15 +14,15 @@ const CardList = observer(() => {
 
   // met à jour le store selon la page ou on est (recherche ou accueil) si celle ci à changé
   useEffect(() => {
-      if (urlParams.query) {
-        // recherche
-        itemsStore.searchItems(urlParams.query)
+    if (urlParams.query) {
+      // recherche
+      itemsStore.searchItems(urlParams.query)
 
-      } else {
-        // tout
-        itemsStore.getItems()
-      }
-  }, [urlParams, itemsStore])
+    } else {
+      // tout
+      itemsStore.getItems()
+    }
+  }, [urlParams])
 
   const [cards, setCards] = useState([])
 

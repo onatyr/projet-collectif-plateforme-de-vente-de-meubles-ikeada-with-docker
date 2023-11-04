@@ -1,16 +1,14 @@
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { useContext } from "react"
 import { observer } from 'mobx-react-lite'
-import { sessionContext } from '../auth/session';
+import { sessionStore } from '../auth/session';
 import { useNavigate } from 'react-router';
 import supabase from '../auth/supabaseClient';
 
 // syntaxe reloue avec "observer" pour accèder et actualiser les données de session
 const Login = observer(() => {
   // on récupère le Store
-  const sessionStore = useContext(sessionContext)
   // on récupère ce que l'utilisateur tape dans les champs de formulaire
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

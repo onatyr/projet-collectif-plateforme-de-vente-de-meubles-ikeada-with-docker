@@ -1,5 +1,6 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useParams } from "react-router";
+import { itemsStore } from "../stores/itemStore";
 import {
   Container,
   Row,
@@ -11,17 +12,16 @@ import {
   Badge,
   Modal,
 } from "react-bootstrap";
-import { itemsContext } from "../stores/itemStore";
 
 export default function ProductPage() {
   // on récupère l'id depuis l'URL créée par le routeur
   const itemId = useParams().productId
   // récupère les items dans le Store
-  const items = useContext(itemsContext).items
   // cherche un match avec l'id fourni par l'URL
-  const item = items.find(item => {
+  const item = itemsStore.items.find(item => {
     return item.data.id == itemId
   })
+
   const [zoomImg, setZoomImg] = useState(false);
   const handleClose = () => setZoomImg(false);
   const handleShow = () => setZoomImg(true);

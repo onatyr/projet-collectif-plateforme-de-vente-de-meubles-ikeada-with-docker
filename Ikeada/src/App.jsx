@@ -5,15 +5,9 @@ import BackOffice from './routes/BackOffice.jsx'
 import Login from './routes/Login'
 import ProtectedRoute from './auth/ProtectedRoute'
 import { Routes, Route } from "react-router-dom";
-import { sessionStore } from './auth/session.js'
-import { Provider } from "mobx-react";
-import { itemsStore } from './stores/itemStore.js'
 
 export default function App() {
   return (
-    // on fournit à toute l'appli les instances du sessionStore et celle de l'itemsStore, pour éviter de les réinstancier
-    <Provider sessionStore={sessionStore}>
-      <Provider itemStore={itemsStore}>
         <Routes>
           {/* Route vers "l'interface", seule la navbar est chargée */}
           <Route path="/" element={<Layout />}>
@@ -34,7 +28,5 @@ export default function App() {
             <Route path="login" element={<Login />} />
           </Route>
         </Routes>
-      </Provider>
-    </Provider>
   )
 }

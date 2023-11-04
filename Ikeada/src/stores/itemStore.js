@@ -1,5 +1,4 @@
 import { makeObservable, observable, action } from "mobx"
-import { createContext } from "react"
 import { interfaceBackEnd } from "../providers/interfaceBackEnd"
 
 // store qui va contenir les données de session
@@ -45,6 +44,3 @@ class Item {
 
 // on instancie le Store avec le service back-end en paramètre
 export const itemsStore = new itemStore(interfaceBackEnd);
-
-// on l'initialise pour pouvoir y accèder partout avec React
-export const itemsContext = createContext(itemsStore);

@@ -1,22 +1,16 @@
 import { Table } from "react-bootstrap";
-import { useContext, useEffect, useState } from "react";
-import { itemsContext } from "../stores/itemStore";
-import { observer } from "mobx-react-lite";
+import { useEffect, useState } from "react";
+import { itemsStore } from "../stores/itemStore";
 import BackOfficeItem from "../components/BackOfficeItem"
 
 // syntaxe observer pour accéder au store
-const BackOffice = observer(() => {
+function BackOffice() {
     // récupère les items stockés dans le store
-    const itemsStore = useContext(itemsContext);
     const items = itemsStore.items
     const [entries, setEntries] = useState([])
 
-    //  met à jour le store 
-    useEffect(() => {
-        if (entries.length < 1) {
-            itemsStore.getItems()
-        }
-    }, [entries.length, itemsStore])
+// met à jour le store
+    itemsStore.getItems()
 
     // crée les lignes du tableau par rapport à la liste des items, et met à jour si ça change
     useEffect(() => {
@@ -50,6 +44,6 @@ const BackOffice = observer(() => {
             </Table>
         </>
     )
-})
+}
 
 export default BackOffice
