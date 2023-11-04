@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types'
 
+
+// affiche le statut du meuble avec des couleurs qui vont bien
 export default function TableStatus({ status, available }) {
     if (status && available) {
         return (<td className="bg-success text-center text-white">En ligne</td>)

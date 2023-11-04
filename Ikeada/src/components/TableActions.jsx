@@ -5,6 +5,7 @@ import EditButton from "./atoms/EditButton";
 import StachButton from "./atoms/StachButton";
 import PublishButton from "./atoms/PublishButton";
 
+// ce composant affiche différents boutons selon le statut et la disponibilité du meuble
 export default function TableActions({ status, available }) {
   if (status) {
     return (

@@ -15,8 +15,6 @@ export default function ProductCard({ item }) {
     borderRadius: 0
   };
 
-
-
   return (
     <Card style={{ width: '18rem', margin: '1rem' }}>
       <Card.Header>Prix : {item.data.price / 100} €</Card.Header>

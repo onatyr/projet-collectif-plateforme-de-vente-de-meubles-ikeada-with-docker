@@ -1,9 +1,11 @@
 import { makeObservable, observable, action } from "mobx"
 import { createContext } from "react"
 
-// store qui va contenir les données de session
+// Ceci est un store qui va enregistré la session Supabase ouverte au moment du login
 class Session {
     user = "anon"
+
+    // session contient notamment le token
     session = null
 
     // on lui dis que "user" et "session" sont des trucs auxquels on va vouloir accèder

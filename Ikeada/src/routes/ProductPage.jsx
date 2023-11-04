@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router";
 import {
   Container,
@@ -16,13 +16,17 @@ import { itemsContext } from "../stores/itemStore";
 export default function ProductPage() {
   // on récupère l'id depuis l'URL créée par le routeur
   const itemId = useParams().productId
-  // on récupère les items dans le Store
-  const items = useContext(itemsContext).items
+  console.log(itemId)
+  // on récupère le store
+  const itemsStore = useContext(itemsContext)
+  // on récupère l'item dans le store grâce à l'id
+  const [item, setItem] = useState({})
+  useEffect(() => {
+    itemsStore.searchItemById(itemId)
+    setItem(itemsStore.currentItem)
+  }, [itemsStore, itemId])
 
-  // on cherche un match avec l'id fourni par l'URL
-  const item = items.find(item => {
-    return item.data.id == itemId
-  })
+
 
   const [zoomImg, setZoomImg] = useState(false);
   const handleClose = () => setZoomImg(false);

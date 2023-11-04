@@ -13,7 +13,6 @@ import { itemsStore } from './stores/itemStore.js'
 
 
 export default function App() {
-  itemsStore.getItems()
   return (
     <Provider sessionStore={sessionStore}>
       <Provider itemStore={itemsStore}>
@@ -23,6 +22,9 @@ export default function App() {
             <Route path="/" element={<Layout />}>
               {/* Routes vers le contenu */}
               <Route path="accueil" element={<CardList />}>
+                {/* Route dynamique vers chaque page produit selon l'id */}
+              </Route>
+              <Route path="search/:query" element={<CardList />}>
                 {/* Route dynamique vers chaque page produit selon l'id */}
               </Route>
               <Route

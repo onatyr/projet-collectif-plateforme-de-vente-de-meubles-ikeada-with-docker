@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { createClient } from '@supabase/supabase-js'
@@ -22,14 +22,22 @@ const Login = observer(() => {
   // on récupère ce que l'utilisateur tape dans les champs de formulaire
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [supabase, setSupabase] = useState(null)
 
-  // on lance le client Supabase
-  const supabase = createClient(url, key)
+  // on crée le client Supabase s'il n'a pas déjà été lancé
+  useEffect(() => {
+    if (!supabase) {
+      setSupabase(createClient(url, key))
+    }
+  }, [supabase])
+
+
+  // c'est juste pour faire plus court
   const navigate = useNavigate()
 
   // gère la connexion quand le formulaire est envoyé
   const handleLogin = async (e) => {
-    // empêche le rafraichissement de la page
+    // empêche le rafraichissement de la page à l'envoi du formulaire
     e.preventDefault();
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -37,13 +45,14 @@ const Login = observer(() => {
         password,
       });
       if (error) {
+        // redirection vers login
         navigate('../login')
         console.error("Erreur de connexion :", error.message);
       } else {
-        // on envoie les données de session dans le Store
+        // envoie les données de session dans le Store
         sessionStore.setSession(data)
+        // redirection vers back-office
         navigate('../back-office')
-        console.log(data.user)
       }
     } catch (error) {
       console.error("Erreur de connexion :", error.message);
