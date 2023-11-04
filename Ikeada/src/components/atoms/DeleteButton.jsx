@@ -1,6 +1,6 @@
 import { TrashFill } from "react-bootstrap-icons"
 import { Button } from "react-bootstrap"
-export default function EditButton() {
+export default function DeleteButton() {
     function deleteItem() {
         console.log("delete")
         // trigger POST request
