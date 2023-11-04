@@ -3,13 +3,12 @@ import { useEffect, useState } from "react";
 import { itemsStore } from "../stores/itemStore";
 import BackOfficeItem from "../components/BackOfficeItem"
 
-// syntaxe observer pour accéder au store
 function BackOffice() {
     // récupère les items stockés dans le store
     const items = itemsStore.items
     const [entries, setEntries] = useState([])
 
-// met à jour le store
+    // met à jour le store
     itemsStore.getItems()
 
     // crée les lignes du tableau par rapport à la liste des items, et met à jour si ça change

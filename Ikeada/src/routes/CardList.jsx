@@ -1,12 +1,9 @@
 import ProductCard from '../components/ProductCard'
-import { observer } from 'mobx-react-lite';
 import { useParams } from 'react-router';
 import { useState, useEffect } from 'react';
 import { itemsStore } from '../stores/itemStore';
 
-// syntaxe observer pour l'utilisation du store
-const CardList = observer(() => {
-
+function CardList() {
   // récupère le chemin URL
   const urlParams = useParams()
   // récupère les items
@@ -39,6 +36,6 @@ const CardList = observer(() => {
       {cards}
     </div>
   )
-})
+}
 
 export default CardList

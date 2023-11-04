@@ -1,7 +1,7 @@
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
-import { PropTypes } from 'mobx-react';
+import { PropTypes } from 'prop-types'
 
 export default function ProductCard({ item }) {
   const picSrc =
