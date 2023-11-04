@@ -1,9 +1,9 @@
 import { PropTypes } from "prop-types";
 
-import DeleteButton from "./DeleteButton";
-import EditButton from "./EditButton";
-import StachButton from "./StachButton";
-import PublishButton from "./PublishButton";
+import DeleteButton from "./atoms/DeleteButton";
+import EditButton from "./atoms/EditButton";
+import StachButton from "./atoms/StachButton";
+import PublishButton from "./atoms/PublishButton";
 
 export default function TableActions({ status, available }) {
   if (status) {

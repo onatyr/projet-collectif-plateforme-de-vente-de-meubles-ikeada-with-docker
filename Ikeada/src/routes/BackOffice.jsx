@@ -1,17 +1,19 @@
 import { Table } from "react-bootstrap";
-import { useEffect, useState } from "react";
 import BackOfficeItem from "../components/BackOfficeItem"
+import { useContext } from "react";
+import { itemsContext } from "../stores/itemStore";
 
 export default function BackOffice() {
-    // on crée le state avec rien dedans au départ
-    const [jsonData, setJsonData] = useState(null);
-    // on récupère les données et met à jour le state
-    useEffect(() => {
-        fetch('../../public/jsonTest/item.json')
-            .then(response => response.json())
-            .then(data => setJsonData(data))
-            .catch(error => console.error('Erreur de chargement du JSON :', error));
-    }, []);
+    const itemsStore = useContext(itemsContext);
+    const items = itemsStore.items
+
+    const tableEntries = items.map((item) => {
+        return (<BackOfficeItem name={item.data.name}
+            status={item.data.status}
+            available={item.data.available}
+            price={item.data.price}
+            key={item.data.name} />)
+    })
 
     return (
         <>
@@ -28,16 +30,7 @@ export default function BackOffice() {
                 </thead>
                 <tbody>
                     {/* on génère autant d'items qu'il y a de meubles dans les données */}
-                    {jsonData &&
-                        <>
-                            {jsonData.map((product) => (
-                                <BackOfficeItem name={product.name}
-                                    status={product.status}
-                                    available={product.available}
-                                    price={product.price}
-                                    key={product.id} />
-                            ))}
-                        </>}
+                    {tableEntries}
                 </tbody>
             </Table></row>
         </>

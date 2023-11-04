@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useParams } from "react-router";
 import {
   Container,
   Row,
@@ -10,18 +11,25 @@ import {
   Badge,
   Modal,
 } from "react-bootstrap";
+import { itemsContext } from "../stores/itemStore";
 
+export default function ProductPage() {
+  // on récupère l'id depuis l'URL créée par le routeur
+  const itemId = useParams().productId
+  // on récupère les items dans le Store
+  const items = useContext(itemsContext).items
 
-export default function ProductPage({ data }) {
-  const [currentProduct, setCurrentProduct] = useState(0);
-  const dataProduct = data[currentProduct];
+  // on cherche un match avec l'id fourni par l'URL
+  const item = items.find(item => {
+    return item.data.id == itemId
+  })
 
   const [zoomImg, setZoomImg] = useState(false);
   const handleClose = () => setZoomImg(false);
   const handleShow = () => setZoomImg(true);
 
   const picSrc =
-    dataProduct.picture ||
+    item.data.picture ||
     "https://www.arqueselectrodiesel.fr/wp-content/uploads/2022/08/photo-non-disponible-1.jpg";
 
   return (
@@ -42,8 +50,8 @@ export default function ProductPage({ data }) {
       </Row>
       <Row>
         <Col style={{ width: "25vw" }}>
-          <h4>{dataProduct.name}</h4>
-          <p>{dataProduct.desc}</p>
+          <h4>{item.data.name}</h4>
+          <p>{item.data.desc}</p>
           <ListGroup>
             <ListGroup.Item className="d-flex flex-column justify-content-center align-items-center">
               Matériaux :
@@ -52,7 +60,7 @@ export default function ProductPage({ data }) {
                 gap={2}
                 className="d-flex flex-row justify-content-center"
               >
-                {dataProduct.materials.map((material, index) => (
+                {item.data.materials.map((material, index) => (
                   <Badge pill bg="secondary" key={index}>
                     {material}
                   </Badge>
@@ -62,7 +70,7 @@ export default function ProductPage({ data }) {
             {/* <ListGroup.Item className='d-flex flex-column justify-content-center align-items-center'>
   Couleurs :
   <Stack direction="horizontal" gap={2} className="d-flex flex-row justify-content-center">
-    {dataProduct.colors.map((color) => (
+    {item.data.colors.map((color) => (
       <Badge pill bg="secondary">{color}</Badge>
     ))}
   </Stack>
@@ -70,20 +78,20 @@ export default function ProductPage({ data }) {
           </ListGroup>
         </Col>
         <Col className="d-flex flex-column align-items-center justify-content-center" style={{ width: "25vw" }}>
-          <h1>{dataProduct.price / 100}€</h1>
+          <h1>{item.data.price / 100}€</h1>
           <Button variant="primary" size="lg">
             Acheter
           </Button>
         </Col>
       </Row>
     </Container>
-    
-    <Modal show={zoomImg} onHide={handleClose} animation={false} size="lg">
+
+      <Modal show={zoomImg} onHide={handleClose} animation={false} size="lg">
         <Modal.Body>
-        <Image
+          <Image
             src={picSrc}
             fluid
-            />
+          />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

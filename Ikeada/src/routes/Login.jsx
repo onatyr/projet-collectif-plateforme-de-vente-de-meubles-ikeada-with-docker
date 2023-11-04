@@ -3,12 +3,17 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { createClient } from '@supabase/supabase-js'
 
-// attention c'est dans GitIgnore donc il faut vous faire la votre
+// attention c'est dans GitIgnore pour pas que ça se retrouve sur le net
+// donc il faut vous faire la votre :
+// creer un fichier "myKey.js"
+// dedans : const key = '...whatever'
+// -> on importe
 import key from '../auth/myKey';
 const url = 'https://bbrfovbvfzeszrjnhsdp.supabase.co'
 import { useContext } from "react"
 import { observer } from 'mobx-react-lite'
 import { sessionContext } from '../auth/session';
+import { useNavigate } from 'react-router';
 
 // syntaxe reloue avec "observer" pour accèder et actualiser les données de session
 const Login = observer(() => {
@@ -20,6 +25,8 @@ const Login = observer(() => {
 
   // on lance le client Supabase
   const supabase = createClient(url, key)
+  const navigate = useNavigate()
+
   // gère la connexion quand le formulaire est envoyé
   const handleLogin = async (e) => {
     // empêche le rafraichissement de la page
@@ -30,10 +37,12 @@ const Login = observer(() => {
         password,
       });
       if (error) {
+        navigate('../login')
         console.error("Erreur de connexion :", error.message);
       } else {
         // on envoie les données de session dans le Store
         sessionStore.setSession(data)
+        navigate('../back-office')
         console.log(data.user)
       }
     } catch (error) {

@@ -1,25 +1,23 @@
-import { useState, useEffect } from 'react'
-import ProductPage from './ProductPage.jsx'
-import ProductCard from './ProductCard.jsx'
+import ProductCard from '../components/ProductCard'
+import { useContext } from 'react';
+import { itemsContext } from '../stores/itemStore'
+import { observer } from 'mobx-react-lite';
 
-export default function CardList() {
 
-    const [jsonData, setJsonData] = useState(null);
+const CardList = observer(() => {
+  const itemsStore = useContext(itemsContext);
+  const items = itemsStore.items
+  const cards = items.map((item) => {
+    return (<ProductCard key={item.data.name} item={item} />)
+  })
 
-    useEffect(() => {
-        fetch('../../public/jsonTest/item.json')
-            .then(response => response.json())
-            .then(data => setJsonData(data))
-            .catch(error => console.error('Erreur de chargement du JSON :', error));
-    }, []);
-    
-    return (
-        <div className="d-flex justify-content-around flex-wrap">
-          {jsonData && 
-            jsonData.map((product) => 
-            <ProductCard key={product.id} data={product} />
-            )
-          }
-        </div>
-      )  
-}
+
+  console.log(items)
+  return (
+    <div className="d-flex justify-content-around flex-wrap">
+      {cards}
+    </div>
+  )
+})
+
+export default CardList
