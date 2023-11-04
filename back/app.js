@@ -36,6 +36,58 @@ app.use((req, res, next) => {
   next();
 });
 
+//---> DEBUT ROOTING PUBLIC GET
+
+//affiche tous les meubles
+
+app.get("/items", async (req, res) => {
+  const { data, error } = await supabase
+    .from("ITEM")
+    .select()
+    .eq("status", true);
+
+  if (error) {
+    res.status(500).json({ error: "Une erreur s'est produite" });
+  } else {
+    res.status(200).json(data);
+  }
+});
+
+//affiche les meubles selon le nom du produit
+
+app.get("/items/:name", async (req, res) => {
+  const itemName = req.params.name;
+  console.log("Requête avec name:", itemName); // Ajout de ce message de débogage
+
+  const { data, error } = await supabase
+    .from("ITEM")
+    .select()
+    .eq("name", itemName);
+
+  if (error) {
+    console.error(error);
+    res.status(500).json({ error: "Une erreur s'est produite" });
+  } else {
+    res.status(200).json(data);
+  }
+});
+
+//affiche les meubles selon l'id du produit
+
+app.get("/items/id/:id", async (req, res) => {
+  const itemId = req.params.id;
+
+  const { data, error } = await supabase.from("ITEM").select().eq("id", itemId);
+
+  if (error) {
+    console.error(error);
+
+    res.status(500).json({ error: "Une erreur s'est produite" });
+  } else {
+    res.status(200).json(data);
+  }
+});
+
 // Public GET category
 // Affiche toutes les catégories de mobilier
 app.get("/category", async (req, res) => {
@@ -99,14 +151,17 @@ app.get("/search_bar/sub_categ/:motcle", async (req, res) => {
   }
 });
 // Fin GET Public catégories
+//---> FIN ROOTING PUBLIC GET
 
-// DEBUT requetes du Back-Office
+//---> DEBUT ROOTING BO
+
+// Check en premier si jeton JWT valide et si c'est le jeton de l'admin
 app.use("/admin/*", checkAuth, checkAdmin, (req, res, next) => {
   next();
 });
 
 //Requête d'ajout d'un item dans le BackOffice
-app.post("admin/postItem", checkAdmin, async (req, res) => {
+app.post("/admin/postItem", checkAdmin, async (req, res) => {
   const jsonData = req.body;
 
   const { data, error } = await supabase.from("ITEM").insert([jsonData]);
@@ -123,7 +178,7 @@ app.post("admin/postItem", checkAdmin, async (req, res) => {
 });
 
 //Requête d'ajout d'un item dans le BackOffice
-app.post("admin/postColor", checkAdmin, async (req, res) => {
+app.post("/admin/postColor", checkAdmin, async (req, res) => {
   const jsonData = req.body;
 
   const { data, error } = await supabase.from("COLOR").insert([jsonData]);
@@ -140,7 +195,7 @@ app.post("admin/postColor", checkAdmin, async (req, res) => {
 });
 
 //Requête d'ajout de catégories dans le BackOffice
-app.post("admin/postCateg", checkAdmin, async (req, res) => {
+app.post("/admin/postCateg", checkAdmin, async (req, res) => {
   const jsonData = req.body;
 
   const { data, error } = await supabase.from("CATEG").insert([jsonData]);
@@ -157,7 +212,7 @@ app.post("admin/postCateg", checkAdmin, async (req, res) => {
 });
 
 //Requête d'ajout d'une sous-catégorie dans le BackOffice
-app.post("admin/postSubCateg", checkAdmin, async (req, res) => {
+app.post("/admin/postSubCateg", checkAdmin, async (req, res) => {
   const jsonData = req.body;
 
   const { data, error } = await supabase.from("SUB_CATEG").insert([jsonData]);
@@ -173,9 +228,9 @@ app.post("admin/postSubCateg", checkAdmin, async (req, res) => {
   );
 });
 
-// Fin des routing Back-Office
+//---> FIN ROOTING BO
 
-// Fonctions Check pour les requetes BO
+//---> Fonctions Check pour les requetes BO
 
 // func pour checker le token des requetes sur le BO
 function checkAuth(req, res, next) {
