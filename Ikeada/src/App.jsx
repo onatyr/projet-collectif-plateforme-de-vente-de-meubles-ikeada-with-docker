@@ -5,10 +5,8 @@ import BackOffice from './routes/BackOffice.jsx'
 import Login from './routes/Login'
 import ProtectedRoute from './auth/ProtectedRoute'
 import { Routes, Route } from "react-router-dom";
-import { itemsStore } from './stores/itemStore.js'
 
 export default function App() {
-    itemsStore.getItems()
   return (
     <Routes>
       {/* Route vers "l'interface", seule la navbar est chargée */}

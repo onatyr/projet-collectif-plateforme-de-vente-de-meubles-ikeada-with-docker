@@ -3,8 +3,6 @@ import { Button } from "react-bootstrap"
 export default function EditButton() {
 
     function editItem() {
-        console.log("edit")
-        // trigger UPDATE request
     }
     return (
         <>

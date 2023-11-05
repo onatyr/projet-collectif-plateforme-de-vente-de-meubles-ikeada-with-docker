@@ -5,7 +5,7 @@ import { PropTypes } from 'prop-types'
 
 export default function ProductCard({ item }) {
   const picSrc =
-    item.data.picture ||
+    item.picture ||
     "https://www.arqueselectrodiesel.fr/wp-content/uploads/2022/08/photo-non-disponible-1.jpg";
 
   const cardImgStyle = {
@@ -17,14 +17,14 @@ export default function ProductCard({ item }) {
 
   return (
     <Card style={{ width: '18rem', margin: '1rem' }}>
-      <Card.Header>Prix : {item.data.price / 100} €</Card.Header>
+      <Card.Header>Prix : {item.price / 100} €</Card.Header>
       <Card.Img variant="top" src={picSrc} style={cardImgStyle} />
       <Card.Body className="d-flex flex-column justify-content-between">
-        <Card.Title>{item.data.name}</Card.Title>
+        <Card.Title>{item.name}</Card.Title>
         <Card.Text>
-          {item.data.desc}
+          {item.desc}
         </Card.Text>
-        <Link to={`../${item.data.id}`}><Button className="button">Voir plus</Button></Link>
+        <Link to={`../${item.id}`}><Button className="button">Voir plus</Button></Link>
       </Card.Body>
     </Card >
   );

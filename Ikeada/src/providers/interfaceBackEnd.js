@@ -1,4 +1,12 @@
+import { sessionStore } from "../auth/session";
+
 class InterfaceBackEnd {
+    // en privé pour faire ça bien
+    #sessionStore
+    constructor(sessionStore) {
+        this.#sessionStore = sessionStore
+    }
+
     // récupère tous les items
     async fetchItems() {
         return await fetch('/api/items', {
@@ -24,9 +32,28 @@ class InterfaceBackEnd {
             })
             .catch(error => console.error('Erreur de chargement du JSON :', error));
     }
+
+    // recherche par id
     async searchItemById(id) {
         return await fetch(`/api/items/id/${id}`, {
             method: 'GET',
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                return data[0]
+            })
+            .catch(error => console.error('Erreur de chargement du JSON :', error));
+    }
+
+    // ajout d'un item dans la BDD
+    async addItem(data) {
+        return await fetch(`api/admin/postItem`, {
+            method: 'POST',
+            headers: {
+                "Authorization": `Bearer ${this.#sessionStore.token}`,
+                "body": data
+            }
         })
             .then(response => response.json())
             .then(data => {
@@ -37,4 +64,4 @@ class InterfaceBackEnd {
     }
 }
 
-export const interfaceBackEnd = new InterfaceBackEnd
+export const interfaceBackEnd = new InterfaceBackEnd(sessionStore)

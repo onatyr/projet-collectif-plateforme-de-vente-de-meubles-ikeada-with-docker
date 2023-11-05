@@ -8,5 +8,6 @@ const url = 'https://bbrfovbvfzeszrjnhsdp.supabase.co'
 import { createClient } from '@supabase/supabase-js'
 
 const supabase = createClient(url, key)
+
 export default supabase
 

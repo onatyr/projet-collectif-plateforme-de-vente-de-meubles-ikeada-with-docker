@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 
-
 // affiche le statut du meuble avec des couleurs qui vont bien
 export default function TableStatus({ status, available }) {
     if (status && available) {

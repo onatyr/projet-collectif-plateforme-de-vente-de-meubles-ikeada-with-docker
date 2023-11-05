@@ -7,6 +7,7 @@ import { useState } from 'react';
 export function NavBar() {
   // on utilise le state pour récupérer ce que l'utilisateur tape dans le champs de recherche
   const [query, setQuery] = useState('')
+  
   return (
     <Navbar fixed="top" sticky="top" expand="lg" className="bg-body-tertiary">
       <Container fluid>

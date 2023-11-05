@@ -1,44 +1,33 @@
 import ProductCard from '../components/ProductCard'
 import { useParams } from 'react-router';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { itemsStore } from '../stores/itemStore';
+import { observer } from 'mobx-react-lite'
 
-function CardList() {
+const CardList = observer(() => {
   // récupère le chemin URL
   const urlParams = useParams()
   // récupère les items
+  const items = itemsStore.items
 
-  // met à jour le store selon la page ou on est (recherche ou accueil) si celle ci à changé
-  const [items, setItems] = useState([])
-
+  // s'éxecute toujours la première fois, puis permet de déclencher un re-render si on est pas sur la même page 
   useEffect(() => {
     if (urlParams.query) {
-      // recherche
+      // page de recherche
       itemsStore.searchItems(urlParams.query)
-      setItems(itemsStore.items)
     } else {
-      // tout
+      // page accueil
       itemsStore.getItems()
-      setItems(itemsStore.items)
     }
-  },[urlParams])
-
-
-  const [cards, setCards] = useState([])
-
-  // crée les cards et les met à jour si la liste des items a changée
-  useEffect(() => {
-    setCards(items.map((item) => {
-      return (<ProductCard key={item.data.name} item={item} />)
-    }))
-  }, [items])
-
+  }, [urlParams])
 
   return (
     <div className="d-flex justify-content-around flex-wrap">
-      {cards}
+      {items.map((item) => {
+        return (<ProductCard key={item.name} item={item} />)
+      })}
     </div>
   )
-}
+})
 
 export default CardList

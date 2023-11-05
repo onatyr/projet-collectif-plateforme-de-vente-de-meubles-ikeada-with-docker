@@ -5,16 +5,12 @@ import supabase from '../auth/supabaseClient';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-// syntaxe reloue avec "observer" pour accèder et actualiser les données de session
 function Login() {
-  // on récupère le Store
+  // ca permet d'utiliser useNavigate ou on veux sinon React n'est pas d'accord
+  const navigate = useNavigate()
   // on récupère ce que l'utilisateur tape dans les champs de formulaire
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-
-  // c'est juste pour faire plus court
-  const navigate = useNavigate()
 
   // gère la connexion quand le formulaire est envoyé
   const handleLogin = async (e) => {
@@ -31,6 +27,7 @@ function Login() {
         console.error("Erreur de connexion :", error.message);
       } else {
         // envoie les données de session dans le Store
+        console.log(data.session.access_token)
         sessionStore.setSession(data)
         // redirection vers back-office
         navigate('../back-office')

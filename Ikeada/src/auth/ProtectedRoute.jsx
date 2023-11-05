@@ -1,7 +1,6 @@
 import { Navigate } from "react-router-dom";
-import { sessionContext } from '../auth/session'
+import { sessionStore } from '../auth/session'
 import { observer } from 'mobx-react-lite'
-import { useContext } from "react"
 import { PropTypes } from 'prop-types'
 
 
@@ -14,9 +13,7 @@ on passe "children" en paramètre juste pour pouvoir l'appeler plus tard
 */
 const ProtectedRoute = observer(({ children }) => {
   // on regarde si on est connecté
-  const sessionStore = useContext(sessionContext)
-
-  if (!sessionStore.session) {
+  if (!sessionStore.token) {
     // non, ben ça passe pas
     return <Navigate to="/login" />
   } else {

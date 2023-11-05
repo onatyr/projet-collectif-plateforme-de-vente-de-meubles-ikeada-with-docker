@@ -1,9 +1,10 @@
 import { TrashFill } from "react-bootstrap-icons"
 import { Button } from "react-bootstrap"
+import { itemsStore } from "../../stores/itemStore"
 export default function DeleteButton() {
-    function deleteItem() {
-        console.log("delete")
-        // trigger POST request
+    function deleteItem({ id }) {
+        // met à jour le store qui devra lui déclencher la requête post
+        itemsStore.delItem(id)
     }
     return (
         <>

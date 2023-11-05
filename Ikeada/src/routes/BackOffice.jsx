@@ -1,25 +1,16 @@
 import { Table } from "react-bootstrap";
-import { useEffect, useState } from "react";
 import { itemsStore } from "../stores/itemStore";
 import BackOfficeItem from "../components/BackOfficeItem"
+import { observer } from "mobx-react-lite";
 
-function BackOffice() {
-    // récupère les items stockés dans le store
-    itemsStore.getItems()
+// observer met à jour le rendu si items change
+const BackOffice = observer(() => {
+    // récupère les items stockés dans le store 
     const items = itemsStore.items
-    const [entries, setEntries] = useState(null)
-
-    // crée les lignes du tableau par rapport à la liste des items, et met à jour si ça change
-    useEffect(() => {
-        setEntries(
-            items.map((item) => {
-                return (<BackOfficeItem name={item.data.name}
-                    status={item.data.status}
-                    available={item.data.available}
-                    price={item.data.price}
-                    key={item.data.name} />)
-            }))
-    }, [items])
+    // si y'en a pas, màj
+    if (!items[1]) {
+        itemsStore.getItems()
+    }
 
     return (
         <>
@@ -36,11 +27,19 @@ function BackOffice() {
                 </thead>
                 <tbody>
                     {/* insère les lignes du tableau */}
-                    {entries}
+                    {items.map((item) => {
+                        return (<BackOfficeItem name={item.name}
+                            status={item.status}
+                            available={item.available}
+                            price={item.price}
+                            id={item.id}
+                            key={item.name} 
+                            />)
+                    })}
                 </tbody>
             </Table>
         </>
     )
-}
+})
 
 export default BackOffice
