@@ -18,7 +18,7 @@ const ProductPage = observer(() => {
   // on récupère l'id depuis l'URL créée par le routeur
   const itemId = useParams().productId
   // et l'item depuis le store
-  
+  const item = itemsStore.currentItem
   // on vérifie juste si la page à changée (ça évite de boucler)
   useEffect(() => {
     if (itemId) {
@@ -26,9 +26,19 @@ const ProductPage = observer(() => {
     }
   }, [itemId])
 
-  const item = itemsStore.currentItem
-  const materials = useState(item.material)
-  
+  // obligé d'utiliser useEffect pour ne pas appeler map avant que .materials n'existe et causer une erreur
+  const [materials, setMaterials] = useState([])
+  useEffect(() => {
+    if (item.materials) {
+      setMaterials(item.materials.map((material) => {
+        return (<Badge pill bg="secondary" key={material}>
+          {material}
+        </Badge>)
+      }))
+    }
+  }, [item.materials])
+
+
   const [zoomImg, setZoomImg] = useState(false);
   const handleClose = () => setZoomImg(false);
   const handleShow = () => setZoomImg(true);
@@ -66,11 +76,7 @@ const ProductPage = observer(() => {
                   gap={2}
                   className="d-flex flex-row justify-content-center"
                 >
-                  {materials.map((material) => {
-                    return (<Badge pill bg="secondary" key={material}>
-                      {material}
-                    </Badge>)
-                  })}
+                  {materials}
                 </Stack>
               </ListGroup.Item>
               {/* <ListGroup.Item className='d-flex flex-column justify-content-center align-items-center'>

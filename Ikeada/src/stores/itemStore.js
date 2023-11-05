@@ -4,7 +4,7 @@ import { interfaceBackEnd } from "../providers/interfaceBackEnd"
 // store qui va contenir les données de session
 class itemStore {
     items = []
-    currentItem = []
+    currentItem = {}
 
     // c'est une propriété "privée", on ne peux y accéder qu'à l'intérieur même de la classe
     #service
@@ -29,10 +29,13 @@ class itemStore {
         this.setItems(data)
     }
     async searchItems(query) {
+        // on reset pour ne pas afficher un autre item pendant le chargement de celui qu'on veut
+        this.currentItem = {}
         const data = await this.#service.searchItems(query)
         this.setItems(data)
     }
     async searchItemById(id) {
+        this.currentItem = {}
         const data = await this.#service.searchItemById(id)
         this.setCurrentItem(data)
     }
@@ -56,6 +59,7 @@ class itemStore {
 }
 
 class Item {
+    
     constructor(data) {
         this.id = data.id
         this.name = data.name

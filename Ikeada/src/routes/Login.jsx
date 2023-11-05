@@ -27,7 +27,6 @@ function Login() {
         console.error("Erreur de connexion :", error.message);
       } else {
         // envoie les données de session dans le Store
-        console.log(data.session.access_token)
         sessionStore.setSession(data)
         // redirection vers back-office
         navigate('../back-office')
