@@ -3,17 +3,16 @@
 ## Introduction
 La documentation front-end de ce projet vous guidera à travers les étapes nécessaires pour développer une application web en utilisant la stack technologique suivante : React avec Vite comme serveur de développement, Bootstrap pour les styles et React Router pour la navigation.
 
-## Prérequis
+### Prérequis
 Avant de commencer à travailler sur le projet, assurez-vous d'avoir installé Node.js sur votre machine. Vous pouvez le télécharger à partir du site officiel : Node.js.
 
-## Installation
+### Installation
 Installez les dépendances du projet en utilisant npm :
 
 ```bash
 npm install
 ```
 ### Dependances
-
 - Vite -> outil de déploiement/transpilateur/gestion du serveur de dev
 
 - React, Javascript ES6
@@ -52,7 +51,7 @@ MonComposant.propTypes = {
 - React-router : outil de gestion de la navigation. On en parle tout de suite.
 
 
-## Exécution de l'Application
+### Exécution de l'Application
 Pour exécuter l'application, utilisez Vite, un serveur de développement rapide pour React. Vous pouvez lancer l'application avec la commande suivante :
 
 ```bash
@@ -118,7 +117,7 @@ Il permet de créer des chemins associés à une URL et de charger les fichiers 
 
 Cela permet de naviguer d'une page à l'autre, avec des url différentes, alors qu'en réalité on charge des composants.
 
-# Routes protégées
+### Routes protégées
 
 Le routeur permet de contrôler l'accès à certaines routes, comme le back-office :
 
@@ -183,7 +182,7 @@ function monComposant() {
 
 Dans React, le state est lié aux composants. Pour avoir des states plus globaux qui permettent de garder et actualiser des réponses de requêtes API, des données de session, c'est plus compliqué.
 
-# MobX
+### MobX
 
 MobX permet de créer des states partagés pour toute l'application, de les centraliser.
 
@@ -217,7 +216,7 @@ Ensuite, on peut y accèder depuis n'importe ou, par exemple pour gérer l'accè
 > itemsStore est le store dans lequel on va stocker les données que le back end nous fournit, c'est là qu'on déclenchera les requêtes, on pourra aussi faire en sorte que lorsqu'on modifie la BDD, les changements se répercutent instantanément sur l'affichage avec une boucle du style : GET -> response stockée dans le store -> affichage d'items à partir du store -> action de l'utilisateur sur la page pour supprimer un item -> POST -> GET -> modification des données du store -> re-rendu des éléments affichés .
 
 
-# Accèder au store
+### Accèder au store
 
 Il y à plusieurs façon d'accèder au store et de le modifier dans React:
 
@@ -251,7 +250,7 @@ function monComposant({storeCommeProp}) {
 
 ```
 
-# Gérer le rendu des composants selon le store
+### Gérer le rendu des composants selon le store
 
 Syntaxe observer :
 

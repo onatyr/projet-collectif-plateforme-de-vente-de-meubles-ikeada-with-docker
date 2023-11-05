@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types'
 
 export default function ProductCard({ item }) {
+  // au cas ou le lien est invalide
   const picSrc =
     item.picture ||
     "https://www.arqueselectrodiesel.fr/wp-content/uploads/2022/08/photo-non-disponible-1.jpg";
