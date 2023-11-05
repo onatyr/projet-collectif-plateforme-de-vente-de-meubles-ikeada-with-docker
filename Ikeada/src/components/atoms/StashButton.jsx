@@ -1,6 +1,6 @@
 import { XSquare } from "react-bootstrap-icons";
 import { Button } from "react-bootstrap";
-export default function StachButton() {
+export default function StashButton() {
     function stashItem() {
         console.log("stash")
         // trigger UPDATE request for status

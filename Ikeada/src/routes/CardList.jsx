@@ -7,19 +7,22 @@ function CardList() {
   // récupère le chemin URL
   const urlParams = useParams()
   // récupère les items
-  const items = itemsStore.items
 
   // met à jour le store selon la page ou on est (recherche ou accueil) si celle ci à changé
+  const [items, setItems] = useState([])
+
   useEffect(() => {
     if (urlParams.query) {
       // recherche
       itemsStore.searchItems(urlParams.query)
-
+      setItems(itemsStore.items)
     } else {
       // tout
       itemsStore.getItems()
+      setItems(itemsStore.items)
     }
-  }, [urlParams])
+  },[urlParams])
+
 
   const [cards, setCards] = useState([])
 

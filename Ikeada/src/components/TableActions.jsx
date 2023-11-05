@@ -2,16 +2,16 @@ import { PropTypes } from "prop-types";
 
 import DeleteButton from "./atoms/DeleteButton";
 import EditButton from "./atoms/EditButton";
-import StachButton from "./atoms/StachButton";
+import StashButton from "./atoms/StashButton";
 import PublishButton from "./atoms/PublishButton";
 
 // ce composant affiche différents boutons selon le statut et la disponibilité du meuble
 export default function TableActions({ status, available }) {
-  if (status) {
+  if (status && available) {
     return (
       <td direction="horizontal" className="text-center">
         <EditButton />
-        <StachButton />
+        <StashButton />
         <DeleteButton />
       </td>
     );
