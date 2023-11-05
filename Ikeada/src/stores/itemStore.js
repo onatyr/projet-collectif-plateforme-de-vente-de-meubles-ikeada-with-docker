@@ -51,10 +51,12 @@ class itemStore {
         this.#service.addItem(data)
     }
     delItem(id) {
-        // purement "visuel" pour l'instant, il faudra envoyer la requête au serveur et récupérer les données à jour
+        // purement "visuel" pour l'instant
+        // il faudra envoyer la requête au serveur et récupérer les données à jour
         let index = this.items.indexOf(this.items.find(item => { return item.id == id }))
         // supprime du tableau, mais ce qu'on voudra c'est simplement relancer getItem() vu que ça sera supprimé au niveaud de la BDD
         this.items.splice(index, 1)
+        // this.items.splice(index, 1)
     }
 }
 

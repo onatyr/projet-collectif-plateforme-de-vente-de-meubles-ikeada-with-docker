@@ -1,15 +1,20 @@
 import { TrashFill } from "react-bootstrap-icons"
 import { Button } from "react-bootstrap"
 import { itemsStore } from "../../stores/itemStore"
-export default function DeleteButton() {
-    function deleteItem({ id }) {
-        // met à jour le store qui devra lui déclencher la requête post
+import { PropTypes } from "mobx-react"
+export default function DeleteButton({ id }) {
+    function del() {
+        console.log(id)
         itemsStore.delItem(id)
     }
     return (
         <>
-            <Button variant="transparent" onClick={deleteItem}>
+            <Button variant="transparent" onClick={del}>
                 <TrashFill size={25} className="text-danger"></TrashFill>
             </Button>
         </>)
+}
+
+DeleteButton.propTypes = {
+    id: PropTypes.string
 }
