@@ -9,7 +9,7 @@ class InterfaceBackEnd {
 
     // récupère tous les items
     async fetchItems() {
-        return await fetch('/api/items', {
+        return await fetch('/api/ikeada/items', {
             method: 'GET',
         })
             .then(response => response.json())
@@ -22,7 +22,7 @@ class InterfaceBackEnd {
 
     // récupère un item grace à son nom complet, pas terrible pour la recherche mais certainement pour d'autres choses, comme la page produit
     async searchItems(query) {
-        return await fetch(`/api/items/${query}`, {
+        return await fetch(`/api/ikeada/items/${query}`, {
             method: 'GET',
         })
             .then(response => response.json())
@@ -35,7 +35,7 @@ class InterfaceBackEnd {
 
     // recherche par id
     async searchItemById(id) {
-        return await fetch(`/api/items/id/${id}`, {
+        return await fetch(`/api/ikeada/items/id/${id}`, {
             method: 'GET',
         })
             .then(response => response.json())
@@ -48,7 +48,7 @@ class InterfaceBackEnd {
 
     // ajout d'un item dans la BDD
     async addItem(data) {
-        return await fetch(`api/admin/postItem`, {
+        return await fetch(`/api/ikeada/admin/postItem`, {
             method: 'POST',
             headers: {
                 "Authorization": `Bearer ${this.#sessionStore.token}`,
