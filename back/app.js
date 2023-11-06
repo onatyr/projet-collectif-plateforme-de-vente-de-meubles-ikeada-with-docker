@@ -45,10 +45,12 @@ app.use((req, res, next) => {
 //affiche tous les meubles
 
 app.get("/items", async (req, res) => {
-  const { data, error } = await supabase
+  let { data, error } = await supabase
     .from("ITEM")
     .select()
-    .eq("status", true);
+    if(checkAdmin(req) == false){
+      data = data.filter((e) => e.status == true)
+    } 
 
   if (error) {
     res.status(500).json({ error: "Une erreur s'est produite" });
@@ -63,10 +65,14 @@ app.get("/items/:name", async (req, res) => {
   const itemName = req.params.name;
   console.log("Requête avec name:", itemName); // Ajout de ce message de débogage
 
-  const { data, error } = await supabase
+  let { data, error } = await supabase
     .from("ITEM")
     .select()
     .eq("name", itemName);
+
+  if(checkAdmin(req) == false){
+    data = data.filter((e) => e.status == true)
+  }
 
   if (error) {
     console.error(error);
@@ -161,16 +167,16 @@ app.get("/search_bar/sub_categ/:motcle", async (req, res) => {
 
 // Check en premier si jeton JWT valide et si c'est le jeton de l'admin
 app.use("/admin/*", checkAuth, (req, res, next) => {
+  if(checkAdmin(req) == false){
+    return res
+      .status(401)
+      .send("Check your privileges")
+  } 
   next();
 });
 
 //Requête d'ajout d'un item dans le BackOffice
 app.post("/admin/postItem", async (req, res) => {
-  if(checkAdmin(req) == false){
-    return res
-      .status(401)
-      .send("Check your privileges")
-  }  
   const jsonData = req.body;
   
   const { data, error } = await supabaseAd.from("ITEM").insert([jsonData]);
@@ -189,11 +195,6 @@ app.post("/admin/postItem", async (req, res) => {
 
 //Requête d'ajout d'un item dans le BackOffice
 app.post("/admin/postColor", async (req, res) => {
-  if(checkAdmin(req) == false){
-    return res
-      .status(401)
-      .send("Check your privileges")
-  }
   const jsonData = req.body;
 
   const { data, error } = await supabaseAd.from("COLOR").insert([jsonData]);
@@ -211,11 +212,6 @@ app.post("/admin/postColor", async (req, res) => {
 
 //Requête d'ajout de catégories dans le BackOffice
 app.post("/admin/postCateg", async (req, res) => {
-  if(checkAdmin(req) == false){
-    return res
-      .status(401)
-      .send("Check your privileges")
-  }
   const jsonData = req.body;
 
   const { data, error } = await supabaseAd.from("CATEG").insert([jsonData]);
@@ -233,11 +229,6 @@ app.post("/admin/postCateg", async (req, res) => {
 
 //Requête d'ajout d'une sous-catégorie dans le BackOffice
 app.post("/admin/postSubCateg", checkAdmin, async (req, res) => {
-  if(checkAdmin(req) == false){
-    return res
-      .status(401)
-      .send("Check your privileges")
-  }
   const jsonData = req.body;
 
   const { data, error } = await supabaseAd.from("SUB_CATEG").insert([jsonData]);
@@ -279,8 +270,10 @@ function checkAuth(req, res, next) {
 }
 
 function checkAdmin(req) {
-  
   // Verifie si l'user enregeristré dans le jeton JWT correspond a l'Admin
+  if(!req.userData){
+    return false
+  }
   if (req.userData.sub == "2e0ab73d-47b8-4ee2-8f43-e22fe8a63dce") {
     return true;
   } else {
