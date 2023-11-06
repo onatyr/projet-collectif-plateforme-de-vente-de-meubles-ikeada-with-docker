@@ -8,9 +8,13 @@ import dotenv from "dotenv";
 dotenv.config();
 const app = express();
 
-app.use(morgan("combined"));
+// app.use(morgan("combined"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+// app.use((req,res,next) => {
+
+//   console.log(req.body)
+// })
 
 const supabase = createClient(
   process.env.SUPABASE_AUTH_DOMAIN,
@@ -156,17 +160,23 @@ app.get("/search_bar/sub_categ/:motcle", async (req, res) => {
 //---> DEBUT ROOTING BO
 
 // Check en premier si jeton JWT valide et si c'est le jeton de l'admin
-app.use("/admin/*", checkAuth, checkAdmin, (req, res, next) => {
+app.use("/admin/*", checkAuth, (req, res, next) => {
   next();
 });
 
 //Requête d'ajout d'un item dans le BackOffice
-app.post("/admin/postItem", checkAdmin, async (req, res) => {
+app.post("/admin/postItem", async (req, res) => {
+  if(checkAdmin(req) == false){
+    return res
+      .status(401)
+      .send("Check your privileges")
+  }  
   const jsonData = req.body;
-
+  
   const { data, error } = await supabaseAd.from("ITEM").insert([jsonData]);
 
   if (error) {
+    // console.log(req)
     return res
       .status(500)
       .send("Erreur lors de l'enregistrement des données dans Supabase.");
@@ -178,7 +188,12 @@ app.post("/admin/postItem", checkAdmin, async (req, res) => {
 });
 
 //Requête d'ajout d'un item dans le BackOffice
-app.post("/admin/postColor", checkAdmin, async (req, res) => {
+app.post("/admin/postColor", async (req, res) => {
+  if(checkAdmin(req) == false){
+    return res
+      .status(401)
+      .send("Check your privileges")
+  }
   const jsonData = req.body;
 
   const { data, error } = await supabaseAd.from("COLOR").insert([jsonData]);
@@ -195,7 +210,12 @@ app.post("/admin/postColor", checkAdmin, async (req, res) => {
 });
 
 //Requête d'ajout de catégories dans le BackOffice
-app.post("/admin/postCateg", checkAdmin, async (req, res) => {
+app.post("/admin/postCateg", async (req, res) => {
+  if(checkAdmin(req) == false){
+    return res
+      .status(401)
+      .send("Check your privileges")
+  }
   const jsonData = req.body;
 
   const { data, error } = await supabaseAd.from("CATEG").insert([jsonData]);
@@ -213,6 +233,11 @@ app.post("/admin/postCateg", checkAdmin, async (req, res) => {
 
 //Requête d'ajout d'une sous-catégorie dans le BackOffice
 app.post("/admin/postSubCateg", checkAdmin, async (req, res) => {
+  if(checkAdmin(req) == false){
+    return res
+      .status(401)
+      .send("Check your privileges")
+  }
   const jsonData = req.body;
 
   const { data, error } = await supabaseAd.from("SUB_CATEG").insert([jsonData]);
@@ -253,12 +278,13 @@ function checkAuth(req, res, next) {
   }
 }
 
-function checkAdmin(req, res, next) {
+function checkAdmin(req) {
+  
   // Verifie si l'user enregeristré dans le jeton JWT correspond a l'Admin
   if (req.userData.sub == "2e0ab73d-47b8-4ee2-8f43-e22fe8a63dce") {
-    next();
+    return true;
   } else {
-    res.status(401);
+    return false;
   }
 }
 
