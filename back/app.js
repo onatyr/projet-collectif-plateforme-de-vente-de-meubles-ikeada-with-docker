@@ -67,18 +67,18 @@ app.get("/items/:name", async (req, res) => {
   let data = [];
   let error = "";
 
-  let { data: tempData, error: tempError } = await supabase
+  let { data: nameData, error: nameError } = await supabase
     .from("ITEM")
     .select()
     .ilikeAnyOf("name", searchRequest.map((e) => `%${e}%`))
 
-  data = data.concat(tempData);
+  data = data.concat(nameData);
 
-  let { data: firstData, error: firstErr } = await supabase
+  let { data: descData, error: descErr } = await supabase
     .from("ITEM")
     .select()
     .textSearch("desc", searchRequest.map((e) => `'${e}'`).join(" | "));
-  data = data.concat(firstData);
+  data = data.concat(descData);
 
   if (checkAdmin(req) == false) {
     data = data.filter((e) => e.status == true)
