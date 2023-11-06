@@ -170,6 +170,9 @@ app.get("/search_bar/sub_categ/:motcle", async (req, res) => {
 // Fin GET Public catégories
 //---> FIN ROOTING PUBLIC GET
 
+
+
+
 //---> DEBUT ROOTING BO
 
 // Check en premier si jeton JWT valide et si c'est le jeton de l'admin
@@ -182,8 +185,9 @@ app.use("/admin/*", checkAuth, (req, res, next) => {
   next();
 });
 
-//Requête d'ajout d'un item dans le BackOffice
-app.post("/admin/postItem", async (req, res) => {
+
+// CREATION
+app.post("/admin/postItem", checkAdmin, async (req, res) => {
   const jsonData = req.body;
   
   const { data, error } = await supabaseAd.from("ITEM").insert([jsonData]);
@@ -199,7 +203,9 @@ app.post("/admin/postItem", async (req, res) => {
     "Données enregistrées avec succès dans Supabase. Nouveau meuble ajouté dans le BackOffice."
   );
 });
-//Requête de modification d'un item dans le BackOffice
+
+
+// MODIFICATION
 app.post("/admin/editItem", checkAdmin, async (req, res) => {
   const jsonData = req.body;
   if (jsonData.archived) {
@@ -212,7 +218,7 @@ app.post("/admin/editItem", checkAdmin, async (req, res) => {
 
     if (error) {
       return res
-        .status(404)
+        .status(403)
         .send(`Echec de la modification de l'item (nom :'${jsonData.name}', prix :'${jsonData.price}'), Supabase_error: ${error.message}
       `)
     }
@@ -224,7 +230,9 @@ app.post("/admin/editItem", checkAdmin, async (req, res) => {
       )
   }
 })
-//Requête d'archivage d'un item dans le BackOffice
+
+
+// ARCHIVAGE
 app.post("/admin/archiveItem", checkAdmin, async (req, res) => {
   const jsonData = req.body;
 
@@ -252,7 +260,10 @@ app.post("/admin/archiveItem", checkAdmin, async (req, res) => {
       )
   }
 })
-//Requête de suppression d'un item dans le BackOffice
+
+
+// SUPPRESSION (Work In Progress :update or delete on table "ITEM" violates foreign key constraint
+//"ITEM_COLOR_RELA_item_id_fkey" on table "ITEM_COLOR_RELA")
 app.post("/admin/deleteItem", checkAdmin, async (req, res) => {
   const jsonData = req.body;
 
@@ -279,8 +290,9 @@ app.post("/admin/deleteItem", checkAdmin, async (req, res) => {
   }
 })
 
-//Requête d'ajout d'un item dans le BackOffice
-app.post("/admin/postColor", async (req, res) => {
+
+// CREATE COLOR
+app.post("/admin/postColor", checkAdmin, async (req, res) => {
   const jsonData = req.body;
 
   const { data, error } = await supabaseAd.from("COLOR").insert([jsonData]);
@@ -296,8 +308,9 @@ app.post("/admin/postColor", async (req, res) => {
   );
 });
 
-//Requête d'ajout de catégories dans le BackOffice
-app.post("/admin/postCateg", async (req, res) => {
+
+// CREATE CAT
+app.post("/admin/postCateg", checkAdmin, async (req, res) => {
   const jsonData = req.body;
 
   const { data, error } = await supabaseAd.from("CATEG").insert([jsonData]);
@@ -313,7 +326,8 @@ app.post("/admin/postCateg", async (req, res) => {
   );
 });
 
-//Requête d'ajout d'une sous-catégorie dans le BackOffice
+
+// CREATE SUB_CAT
 app.post("/admin/postSubCateg", checkAdmin, async (req, res) => {
   const jsonData = req.body;
 
@@ -331,6 +345,8 @@ app.post("/admin/postSubCateg", checkAdmin, async (req, res) => {
 });
 
 //---> FIN ROOTING BO
+
+
 
 //---> Fonctions Check pour les requetes BO
 
