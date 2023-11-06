@@ -3,7 +3,7 @@ import express from "express";
 import morgan from "morgan";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import jwt from 'jsonwebtoken';
+
 
 dotenv.config();
 const app = express();
@@ -37,6 +37,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api", route)
+app.use("/ikeada", route)
 
 export default app;

@@ -1,18 +1,19 @@
-//---> DEBUT ROOTING BO
+import { supabase } from "./app.js"
+import { supabaseAd } from "./app.js"
+import jwt from 'jsonwebtoken';
 
 // Check en premier si jeton JWT valide et si c'est le jeton de l'admin
 export const checkAuthAdmin = (req, res, next) => {
-  if (checkAdmin(req) == false) {
-    return res.status(401).send("Check your privileges");
-  }
+
   if (req.headers.authorization) {
     const token = req.headers.authorization.split(" ")[1];
     try {
       // Verifie le token avec la clef secrète
       const decoded = jwt.verify(token, process.env.SUPABASE_TOKEN);
       req.userData = decoded;
-      // S'il est possible de le decoder alors on passe au prochains middleware
-      next();
+      if (checkAdmin(req) == false) {
+        return res.status(401).send("Check your privileges");
+      }
     } catch (err) {
       return res.status(401).json({
         message: "Auth failed",
