@@ -87,13 +87,20 @@ app.get("/items/:name", async (req, res) => {
 app.get("/items/id/:id", async (req, res) => {
   const itemId = req.params.id;
 
-  const { data, error } = await supabase.from("ITEM").select().eq("id", itemId);
+  let { data, error } = await supabase.from("ITEM").select().eq("id", itemId);
+
+  // if(checkAdmin(req) == false){
+  //   data = data.filter((e) => e.status == true)
+  // } 
 
   if (error) {
     console.error(error);
 
     res.status(500).json({ error: "Une erreur s'est produite" });
-  } else {
+  } else if (data.filter((e) => e.status == false).length > 0 && checkAdmin(req) == false){
+    res.status(561).json("Check your privileges")
+  }
+  else {
     res.status(200).json(data);
   }
 });
