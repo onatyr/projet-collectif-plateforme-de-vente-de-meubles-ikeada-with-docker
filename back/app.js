@@ -87,11 +87,13 @@ app.get("/items/:name", async (req, res) => {
 app.get("/items/id/:id", async (req, res) => {
   const itemId = req.params.id;
 
-  let { data, error } = await supabase.from("ITEM").select().eq("id", itemId);
-
-  // if(checkAdmin(req) == false){
-  //   data = data.filter((e) => e.status == true)
-  // } 
+  const { data, error } = await supabase
+  .from("ITEM")
+  .select(`
+    *,
+    colors:COLOR(*);
+  `)
+  .eq("id", itemId);
 
   if (error) {
     console.error(error);
@@ -168,6 +170,8 @@ app.get("/search_bar/sub_categ/:motcle", async (req, res) => {
   }
 });
 // Fin GET Public catégories
+
+
 //---> FIN ROOTING PUBLIC GET
 
 
@@ -295,7 +299,7 @@ app.post("/admin/deleteItem", checkAdmin, async (req, res) => {
 app.post("/admin/postColor", checkAdmin, async (req, res) => {
   const jsonData = req.body;
 
-  const { data, error } = await supabaseAd.from("COLOR").insert([jsonData]);
+  const { data, error } = await supabase.from("COLOR").insert([jsonData]);
 
   if (error) {
     return res
@@ -313,7 +317,7 @@ app.post("/admin/postColor", checkAdmin, async (req, res) => {
 app.post("/admin/postCateg", checkAdmin, async (req, res) => {
   const jsonData = req.body;
 
-  const { data, error } = await supabaseAd.from("CATEG").insert([jsonData]);
+  const { data, error } = await supabase.from("CATEG").insert([jsonData]);
 
   if (error) {
     return res
@@ -331,7 +335,7 @@ app.post("/admin/postCateg", checkAdmin, async (req, res) => {
 app.post("/admin/postSubCateg", checkAdmin, async (req, res) => {
   const jsonData = req.body;
 
-  const { data, error } = await supabaseAd.from("SUB_CATEG").insert([jsonData]);
+  const { data, error } = await supabase.from("SUB_CATEG").insert([jsonData]);
 
   if (error) {
     return res

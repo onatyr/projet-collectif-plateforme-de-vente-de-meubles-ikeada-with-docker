@@ -6,6 +6,8 @@ import Login from './routes/Login'
 import ProtectedRoute from './auth/ProtectedRoute'
 import { Routes, Route } from "react-router-dom";
 
+import './custom.css'
+
 export default function App() {
   return (
     <Routes>
