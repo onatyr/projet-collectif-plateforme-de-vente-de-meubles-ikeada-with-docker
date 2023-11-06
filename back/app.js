@@ -62,13 +62,24 @@ app.get("/items", async (req, res) => {
 //affiche les meubles selon le nom du produit
 
 app.get("/items/:name", async (req, res) => {
-  const itemName = req.params.name;
-  console.log("Requête avec name:", itemName); // Ajout de ce message de débogage
+  
+  let searchRequest = req.params.name.split(" ").map((e) => `'${e}'`).join(" | ");
+  console.log("Requête avec name:", searchRequest); // Ajout de ce message de débogage
 
-  let { data, error } = await supabase
+  let { data: firstData, error: firstErr } = await supabase
     .from("ITEM")
     .select()
-    .ilike("name", `%${itemName}%`);
+    .textSearch("desc", searchRequest)
+
+
+  let { data, error} = await supabase
+    .from("ITEM")
+    .select()
+    .ilike("name", `%${req.params.name}%`)
+  
+  data = data.concat(firstData)
+  console.log(data)
+
 
   if(checkAdmin(req) == false){
     data = data.filter((e) => e.status == true)
