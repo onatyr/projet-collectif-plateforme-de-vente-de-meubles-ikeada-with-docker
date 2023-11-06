@@ -1,6 +1,6 @@
 // Importez les modules 
-const http = require('http');
-const app = require('./app.js');
+import http from 'http';
+import app from './app.js';
 
 // Définir les ports
 const port = process.env.PORT || 3000;

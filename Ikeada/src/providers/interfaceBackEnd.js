@@ -48,7 +48,7 @@ class InterfaceBackEnd {
 
     // ajout d'un item dans la BDD
     async addItem(data) {
-        return await fetch(`api/admin/postItem`, {
+        return await fetch(`/api/admin/postItem`, {
             method: 'POST',
             headers: {
                 "Authorization": `Bearer ${this.#sessionStore.token}`,

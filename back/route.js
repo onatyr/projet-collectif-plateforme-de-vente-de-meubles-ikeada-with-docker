@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const getController = require('./getController.js');
-const postController = require('./postController.js');
+import * as getController from './getController.js';
+import * as postController from './postController.js';
 
 router.get("/items", getController.getAllItems)
 router.get("/items/:name", getController.searchByNameDesc)
@@ -20,4 +20,4 @@ router.post("/admin/postColor", postController.postColor)
 router.post("/admin/postCateg", postController.postCategory)
 router.post("/admin/postSubCateg", postController.postSubcategory)
 
-module.exports = router
+export default router

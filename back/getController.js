@@ -1,6 +1,9 @@
+import { supabase } from "./app.js"
+import { checkAdmin } from "./postController.js";
+
 //affiche tous les meubles
 
-exports.getAllItems =  async (req, res) => {
+export const getAllItems =  async (req, res) => {
   let { data, error } = await supabase
     .from("ITEM")
     .select()
@@ -17,7 +20,7 @@ exports.getAllItems =  async (req, res) => {
 
 //affiche les meubles selon le nom du produit ou sa description
 
-exports.searchByNameDesc = async (req, res) => {
+export const searchByNameDesc = async (req, res) => {
 
   let searchRequest = req.params.name.split(" ");
   console.log("Requête avec name:", searchRequest);
@@ -52,7 +55,7 @@ exports.searchByNameDesc = async (req, res) => {
 
 //affiche les meubles selon l'id du produit
 
-exports.getItemById = async (req, res) => {
+export const getItemById = async (req, res) => {
   const itemId = req.params.id;
 
   const { data, error } = await supabase
@@ -78,7 +81,7 @@ exports.getItemById = async (req, res) => {
 };
 
 // Affiche toutes les catégories de mobilier
-exports.getAllCategories = async (req, res) => {
+export const getAllCategories = async (req, res) => {
   const { data, error } = await supabase.from("CATEG").select();
   // .eq('name', 'Cuisine') // Permet d'affiner l'affichage par catégorie.
   if (error) {
@@ -89,7 +92,7 @@ exports.getAllCategories = async (req, res) => {
 };
 
 // Affiche toutes les sous-catégories de mobilier
-exports.getAllSubcategories = async (req, res) => {
+export const getAllSubcategories = async (req, res) => {
   const { data, error } = await supabase.from("SUB_CATEG").select();
   // .eq('name', 'Canapés') // Permet d'affiner l'affichage par sous catégorie.
   if (error) {
@@ -100,7 +103,7 @@ exports.getAllSubcategories = async (req, res) => {
 };
 
 //Recherche une catégorie
-exports.searchCategory = async (req, res) => {
+export const searchCategory = async (req, res) => {
   const motCle = req.params.motcle;
   console.log(motCle);
   if (!motCle) {
@@ -118,7 +121,7 @@ exports.searchCategory = async (req, res) => {
 };
 
 // Recherche une sous catégorie
-exports.searchSubcategory = async (req, res) => {
+export const searchSubcategory = async (req, res) => {
   const motCle = req.params.motcle;
   console.log(motCle);
   if (!motCle) {

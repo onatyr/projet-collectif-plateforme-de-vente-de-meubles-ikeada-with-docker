@@ -1,7 +1,7 @@
 //---> DEBUT ROOTING BO
 
 // Check en premier si jeton JWT valide et si c'est le jeton de l'admin
-exports.checkAuthAdmin = (req, res, next) => {
+export const checkAuthAdmin = (req, res, next) => {
   if (checkAdmin(req) == false) {
     return res.status(401).send("Check your privileges");
   }
@@ -26,7 +26,7 @@ exports.checkAuthAdmin = (req, res, next) => {
 };
 
 // CREATION
-exports.postItem = async (req, res) => {
+export const postItem = async (req, res) => {
   const jsonData = req.body;
   if (jsonData.archived) {
     return res
@@ -51,7 +51,7 @@ exports.postItem = async (req, res) => {
 };
 
 // MODIFICATION
-exports.editItem = async (req, res) => {
+export const editItem = async (req, res) => {
   const jsonData = req.body;
   if (jsonData.archived) {
     return res
@@ -80,7 +80,7 @@ exports.editItem = async (req, res) => {
 };
 
 // ARCHIVAGE
-exports.archiveItem = async (req, res) => {
+export const archiveItem = async (req, res) => {
   const jsonData = req.body;
 
   const { data, error } = await supabaseAd
@@ -107,7 +107,7 @@ exports.archiveItem = async (req, res) => {
 
 // SUPPRESSION (Work In Progress :update or delete on table "ITEM" violates foreign key constraint
 //"ITEM_COLOR_RELA_item_id_fkey" on table "ITEM_COLOR_RELA")
-exports.deleteItem = async (req, res) => {
+export const deleteItem = async (req, res) => {
   const jsonData = req.body;
 
   if (!jsonData.archived) {
@@ -135,7 +135,7 @@ exports.deleteItem = async (req, res) => {
 };
 
 // CREATE COLOR
-exports.postColor = async (req, res) => {
+export const postColor = async (req, res) => {
   const jsonData = req.body;
 
   const { data, error } = await supabase.from("COLOR").insert([jsonData]);
@@ -152,7 +152,7 @@ exports.postColor = async (req, res) => {
 };
 
 // CREATE CAT
-exports.postCategory = async (req, res) => {
+export const postCategory = async (req, res) => {
   const jsonData = req.body;
 
   const { data, error } = await supabase.from("CATEG").insert([jsonData]);
@@ -169,7 +169,7 @@ exports.postCategory = async (req, res) => {
 };
 
 // CREATE SUB_CAT
-exports.postSubcategory = async (req, res) => {
+export const postSubcategory = async (req, res) => {
   const jsonData = req.body;
 
   const { data, error } = await supabase.from("SUB_CATEG").insert([jsonData]);
@@ -185,7 +185,7 @@ exports.postSubcategory = async (req, res) => {
   );
 };
 
-function checkAdmin(req) {
+export function checkAdmin(req) {
   // Verifie si l'user enregeristré dans le jeton JWT correspond a l'Admin
   if (!req.userData) {
     return false;

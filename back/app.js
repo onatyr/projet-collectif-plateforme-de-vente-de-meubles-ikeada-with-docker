@@ -1,24 +1,24 @@
-const { createClient } = require("@supabase/supabase-js");
-const express = require("express");
-const morgan = require("morgan");
-const bodyParser = require("body-parser");
-const dotenv = require("dotenv");
-const jwt = require('jsonwebtoken');
+import { createClient } from "@supabase/supabase-js";
+import express from "express";
+import morgan from "morgan";
+import bodyParser from "body-parser";
+import dotenv from "dotenv";
+import jwt from 'jsonwebtoken';
 
 dotenv.config();
 const app = express();
-const route = require('./route')
+import route from './route.js';
 
 app.use(morgan("combined"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const supabase = createClient(
+export const supabase = createClient(
   process.env.SUPABASE_AUTH_DOMAIN,
   process.env.SUPABASE_PU_API_KEY
 );
 
-const supabaseAd = createClient(
+export const supabaseAd = createClient(
   process.env.SUPABASE_AUTH_DOMAIN,
   process.env.SUPABASE_AD_API_KEY
 );
@@ -37,6 +37,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("./api", route)
+app.use("/api", route)
 
 export default app;
