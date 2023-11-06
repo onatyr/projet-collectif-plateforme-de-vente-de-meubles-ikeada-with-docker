@@ -45,9 +45,11 @@ app.use((req, res, next) => {
 //affiche tous les meubles
 
 app.get("/items", async (req, res) => {
-  let { data, error } = await supabase.from("ITEM").select();
+  let { data, error } = await supabase
+    .from("ITEM")
+    .select()
   if (checkAdmin(req) == false) {
-    data = data.filter((e) => e.status == true);
+    data = data.filter((e) => e.status == true)
   }
 
   if (error) {
@@ -81,6 +83,7 @@ app.get("/items/:name", async (req, res) => {
   data = data.concat(descData);
 
   if (checkAdmin(req) == false) {
+  if (checkAdmin(req) == false) {
     data = data.filter((e) => e.status == true)
   }
 
@@ -97,11 +100,13 @@ app.get("/items/:name", async (req, res) => {
 app.get("/items/id/:id", async (req, res) => {
   const itemId = req.params.id;
 
-  let { data, error } = await supabase.from("ITEM").select().eq("id", itemId);
-
-  // if(checkAdmin(req) == false){
-  //   data = data.filter((e) => e.status == true)
-  // }
+  const { data, error } = await supabase
+  .from("ITEM")
+  .select(`
+    *,
+    colors:COLOR(*);
+  `)
+  .eq("id", itemId);
 
   if (error) {
     console.error(error);
@@ -180,6 +185,8 @@ app.get("/search_bar/sub_categ/:motcle", async (req, res) => {
   }
 });
 // Fin GET Public catégories
+
+
 //---> FIN ROOTING PUBLIC GET
 
 
@@ -197,34 +204,39 @@ app.use("/admin/*", checkAuth, (req, res, next) => {
 
 
 // CREATION
-app.post("/admin/postItem", checkAdmin, async (req, res) => {
-  const jsonData = req.body;
-
-  const { data, error } = await supabaseAd.from("ITEM").insert([jsonData]);
-
-  if (error) {
-    // console.log(req)
-    return res
-      .status(500)
-      .send("Erreur lors de l'enregistrement des données dans Supabase.");
-  }
-
-  return res.send(
-    "Données enregistrées avec succès dans Supabase. Nouveau meuble ajouté dans le BackOffice."
-  );
-});
-
-
-// MODIFICATION
-app.post("/admin/editItem", checkAdmin, async (req, res) => {
+app.post("/admin/postItem", async (req, res) => {
   const jsonData = req.body;
   if (jsonData.archived) {
     return res
       .status(403)
-      .send("Interdit : les items ne peuvent pas être modifiés et archivés en même temps")
+      .send("Interdit : les items ne peuvent pas être créés et archivés en même temps")
   } else {
+    const { data, error } = await supabaseAd.from("ITEM").insert([jsonData]);
 
-    const { data, error } = await supabaseAd.from("ITEM").update([jsonData]).eq('id', jsonData.id);
+    if (error) {
+      // console.log(req)
+      return res
+        .status(500)
+        .send("Erreur lors de l'enregistrement des données dans Supabase.");
+    }
+
+    return res.send(
+      "Données enregistrées avec succès dans Supabase. Nouveau meuble ajouté dans le BackOffice."
+    );
+  }
+});
+
+
+// MODIFICATION
+app.post("/admin/editItem", async (req, res) => {
+  const jsonData = req.body;
+   if (jsonData.archived) {
+     return res
+       .status(403)
+       .send("Interdit : les items ne peuvent pas être modifiés et archivés en même temps")
+   } else {
+
+    const { data, error } = await supabaseAd.from("ITEM").update([jsonData]).eq('id', jsonData.id)
 
     if (error) {
       return res
@@ -243,7 +255,7 @@ app.post("/admin/editItem", checkAdmin, async (req, res) => {
 
 
 // ARCHIVAGE
-app.post("/admin/archiveItem", checkAdmin, async (req, res) => {
+app.post("/admin/archiveItem", async (req, res) => {
   const jsonData = req.body;
 
   const { data, error } = await supabaseAd.from("ITEM").update([jsonData]).eq('id', jsonData.id);
@@ -274,7 +286,7 @@ app.post("/admin/archiveItem", checkAdmin, async (req, res) => {
 
 // SUPPRESSION (Work In Progress :update or delete on table "ITEM" violates foreign key constraint
 //"ITEM_COLOR_RELA_item_id_fkey" on table "ITEM_COLOR_RELA")
-app.post("/admin/deleteItem", checkAdmin, async (req, res) => {
+app.post("/admin/deleteItem", async (req, res) => {
   const jsonData = req.body;
 
   if (!jsonData.archived) {
@@ -302,10 +314,10 @@ app.post("/admin/deleteItem", checkAdmin, async (req, res) => {
 
 
 // CREATE COLOR
-app.post("/admin/postColor", checkAdmin, async (req, res) => {
+app.post("/admin/postColor", async (req, res) => {
   const jsonData = req.body;
 
-  const { data, error } = await supabaseAd.from("COLOR").insert([jsonData]);
+  const { data, error } = await supabase.from("COLOR").insert([jsonData]);
 
   if (error) {
     return res
@@ -320,10 +332,10 @@ app.post("/admin/postColor", checkAdmin, async (req, res) => {
 
 
 // CREATE CAT
-app.post("/admin/postCateg", checkAdmin, async (req, res) => {
+app.post("/admin/postCateg", async (req, res) => {
   const jsonData = req.body;
 
-  const { data, error } = await supabaseAd.from("CATEG").insert([jsonData]);
+  const { data, error } = await supabase.from("CATEG").insert([jsonData]);
 
   if (error) {
     return res
@@ -338,10 +350,10 @@ app.post("/admin/postCateg", checkAdmin, async (req, res) => {
 
 
 // CREATE SUB_CAT
-app.post("/admin/postSubCateg", checkAdmin, async (req, res) => {
+app.post("/admin/postSubCateg", async (req, res) => {
   const jsonData = req.body;
 
-  const { data, error } = await supabaseAd.from("SUB_CATEG").insert([jsonData]);
+  const { data, error } = await supabase.from("SUB_CATEG").insert([jsonData]);
 
   if (error) {
     return res
@@ -385,7 +397,7 @@ function checkAuth(req, res, next) {
 function checkAdmin(req) {
   // Verifie si l'user enregeristré dans le jeton JWT correspond a l'Admin
   if (!req.userData) {
-    return false;
+    return false
   }
   if (req.userData.sub == "2e0ab73d-47b8-4ee2-8f43-e22fe8a63dce") {
     return true;
