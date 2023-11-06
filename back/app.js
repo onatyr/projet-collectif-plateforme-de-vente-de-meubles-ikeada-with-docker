@@ -191,7 +191,7 @@ app.use("/admin/*", checkAuth, (req, res, next) => {
 
 
 // CREATION
-app.post("/admin/postItem", checkAdmin, async (req, res) => {
+app.post("/admin/postItem", async (req, res) => {
   const jsonData = req.body;
   if (jsonData.archived) {
     return res
@@ -215,13 +215,13 @@ app.post("/admin/postItem", checkAdmin, async (req, res) => {
 
 
 // MODIFICATION
-app.post("/admin/editItem", checkAdmin, async (req, res) => {
+app.post("/admin/editItem", async (req, res) => {
   const jsonData = req.body;
-  if (jsonData.archived) {
-    return res
-      .status(403)
-      .send("Interdit : les items ne peuvent pas être modifiés et archivés en même temps")
-  } else {
+   if (jsonData.archived) {
+     return res
+       .status(403)
+       .send("Interdit : les items ne peuvent pas être modifiés et archivés en même temps")
+   } else {
 
     const { data, error } = await supabaseAd.from("ITEM").update([jsonData]).eq('id', jsonData.id)
 
@@ -242,7 +242,7 @@ app.post("/admin/editItem", checkAdmin, async (req, res) => {
 
 
 // ARCHIVAGE
-app.post("/admin/archiveItem", checkAdmin, async (req, res) => {
+app.post("/admin/archiveItem", async (req, res) => {
   const jsonData = req.body;
 
   const { data, error } = await supabaseAd.from("ITEM").update([jsonData]).eq('id', jsonData.id);
@@ -273,7 +273,7 @@ app.post("/admin/archiveItem", checkAdmin, async (req, res) => {
 
 // SUPPRESSION (Work In Progress :update or delete on table "ITEM" violates foreign key constraint
 //"ITEM_COLOR_RELA_item_id_fkey" on table "ITEM_COLOR_RELA")
-app.post("/admin/deleteItem", checkAdmin, async (req, res) => {
+app.post("/admin/deleteItem", async (req, res) => {
   const jsonData = req.body;
 
   if (!jsonData.archived) {
@@ -301,7 +301,7 @@ app.post("/admin/deleteItem", checkAdmin, async (req, res) => {
 
 
 // CREATE COLOR
-app.post("/admin/postColor", checkAdmin, async (req, res) => {
+app.post("/admin/postColor", async (req, res) => {
   const jsonData = req.body;
 
   const { data, error } = await supabase.from("COLOR").insert([jsonData]);
@@ -319,7 +319,7 @@ app.post("/admin/postColor", checkAdmin, async (req, res) => {
 
 
 // CREATE CAT
-app.post("/admin/postCateg", checkAdmin, async (req, res) => {
+app.post("/admin/postCateg", async (req, res) => {
   const jsonData = req.body;
 
   const { data, error } = await supabase.from("CATEG").insert([jsonData]);
@@ -337,7 +337,7 @@ app.post("/admin/postCateg", checkAdmin, async (req, res) => {
 
 
 // CREATE SUB_CAT
-app.post("/admin/postSubCateg", checkAdmin, async (req, res) => {
+app.post("/admin/postSubCateg", async (req, res) => {
   const jsonData = req.body;
 
   const { data, error } = await supabase.from("SUB_CATEG").insert([jsonData]);
