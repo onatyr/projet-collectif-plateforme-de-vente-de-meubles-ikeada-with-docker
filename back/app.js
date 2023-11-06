@@ -45,12 +45,10 @@ app.use((req, res, next) => {
 //affiche tous les meubles
 
 app.get("/items", async (req, res) => {
-  let { data, error } = await supabase
-    .from("ITEM")
-    .select()
-    if(checkAdmin(req) == false){
-      data = data.filter((e) => e.status == true)
-    } 
+  let { data, error } = await supabase.from("ITEM").select();
+  if (checkAdmin(req) == false) {
+    data = data.filter((e) => e.status == true);
+  }
 
   if (error) {
     res.status(500).json({ error: "Une erreur s'est produite" });
@@ -62,15 +60,27 @@ app.get("/items", async (req, res) => {
 //affiche les meubles selon le nom du produit
 
 app.get("/items/:name", async (req, res) => {
-  const itemName = req.params.name;
-  console.log("Requête avec name:", itemName); // Ajout de ce message de débogage
 
-  let { data, error } = await supabase
+  let searchRequest = req.params.name.split(" ");
+  console.log("Requête avec name:", searchRequest); // Ajout de ce message de débogage
+
+  let data = [];
+  let error = "";
+
+  let { data: tempData, error: tempError } = await supabase
     .from("ITEM")
     .select()
-    .ilike("name", `%${itemName}%`);
+    .ilikeAnyOf("name", searchRequest.map((e) => `%${e}%`))
 
-  if(checkAdmin(req) == false){
+  data = data.concat(tempData);
+
+  let { data: firstData, error: firstErr } = await supabase
+    .from("ITEM")
+    .select()
+    .textSearch("desc", searchRequest.map((e) => `'${e}'`).join(" | "));
+  data = data.concat(firstData);
+
+  if (checkAdmin(req) == false) {
     data = data.filter((e) => e.status == true)
   }
 
@@ -91,16 +101,18 @@ app.get("/items/id/:id", async (req, res) => {
 
   // if(checkAdmin(req) == false){
   //   data = data.filter((e) => e.status == true)
-  // } 
+  // }
 
   if (error) {
     console.error(error);
 
     res.status(500).json({ error: "Une erreur s'est produite" });
-  } else if (data.filter((e) => e.status == false).length > 0 && checkAdmin(req) == false){
-    res.status(561).json("Check your privileges")
-  }
-  else {
+  } else if (
+    data.filter((e) => e.status == false).length > 0 &&
+    checkAdmin(req) == false
+  ) {
+    res.status(561).json("Check your privileges");
+  } else {
     res.status(200).json(data);
   }
 });
@@ -177,11 +189,9 @@ app.get("/search_bar/sub_categ/:motcle", async (req, res) => {
 
 // Check en premier si jeton JWT valide et si c'est le jeton de l'admin
 app.use("/admin/*", checkAuth, (req, res, next) => {
-  if(checkAdmin(req) == false){
-    return res
-      .status(401)
-      .send("Check your privileges")
-  } 
+  if (checkAdmin(req) == false) {
+    return res.status(401).send("Check your privileges");
+  }
   next();
 });
 
@@ -189,7 +199,7 @@ app.use("/admin/*", checkAuth, (req, res, next) => {
 // CREATION
 app.post("/admin/postItem", checkAdmin, async (req, res) => {
   const jsonData = req.body;
-  
+
   const { data, error } = await supabaseAd.from("ITEM").insert([jsonData]);
 
   if (error) {
@@ -374,8 +384,8 @@ function checkAuth(req, res, next) {
 
 function checkAdmin(req) {
   // Verifie si l'user enregeristré dans le jeton JWT correspond a l'Admin
-  if(!req.userData){
-    return false
+  if (!req.userData) {
+    return false;
   }
   if (req.userData.sub == "2e0ab73d-47b8-4ee2-8f43-e22fe8a63dce") {
     return true;
