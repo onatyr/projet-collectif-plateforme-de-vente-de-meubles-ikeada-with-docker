@@ -19,6 +19,8 @@ Le backend dépend des packages npm suivants :
 - **`@supabase/supabase-js`**: Une bibliothèque cliente JavaScript pour Supabase.
 - **`body-parser`**: Middleware pour gérer les requêtes HTTP POST.
 - **`morgan`**: Middleware d'enregistrement des requêtes HTTP.
+- **`jsonwebtoken`**: Bibliothèque pour la gestion des JSON Web Tokens.
+- **`dotenv`**: Charge les variables d'environnement à partir d'un fichier .env.
 
 Ces dépendances sont spécifiées dans le fichier `package.json`.
 
@@ -37,19 +39,20 @@ npm install
 Pour acceder aux differentes dépendances il faut les importer dans le app.js :
 ```javascript
 import express from 'express';
-import {createClient} from '@supabase/supabase-js'
-import morgan from 'morgan'
-import bodyParser from "body-parser";
+import { createClient } from '@supabase/supabase-js';
+import morgan from 'morgan';
+import bodyParser from 'body-parser';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 ```
 
 Et ensuite définir les constantes pour simplifier leurs utilisations : 
 ```javascript
 const app = express();
-
 app.use(morgan('combined'));
-
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+dotenv.config();
 ```
 
 ### Clef API Supabase 
@@ -57,10 +60,15 @@ app.use(bodyParser.json());
 Pour interagir avec Supabase, vous devez fournir votre clé API Supabase. Remplacez la valeur fictive dans app.js par votre clé API réelle :
 
 ```javascript
-const supabase = createClient({
-  apiKey: 'VOTRE_CLÉ_API_SUPABASE',
-  project: 'VOTRE_PROJET_SUPABASE',
-});
+const supabase = createClient(
+  process.env.SUPABASE_AUTH_DOMAIN,
+  process.env.SUPABASE_PU_API_KEY
+);
+
+const supabaseAd = createClient(
+  process.env.SUPABASE_AUTH_DOMAIN,
+  process.env.SUPABASE_AD_API_KEY
+);
 ```
 ### Configuration du Port
 
@@ -82,8 +90,23 @@ Le serveur démarrera, et vous pourrez accéder à l'API à l'adresse http://loc
 
 ## Points d'accès API
 
-  - POST /api/stuff: Créer un objet.
-  - GET /api/stuff: Récupérer une liste d'objets.
+  - #### Public GET Endpoints:
+
+    - GET /items: Récupère tous les meubles.
+    - GET /items/:name: Récupère les meubles selon le nom du produit.
+    - GET /items/id/:id: Récupère les meubles selon l'ID du produit.
+    - GET /category: Récupère toutes les catégories de mobilier.
+    - GET /sub_category: Récupère toutes les sous-catégories de mobilier.
+    - GET /search_bar/category/:motcle: Recherche par mot-clé des catégories.
+    - GET /search_bar/sub_categ/:motcle: Recherche par mot-clé des sous-catégories.
+
+  - #### Backend Office (BO) Endpoints:
+
+    - POST /admin/postItem: Ajoute un meuble dans le BackOffice.
+    - POST /admin/postColor: Ajoute une couleur dans le BackOffice.
+    - POST /admin/postCateg: Ajoute une catégorie dans le BackOffice.
+    - POST /admin/postSubCateg: Ajoute une sous-catégorie dans le BackOffice.
+  
 Exemple :
 ```javascript
 app.get('/api/stuff', async (req, res) => {
@@ -107,6 +130,14 @@ app.post('/api/stuff', async (req, res) => {
     res.send("created!!");
 });
 ```
+
+### Fonctions de Vérification des Requêtes BO
+
+Deux fonctions de vérification sont définies pour les requêtes du BackOffice :
+
+checkAuth: Vérifie la validité du token JWT.
+checkAdmin: Vérifie si l'utilisateur dans le token JWT est un administrateur.
+N'oubliez pas de consulter la documentation de Supabase pour obtenir les clés d'API et configurer les tables nécessaires dans votre base de données.
 
 ## Structure des données DB 
 
