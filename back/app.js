@@ -199,6 +199,85 @@ app.post("/admin/postItem", async (req, res) => {
     "Données enregistrées avec succès dans Supabase. Nouveau meuble ajouté dans le BackOffice."
   );
 });
+//Requête de modification d'un item dans le BackOffice
+app.post("/admin/editItem", checkAdmin, async (req, res) => {
+  const jsonData = req.body;
+  if (jsonData.archived) {
+    return res
+      .status(403)
+      .send("Interdit : les items ne peuvent pas être modifiés et archivés en même temps")
+  } else {
+
+    const { data, error } = await supabaseAd.from("ITEM").update([jsonData]).eq('id', jsonData.id);
+
+    if (error) {
+      return res
+        .status(404)
+        .send(`Echec de la modification de l'item (nom :'${jsonData.name}', prix :'${jsonData.price}'), Supabase_error: ${error.message}
+      `)
+    }
+
+    return res
+      .status(201)
+      .send(
+        "Données enregistrées avec succès. Item modifié : " + jsonData.name
+      )
+  }
+})
+//Requête d'archivage d'un item dans le BackOffice
+app.post("/admin/archiveItem", checkAdmin, async (req, res) => {
+  const jsonData = req.body;
+
+  const { data, error } = await supabaseAd.from("ITEM").update([jsonData]).eq('id', jsonData.id);
+  if (!jsonData.archived) {
+    return res
+      .status(403)
+      .send("La propriété 'archived' doit être modifiée")
+  } else {
+
+    if (error) {
+      return res
+        .status(404)
+        .send(`Echec de l'archivage de l'item, assurez-vous de ne modifier que la propriété "archived"
+       (nom :'${jsonData.name}',
+       prix :'${jsonData.price}'),
+      Supabase_error: ${error.message}
+      `)
+    }
+
+    return res
+      .status(201)
+      .send(
+        "Données enregistrées avec succès. Archivé : " + jsonData.name
+      )
+  }
+})
+//Requête de suppression d'un item dans le BackOffice
+app.post("/admin/deleteItem", checkAdmin, async (req, res) => {
+  const jsonData = req.body;
+
+  if (!jsonData.archived) {
+    return res
+      .status(403)
+      .send("Interdit : les items doivent être archivés avant suppression")
+  } else {
+
+    const { data, error } = await supabaseAd.from("ITEM").delete([jsonData]).eq('id', jsonData.id);
+
+    if (error) {
+      return res
+        .status(404)
+        .send(`Echec de la suppression de l'item (nom :'${jsonData.name}', prix :'${jsonData.price}'), Supabase_error: ${error.message}
+      `)
+    }
+
+    return res
+      .status(201)
+      .send(
+        "Données enregistrées avec succès. Item supprimé : " + jsonData.name
+      )
+  }
+})
 
 //Requête d'ajout d'un item dans le BackOffice
 app.post("/admin/postColor", async (req, res) => {
@@ -269,6 +348,7 @@ function checkAuth(req, res, next) {
     } catch (err) {
       return res.status(401).json({
         message: "Auth failed",
+        err
       });
     }
   } else {
