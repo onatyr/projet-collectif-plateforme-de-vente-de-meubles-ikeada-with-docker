@@ -164,7 +164,7 @@ app.use("/admin/*", checkAuth, checkAdmin, (req, res, next) => {
 app.post("/admin/postItem", checkAdmin, async (req, res) => {
   const jsonData = req.body;
 
-  const { data, error } = await supabase.from("ITEM").insert([jsonData]);
+  const { data, error } = await supabaseAd.from("ITEM").insert([jsonData]);
 
   if (error) {
     return res
@@ -181,7 +181,7 @@ app.post("/admin/postItem", checkAdmin, async (req, res) => {
 app.post("/admin/postColor", checkAdmin, async (req, res) => {
   const jsonData = req.body;
 
-  const { data, error } = await supabase.from("COLOR").insert([jsonData]);
+  const { data, error } = await supabaseAd.from("COLOR").insert([jsonData]);
 
   if (error) {
     return res
@@ -198,7 +198,7 @@ app.post("/admin/postColor", checkAdmin, async (req, res) => {
 app.post("/admin/postCateg", checkAdmin, async (req, res) => {
   const jsonData = req.body;
 
-  const { data, error } = await supabase.from("CATEG").insert([jsonData]);
+  const { data, error } = await supabaseAd.from("CATEG").insert([jsonData]);
 
   if (error) {
     return res
@@ -215,7 +215,7 @@ app.post("/admin/postCateg", checkAdmin, async (req, res) => {
 app.post("/admin/postSubCateg", checkAdmin, async (req, res) => {
   const jsonData = req.body;
 
-  const { data, error } = await supabase.from("SUB_CATEG").insert([jsonData]);
+  const { data, error } = await supabaseAd.from("SUB_CATEG").insert([jsonData]);
 
   if (error) {
     return res
