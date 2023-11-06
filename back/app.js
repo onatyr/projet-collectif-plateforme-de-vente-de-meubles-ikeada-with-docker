@@ -48,9 +48,9 @@ app.get("/items", async (req, res) => {
   let { data, error } = await supabase
     .from("ITEM")
     .select()
-    if(checkAdmin(req) == false){
-      data = data.filter((e) => e.status == true)
-    } 
+  if (checkAdmin(req) == false) {
+    data = data.filter((e) => e.status == true)
+  }
 
   if (error) {
     res.status(500).json({ error: "Une erreur s'est produite" });
@@ -70,7 +70,7 @@ app.get("/items/:name", async (req, res) => {
     .select()
     .ilike("name", `%${itemName}%`);
 
-  if(checkAdmin(req) == false){
+  if (checkAdmin(req) == false) {
     data = data.filter((e) => e.status == true)
   }
 
@@ -99,7 +99,7 @@ app.get("/items/id/:id", async (req, res) => {
     console.error(error);
 
     res.status(500).json({ error: "Une erreur s'est produite" });
-  } else if (data.filter((e) => e.status == false).length > 0 && checkAdmin(req) == false){
+  } else if (data.filter((e) => e.status == false).length > 0 && checkAdmin(req) == false) {
     res.status(561).json("Check your privileges")
   }
   else {
@@ -181,11 +181,11 @@ app.get("/search_bar/sub_categ/:motcle", async (req, res) => {
 
 // Check en premier si jeton JWT valide et si c'est le jeton de l'admin
 app.use("/admin/*", checkAuth, (req, res, next) => {
-  if(checkAdmin(req) == false){
+  if (checkAdmin(req) == false) {
     return res
       .status(401)
-      .send("Check your privileges")
-  } 
+      .send("Vous devez disposer des privilèges administrateur")
+  }
   next();
 });
 
@@ -193,19 +193,24 @@ app.use("/admin/*", checkAuth, (req, res, next) => {
 // CREATION
 app.post("/admin/postItem", checkAdmin, async (req, res) => {
   const jsonData = req.body;
-  
-  const { data, error } = await supabaseAd.from("ITEM").insert([jsonData]);
-
-  if (error) {
-    // console.log(req)
+  if (jsonData.archived) {
     return res
-      .status(500)
-      .send("Erreur lors de l'enregistrement des données dans Supabase.");
-  }
+      .status(403)
+      .send("Interdit : les items ne peuvent pas être créés et archivés en même temps")
+  } else {
+    const { data, error } = await supabaseAd.from("ITEM").insert([jsonData]);
 
-  return res.send(
-    "Données enregistrées avec succès dans Supabase. Nouveau meuble ajouté dans le BackOffice."
-  );
+    if (error) {
+      // console.log(req)
+      return res
+        .status(500)
+        .send("Erreur lors de l'enregistrement des données dans Supabase.");
+    }
+
+    return res.send(
+      "Données enregistrées avec succès dans Supabase. Nouveau meuble ajouté dans le BackOffice."
+    );
+  }
 });
 
 
@@ -218,7 +223,7 @@ app.post("/admin/editItem", checkAdmin, async (req, res) => {
       .send("Interdit : les items ne peuvent pas être modifiés et archivés en même temps")
   } else {
 
-    const { data, error } = await supabaseAd.from("ITEM").update([jsonData]).eq('id', jsonData.id);
+    const { data, error } = await supabaseAd.from("ITEM").update([jsonData]).eq('id', jsonData.id)
 
     if (error) {
       return res
@@ -378,7 +383,7 @@ function checkAuth(req, res, next) {
 
 function checkAdmin(req) {
   // Verifie si l'user enregeristré dans le jeton JWT correspond a l'Admin
-  if(!req.userData){
+  if (!req.userData) {
     return false
   }
   if (req.userData.sub == "2e0ab73d-47b8-4ee2-8f43-e22fe8a63dce") {
