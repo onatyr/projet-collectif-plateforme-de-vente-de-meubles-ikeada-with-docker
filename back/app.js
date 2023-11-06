@@ -83,7 +83,6 @@ app.get("/items/:name", async (req, res) => {
   data = data.concat(descData);
 
   if (checkAdmin(req) == false) {
-  if (checkAdmin(req) == false) {
     data = data.filter((e) => e.status == true)
   }
 
