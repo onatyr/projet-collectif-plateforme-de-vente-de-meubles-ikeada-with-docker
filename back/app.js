@@ -68,7 +68,7 @@ app.get("/items/:name", async (req, res) => {
   let { data, error } = await supabase
     .from("ITEM")
     .select()
-    .eq("name", itemName);
+    .ilike("name", `%${itemName}%`);
 
   if(checkAdmin(req) == false){
     data = data.filter((e) => e.status == true)
