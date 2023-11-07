@@ -3,7 +3,7 @@ import { supabaseAd } from "./app.js"
 import jwt from 'jsonwebtoken';
 
 // Check en premier si jeton JWT valide et si c'est le jeton de l'admin
-export const checkAuthAdmin = (req, res, next) => {
+export const checkAuthAdmin = async (req, res, next) => {
 
   if (req.headers.authorization) {
     const token = req.headers.authorization.split(" ")[1];
@@ -11,7 +11,7 @@ export const checkAuthAdmin = (req, res, next) => {
       // Verifie le token avec la clef secrète
       const decoded = jwt.verify(token, process.env.SUPABASE_TOKEN);
       req.userData = decoded;
-      if (checkAdmin(req) == false) {
+      if (await checkAdmin(req) == false) {
         return res.status(401).send("Check your privileges");
       }
     } catch (err) {
@@ -186,12 +186,15 @@ export const postSubcategory = async (req, res) => {
   );
 };
 
-export function checkAdmin(req) {
+export async function checkAdmin(req) {
   // Verifie si l'user enregeristré dans le jeton JWT correspond a l'Admin
   if (!req.userData) {
     return false;
   }
-  if (req.userData.sub == "2e0ab73d-47b8-4ee2-8f43-e22fe8a63dce") {
+
+  const { data, error } = await supabase.from('profiles').select().eq('id', req.userData.sub)
+
+  if (data[0].admin == true) {
     return true;
   } else {
     return false;
