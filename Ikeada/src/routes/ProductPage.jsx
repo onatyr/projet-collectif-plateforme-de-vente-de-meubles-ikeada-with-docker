@@ -118,20 +118,16 @@ const ProductPage = observer(() => {
               {/* Afficher la dimension du produit conversion mm vers cm */}
               <ListGroup.Item className="d-flex flex-column justify-content-center align-items-center">
                 Dimensions :
-                <Stack
-                  direction="horizontal"
-                  gap={2}
-                  className="d-flex flex-row justify-content-center"
-                >
-                  {item.dimensions
-                    ? item.dimensions.map((dimension, index) => (
-                        <Badge pill bg="secondary" key={index}>
-                          {`${dimension} cm`}
-                        </Badge>
-                      ))
-                    : "Aucune dimension disponible"}
-                </Stack>
+                {item.dimensions
+                  ? item.dimensions.map((dimension, index) => (
+                      <span key={index}>
+                        {`${dimension * 0.1} cm`}
+                        {index < item.dimensions.length - 1 ? " x " : ""}
+                      </span>
+                    ))
+                  : "Aucune dimension disponible"}
               </ListGroup.Item>
+
               {/* Afficher la couleur du produit */}
               {/* <ListGroup.Item className='d-flex flex-column justify-content-center align-items-center'>
   Couleurs :
@@ -154,7 +150,7 @@ const ProductPage = observer(() => {
           </Col>
         </Row>
       </Container>
-      
+
       <Modal show={zoomImg} onHide={handleClose} animation={false} size="lg">
         <Modal.Body>
           <Image src={picSrc} fluid />
