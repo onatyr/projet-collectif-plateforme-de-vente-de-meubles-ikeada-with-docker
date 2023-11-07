@@ -22,7 +22,7 @@ export function NavBar() {
           {/* on peut naviguer vers différentes pages grace aux Routes */}
           <Link to={`/accueil`}>Shop</Link>
           <Link to={`/back-office`}>À Propos</Link>
-          <Link to={`/back-office`}>Contact</Link>
+          <Link to={`/contact`}>Contact</Link>
         </Nav>
         <Form className="d-flex">
           <Form.Control
