@@ -35,20 +35,19 @@ export const postItem = async (req, res) => {
       .send(
         "Interdit : les items ne peuvent pas être créés et archivés en même temps"
       );
-  } else {
-    const { data, error } = await supabaseAd.from("ITEM").insert([jsonData]);
-
-    if (error) {
-      // console.log(req)
-      return res
-        .status(500)
-        .send("Erreur lors de l'enregistrement des données dans Supabase.");
-    }
-
-    return res.send(
-      "Données enregistrées avec succès dans Supabase. Nouveau meuble ajouté dans le BackOffice."
-    );
   }
+
+  const { data, error } = await supabaseAd.from("ITEM").insert([jsonData])
+
+  if (error) {
+    return res
+      .status(500)
+      .send("Erreur lors de l'enregistrement des données dans Supabase :" + error.message);
+  }
+
+  return res.send(
+    `Données enregistrées avec succès dans Supabase. Nouveau meuble ajouté dans le BackOffice : ${jsonData.name}`
+  );
 };
 
 // MODIFICATION

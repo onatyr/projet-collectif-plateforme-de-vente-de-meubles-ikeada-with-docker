@@ -3,7 +3,7 @@ import { checkAdmin } from "./postController.js";
 
 //affiche tous les meubles
 
-export const getAllItems =  async (req, res) => {
+export const getAllItems = async (req, res) => {
   let { data, error } = await supabase
     .from("ITEM")
     .select()
@@ -65,7 +65,7 @@ export const getItemById = async (req, res) => {
     item_colors:ITEM_COLOR_RELATION(color:COLOR(name)),
     sub_categ:SUB_CATEG(name, room:CATEG(name));
   `)
-  .eq("id", itemId);
+    .eq("id", itemId);
 
   if (error) {
     console.error(error);
