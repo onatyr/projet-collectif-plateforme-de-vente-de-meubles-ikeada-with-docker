@@ -7,7 +7,7 @@ export const getAllItems =  async (req, res) => {
   let { data, error } = await supabase
     .from("ITEM")
     .select()
-  if (checkAdmin(req) == false) {
+  if (await checkAdmin(req) == false) {
     data = data.filter((e) => e.status == true)
   }
 
