@@ -11,6 +11,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import "./custom.css";
 
 import './custom.css'
+import ContactForm from "./components/ContactPage";
 
 export default function App() {
   return (
@@ -27,6 +28,8 @@ export default function App() {
           <Route path="search/:query" element={<CardList />} />
           {/* Route dynamique vers chaque page produit selon l'id */}
           <Route path=":productId" element={<ProductPage />} />
+          {/* Route dynamique vers la page de contact */ }
+          <Route path="contact" element={<ContactForm />} />
           {/* route vers le back office avec un "tampon" protectedroute qui vérifie les données de session*/}
           <Route
             path="back-office"

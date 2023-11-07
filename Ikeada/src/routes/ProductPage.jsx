@@ -154,7 +154,7 @@ const ProductPage = observer(() => {
           </Col>
         </Row>
       </Container>
-      ​
+      
       <Modal show={zoomImg} onHide={handleClose} animation={false} size="lg">
         <Modal.Body>
           <Image src={picSrc} fluid />
