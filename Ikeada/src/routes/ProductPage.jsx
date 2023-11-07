@@ -113,10 +113,7 @@ const ProductPage = observer(() => {
               </ListGroup.Item>
 
               {/* Afficher la dimension du produit conversion mm vers cm */}
-
-              {/* Afficher la dimension du produit conversion mm vers cm */}
-              {/* Afficher la dimension du produit conversion mm vers cm */}
-              <ListGroup.Item className="d-flex flex-column justify-content-center align-items-center">
+              <ListGroup.Item className="d-flex flex-row justify-content-evenly align-items-center">
                 Dimensions :
                 {item.dimensions
                   ? item.dimensions.map((dimension, index) => (
