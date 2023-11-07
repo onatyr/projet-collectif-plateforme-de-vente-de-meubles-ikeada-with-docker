@@ -1,8 +1,6 @@
 import { supabase } from "./app.js"
 import { checkAdmin } from "./postController.js";
-
 //affiche tous les meubles
-
 export const getAllItems = async (req, res) => {
   let { data, error } = await supabase
     .from("ITEM")
@@ -59,10 +57,10 @@ export const getItemById = async (req, res) => {
   const itemId = req.params.id;
 
   const { data, error } = await supabase
-  .from("ITEM")
-  .select(`
+    .from("ITEM")
+    .select(`
     *,
-    item_colors:ITEM_COLOR_RELATION(color:COLOR(name)),
+    item_colors:COLOR(*),
     sub_categ:SUB_CATEG(name, room:CATEG(name));
   `)
     .eq("id", itemId);
@@ -87,6 +85,16 @@ export const getAllCategories = async (req, res) => {
   // .eq('name', 'Cuisine') // Permet d'affiner l'affichage par catégorie.
   if (error) {
     res.status(500).json({ error: "Une erreur s'est produite" });
+  } else {
+    res.status(200).json(data);
+  }
+};
+
+// Affiche toutes les catégories de mobilier
+export const getColorList = async (req, res) => {
+  const { data, error } = await supabase.from("COLOR").select();
+  if (error) {
+    res.status(500).send("Erreur lors de la récupération de la liste des couleurs");
   } else {
     res.status(200).json(data);
   }

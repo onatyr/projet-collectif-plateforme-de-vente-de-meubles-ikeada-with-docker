@@ -1,7 +1,6 @@
 import { supabase } from "./app.js"
 import { supabaseAd } from "./app.js"
 import jwt from 'jsonwebtoken';
-
 // Check en premier si jeton JWT valide et si c'est le jeton de l'admin
 export const checkAuthAdmin = async (req, res, next) => {
 
@@ -24,30 +23,6 @@ export const checkAuthAdmin = async (req, res, next) => {
     res.status(401);
   }
   next();
-};
-
-// CREATION
-export const postItem = async (req, res) => {
-  const jsonData = req.body;
-  if (jsonData.archived) {
-    return res
-      .status(403)
-      .send(
-        "Interdit : les items ne peuvent pas être créés et archivés en même temps"
-      );
-  }
-
-  const { data, error } = await supabaseAd.from("ITEM").insert([jsonData])
-
-  if (error) {
-    return res
-      .status(500)
-      .send("Erreur lors de l'enregistrement des données dans Supabase :" + error.message);
-  }
-
-  return res.send(
-    `Données enregistrées avec succès dans Supabase. Nouveau meuble ajouté dans le BackOffice : ${jsonData.name}`
-  );
 };
 
 // MODIFICATION
@@ -131,8 +106,7 @@ export const restoreItem = async (req, res) => {
   }
 };
 
-// SUPPRESSION (Work In Progress :update or delete on table "ITEM" violates foreign key constraint
-//"ITEM_COLOR_RELA_item_id_fkey" on table "ITEM_COLOR_RELA")
+// SUPPRESSION
 export const deleteItem = async (req, res) => {
   const jsonData = req.body;
 
