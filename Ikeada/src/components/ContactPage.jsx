@@ -6,13 +6,13 @@ export default function ContactForm() {
   return (
     <>
     <Form>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
+      <Form.Group className="mb-3 justify-content text-align flex" controlId="formBasicEmail">
         <Form.Label>Prénom</Form.Label>
         <Form.Control type="text" placeholder="Prénom" />
         <Form.Label>Nom</Form.Label>
         <Form.Control type="text" placeholder="Nom" />
         <Form.Label>E-mail</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" />
+        <Form.Control type="email" placeholder="example@email.com" />
         <Form.Label>Votre message :</Form.Label>
         <Form.Control type="text" placeholder="Ecrivez quelque chose ..." />
         <Form.Text className="text-muted">
@@ -27,7 +27,7 @@ export default function ContactForm() {
         Submit
       </Button>
     </Form>
-    <Container>
+    <Container >
         <h1>Contact Us</h1>
       <p>Chez IKEA, nous attachons une grande importance à votre opinion et à votre expérience. Vos commentaires, vos questions et vos suggestions sont essentiels pour nous aider à améliorer nos produits et nos services. Nous sommes là pour vous écouter et vous assister de la meilleure manière possible.
 

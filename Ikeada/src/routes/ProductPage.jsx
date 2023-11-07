@@ -62,12 +62,6 @@ const ProductPage = observer(() => {
     "https://www.arqueselectrodiesel.fr/wp-content/uploads/2022/08/photo-non-disponible-1.jpg";
   return (
     <>
-<div className="d-flex justify-content-around flex-wrap">
-  {items.length === 0 ? (
-    'blablabla'
-  ) : (
-  
-
       <Container
         className="d-flex flex-column justify-content-center align-items-center"
         style={{ minHeight: "90vh", width: "90vw" }}
