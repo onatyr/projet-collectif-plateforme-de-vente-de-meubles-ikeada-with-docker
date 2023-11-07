@@ -92,7 +92,7 @@ export const archiveItem = async (req, res) => {
     return res.status(403).send("La propriété 'archived' doit être modifiée");
   } else {
     if (error) {
-      return res.status(404)
+      return res.status(403)
         .send(`Echec de l'archivage de l'item, assurez-vous de ne modifier que la propriété "archived"
        (nom :'${jsonData.name}',
        prix :'${jsonData.price}'),
@@ -103,6 +103,32 @@ export const archiveItem = async (req, res) => {
     return res
       .status(201)
       .send("Données enregistrées avec succès. Archivé : " + jsonData.name);
+  }
+};
+
+// RESTORATION
+export const restoreItem = async (req, res) => {
+  const jsonData = req.body;
+
+  const { data, error } = await supabaseAd
+    .from("ITEM")
+    .update([jsonData])
+    .eq("id", jsonData.id);
+  if (jsonData.archived) {
+    return res.status(403).send("La propriété 'archived' doit être modifiée");
+  } else {
+    if (error) {
+      return res.status(403)
+        .send(`Echec de la restoration de l'item, assurez-vous de ne modifier que la propriété "archived"
+       (nom :'${jsonData.name}',
+       prix :'${jsonData.price}'),
+      Supabase_error: ${error.message}
+      `);
+    }
+
+    return res
+      .status(201)
+      .send("Données enregistrées avec succès. Restauré : " + jsonData.name);
   }
 };
 

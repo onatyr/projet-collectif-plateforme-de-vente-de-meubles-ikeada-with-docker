@@ -62,7 +62,6 @@ export const getItemById = async (req, res) => {
   .from("ITEM")
   .select(`
     *,
-    colors:COLOR(name, rgb, description),
     sub_category:SUB_CATEG(name, room:CATEG(name));
   `)
   .eq("id", itemId);
@@ -70,7 +69,7 @@ export const getItemById = async (req, res) => {
   if (error) {
     console.error(error);
 
-    res.status(500).json({ error: "Une erreur s'est produite" });
+    res.status(500).json({ error: "Une erreur s'est produite", message: error.message });
   } else if (
     data.filter((e) => e.status == false).length > 0 &&
     checkAdmin(req) == false
