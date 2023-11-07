@@ -1,6 +1,6 @@
 import { Container, Navbar, Nav, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
-// import { HouseDoorFill, PersonFill, GearFill } from "react-bootstrap-icons";
+import { HouseDoorFill, PersonFill, GearFill } from "react-bootstrap-icons";
 import { Button } from "react-bootstrap";
 import { useState } from "react";
 import BorderBottom from "./atoms/BorderBottom";

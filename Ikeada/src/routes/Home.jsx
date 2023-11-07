@@ -1,6 +1,8 @@
 import MainTitle from "../components/atoms/MainTitle";
 import CardListBS from "../components/Home/CardListBestSell";
 import { Link } from "react-router-dom";
+import { ArrowUpRight } from "react-bootstrap-icons";
+import CategList from "../components/Home/CategList";
 
 export default function Home() {
   return (
@@ -43,24 +45,19 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="home--categ--container d-flex justify-content-between">
+      <div className="home--categ--container d-flex justify-content-between align-items-center">
         <div className="d-flex flex-column bd-highlight mb-3">
           <h2 className="home--title display-4 h2 fw-bold">
             Achetez par pièces
           </h2>
-          <div className="home--bestsell--cadlist p-2 bd-highlight">
-            <ul className="list-group p-2 bd-highlight">
-              <li className="list-group-item">An item</li>
-              <li className="list-group-item">A second item</li>
-              <li className="list-group-item">A third item</li>
-              <li className="list-group-item">A fourth item</li>
-              <li className="list-group-item">And a fifth one</li>
-            </ul>
+
+          <div className="home--categ--container-list p-2 bd-highlight">
+            <CategList className="home--categ--list w-100" />
           </div>
         </div>
 
         <img
-          className="home--categ--img flex-end"
+          className="home--categ--img"
           src="https://www.ikea.com/ext/ingkadam/m/3223ad96ac50a09b/original/PH190402.jpg?f=xxxl"
           alt="Image Categ"
         />

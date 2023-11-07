@@ -1,16 +1,16 @@
-import { useState } from 'react';
-import { sessionStore } from '../auth/session';
-import { useNavigate } from 'react-router';
-import supabase from '../auth/supabaseClient';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import { useState } from "react";
+import { sessionStore } from "../auth/session";
+import { useNavigate } from "react-router";
+import supabase from "../auth/supabaseClient";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 function Login() {
   // ca permet d'utiliser useNavigate ou on veux sinon React n'est pas d'accord
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   // on récupère ce que l'utilisateur tape dans les champs de formulaire
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // gère la connexion quand le formulaire est envoyé
   const handleLogin = async (e) => {
@@ -23,13 +23,14 @@ function Login() {
       });
       if (error) {
         // redirection vers login
-        navigate('../login')
+        navigate("../login");
         console.error("Erreur de connexion :", error.message);
       } else {
         // envoie les données de session dans le Store
-        sessionStore.setSession(data)
+        sessionStore.setSession(data);
+        console.log(sessionStore);
         // redirection vers back-office
-        navigate('../back-office')
+        navigate("../back-office");
       }
     } catch (error) {
       console.error("Erreur de connexion :", error.message);
@@ -68,4 +69,4 @@ function Login() {
   );
 }
 
-export default Login
+export default Login;
