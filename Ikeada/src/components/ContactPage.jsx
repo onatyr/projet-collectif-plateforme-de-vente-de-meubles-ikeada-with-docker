@@ -7,13 +7,13 @@ export default function ContactForm() {
     <>
     <Container className="d-flex justify-content-around flex-wrap p-5">
         <h1 className="p-5">Contactez nous</h1>
-      <p>Chez IKEA, nous attachons une grande importance à votre opinion et à votre expérience. Vos commentaires, vos questions et vos suggestions sont essentiels pour nous aider à améliorer nos produits et nos services. Nous sommes là pour vous écouter et vous assister de la meilleure manière possible.
+      <p>Chez Ikeada, nous attachons une grande importance à votre opinion et à votre expérience. Vos commentaires, vos questions et vos suggestions sont essentiels pour nous aider à améliorer nos produits et nos services. Nous sommes là pour vous écouter et vous assister de la meilleure manière possible.
 
 Que ce soit pour discuter de nos produits, obtenir de l'aide avec un projet, signaler un problème ou partager des idées, nous sommes à votre disposition. Votre voix compte, et nous sommes impatients de vous entendre.
 
 N'hésitez pas à nous contacter en utilisant le formulaire ci-dessous. Notre équipe dévouée se fera un plaisir de vous répondre dans les plus brefs délais. Vous pouvez également nous appeler au numéro de téléphone indiqué ci-dessous pour une assistance immédiate.
 
-Votre satisfaction est notre priorité, et nous sommes là pour vous accompagner à chaque étape de votre expérience IKEA. Merci de faire partie de la famille IKEA, et nous sommes impatients de vous lire.</p>
+Votre satisfaction est notre priorité, et nous sommes là pour vous accompagner à chaque étape de votre expérience Ikeada. Merci de faire partie de la famille Ikeada, et nous sommes impatients de vous lire.</p>
     </Container>
     <Form className="mx-auto p-2"
       style={{ minHeight: "60vh", width: "50vw", marginTop: "10px" }}
