@@ -41,7 +41,7 @@ export const searchByNameDesc = async (req, res) => {
     .textSearch("desc", searchRequest.map((e) => `'${e}'`).join(" | "));
   data = data.concat(descData);
 
-  if (checkAdmin(req) == false) {
+  if (await checkAdmin(req) == false) {
     data = data.filter((e) => e.status == true)
   }
 
@@ -72,7 +72,7 @@ export const getItemById = async (req, res) => {
     res.status(500).json({ error: "Une erreur s'est produite", message: error.message });
   } else if (
     data.filter((e) => e.status == false).length > 0 &&
-    checkAdmin(req) == false
+    await checkAdmin(req) == false
   ) {
     res.status(561).json("Check your privileges");
   } else {
