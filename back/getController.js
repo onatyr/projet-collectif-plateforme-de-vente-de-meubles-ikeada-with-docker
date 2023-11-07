@@ -62,7 +62,8 @@ export const getItemById = async (req, res) => {
   .from("ITEM")
   .select(`
     *,
-    sub_category:SUB_CATEG(name, room:CATEG(name));
+    item_colors:ITEM_COLOR_RELATION(color:COLOR(name)),
+    sub_categ:SUB_CATEG(name, room:CATEG(name));
   `)
   .eq("id", itemId);
 
