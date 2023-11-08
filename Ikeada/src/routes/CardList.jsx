@@ -3,9 +3,12 @@ import { useParams } from 'react-router';
 import { useEffect } from 'react';
 import { itemsStore } from '../stores/itemStore';
 import { observer } from 'mobx-react-lite'
+import { useLocation } from 'react-router-dom'
 
 const CardList = observer(() => {
   // récupère le chemin URL
+  const urlLocation = useLocation()
+  //recupère les paramètres
   const urlParams = useParams()
   // récupère les items
   const items = itemsStore.items
@@ -13,8 +16,12 @@ const CardList = observer(() => {
   // s'éxecute toujours la première fois, puis permet de déclencher un re-render si on est pas sur la même page 
   useEffect(() => {
     if (urlParams.query) {
-      // page de recherche
-      itemsStore.searchItems(urlParams.query)
+      if(urlLocation.pathname.split("/")[0]=="itemscateg"){
+        itemsStore.getItemsByCateg(urlParams.query)
+      } else if(urlLocation.pathname.split("/")[0]=="search"){
+        // page de recherche
+        itemsStore.searchItems(urlParams.query)
+      }
     } else {
       // page accueil
       itemsStore.getItems()
