@@ -285,3 +285,28 @@ background-color: #E2E3DEFF !important;
 }
 
 /* Footer Style Ends */
+
+/* Contact form style starts */
+.label--form--color {
+    color: var(--deep--onyx);
+}
+.input--form--color {
+    color: var(--fossil--grey);
+}
+
+.form--submit--btn {
+    padding: 20px;
+    margin: 10px;
+    height: 100%;
+    width: 150px;
+    color: var(--deep--onyx) !important;
+    background-color: var(--bs--white) !important;
+}
+
+.form--submit--btn:hover {
+    --bs-btn-hover-color: var(--fossil--grey);
+    --bs-btn-hover-bg: #E2E3DEFF;
+    --bs-btn-hover-border-color: #E2E3DEFF;
+}
+
+/* Contact form style ends */
