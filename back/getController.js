@@ -1,6 +1,7 @@
 import { supabase } from "./app.js"
 import { checkAdmin } from "./postController.js";
-//affiche tous les meubles
+
+// GET ALL
 export const getAllItems = async (req, res) => {
   const { data, error } = await supabase
     .from("ITEM")
@@ -16,8 +17,7 @@ export const getAllItems = async (req, res) => {
   }
 };
 
-//affiche les meubles selon le nom du produit ou sa description
-
+// SEARCH ITEM BY NAME OR DESC
 export const searchByNameDesc = async (req, res) => {
 
   const searchRequest = req.params.name.split(" ");
