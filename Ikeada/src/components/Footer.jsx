@@ -28,12 +28,12 @@ export default function App() {
                 </a>
               </p>
               <p>
-                <a href="#!" className="text-reset">
+                <a href="accueil#/login" className="text-reset">
                   À Propos
                 </a>
               </p>
               <p>
-                <a href="#!" className="text-reset">
+                <a href="accueil#/contact" className="text-reset">
                   Contact
                 </a>
               </p>

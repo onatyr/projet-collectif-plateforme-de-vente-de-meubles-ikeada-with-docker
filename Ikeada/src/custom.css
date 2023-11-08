@@ -269,3 +269,20 @@ background-color: var(--stone--white);
 }
 
 /* Footer Style Ends */
+
+/* Contact form style starts */
+.label--form--color {
+    color: var(--deep--onyx);
+}
+.input--form--color {
+    color: var(--fossil--grey);
+}
+
+.form--submit--btn {
+    padding: 20px;
+    margin: 10px;
+    height: 100%;
+    width: 150px;
+    color: none;
+}
+/* Contact form style ends */

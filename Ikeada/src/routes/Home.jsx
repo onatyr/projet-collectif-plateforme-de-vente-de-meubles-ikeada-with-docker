@@ -13,7 +13,7 @@ export default function Home() {
           className="btn btn-outline-custom rounded-0 home--subtitle--btn d-flex align-items-center justify-content-center"
           type="button"
         >
-          Voir tout les meubles
+          Voir tous les meubles
         </Link>
         <p className="home--subtitle--text">
           Découvrez l'élégance abordable pour votre intérieur avec notre
