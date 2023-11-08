@@ -20,6 +20,19 @@ class InterfaceBackEnd {
       .catch((error) => console.error("Erreur de chargement du JSON :", error));
   }
 
+  async fetchItemsByCateg(query) {
+    console.log(query)
+    return await fetch(`/api/ikeada/itemscateg/${query}`, {
+      method: "GET",
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data)
+      return data
+    })
+    .catch((error) => console.error("Erreur de chargement du JSON :", error))
+  }
+
   // récupère un item grace à son nom complet, pas terrible pour la recherche mais certainement pour d'autres choses, comme la page produit
   async searchItems(query) {
     return await fetch(`/api/ikeada/items/${query}`, {
@@ -63,7 +76,7 @@ class InterfaceBackEnd {
       .catch((error) => console.error("Erreur de chargement du JSON :", error));
   }
 
-  // Categs
+  Categs
   async fetchCategs() {
     return await fetch("/api/ikeada/category", {
       method: "GET",

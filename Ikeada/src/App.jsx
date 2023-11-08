@@ -25,6 +25,8 @@ export default function App() {
           <Route path="shop" element={<Shop />} />
           {/* Route dynamique vers un résultat de recherche, pour l'instant il faut le nom complet du produit */}
           <Route path="search/:query" element={<CardList />} />
+          {/* Route dynamique vers tous les items d'une catégorie*/}
+          <Route path="itemscateg/:query" element={<CardList />} />
           {/* Route dynamique vers chaque page produit selon l'id */}
           <Route path=":productId" element={<ProductPage />} />
           {/* Route dynamique vers la page de contact */}

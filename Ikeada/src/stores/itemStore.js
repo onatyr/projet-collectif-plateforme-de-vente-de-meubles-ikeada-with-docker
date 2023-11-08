@@ -28,6 +28,10 @@ class itemStore {
     const data = await this.#service.fetchItems();
     this.setItems(data);
   }
+  async getItemsByCateg(query) {
+    const data = await this.#service.fetchItemsByCateg(query)
+    this.setItems(data);
+  }
   async searchItems(query) {
     // on reset pour ne pas afficher un autre item pendant le chargement de celui qu'on veut
     this.currentItem = {};
