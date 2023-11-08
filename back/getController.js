@@ -28,6 +28,7 @@ export const getItemsByCateg = async (req, res) => {
     data = data.filter((e) => e.status == true && e.archived == false)
   }
 
+
   if(error) {
     res.status(500).json({error})
   } else {

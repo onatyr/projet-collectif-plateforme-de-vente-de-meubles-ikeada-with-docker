@@ -16,9 +16,9 @@ const CardList = observer(() => {
   // s'éxecute toujours la première fois, puis permet de déclencher un re-render si on est pas sur la même page 
   useEffect(() => {
     if (urlParams.query) {
-      if(urlLocation.pathname.split("/")[0]=="itemscateg"){
+      if(urlLocation.pathname.split("/")[1]=="itemscateg"){
         itemsStore.getItemsByCateg(urlParams.query)
-      } else if(urlLocation.pathname.split("/")[0]=="search"){
+      } else if(urlLocation.pathname.split("/")[1]=="search"){
         // page de recherche
         itemsStore.searchItems(urlParams.query)
       }

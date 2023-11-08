@@ -21,6 +21,7 @@ class InterfaceBackEnd {
   }
 
   async fetchItemsByCateg(query) {
+    console.log(query)
     return await fetch(`/api/ikeada/itemscateg/${query}`, {
       method: "GET",
     })
@@ -75,7 +76,7 @@ class InterfaceBackEnd {
       .catch((error) => console.error("Erreur de chargement du JSON :", error));
   }
 
-  // Categs
+  Categs
   async fetchCategs() {
     return await fetch("/api/ikeada/category", {
       method: "GET",

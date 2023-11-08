@@ -28,8 +28,8 @@ class itemStore {
     const data = await this.#service.fetchItems();
     this.setItems(data);
   }
-  async getItemsByCateg() {
-    const data = await this.#service.fetchItemsByCateg()
+  async getItemsByCateg(query) {
+    const data = await this.#service.fetchItemsByCateg(query)
     this.setItems(data);
   }
   async searchItems(query) {
