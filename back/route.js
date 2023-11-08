@@ -6,6 +6,7 @@ import * as insertItemController from './insertItemController.js';
 import * as archiveDeleteController from './archiveDeleteController.js';
 
 router.get("/items", getController.getAllItems)
+router.get("/itemscateg/:categ", getController.getItemsByCateg)
 router.get("/items/:name", getController.searchByNameDesc)
 router.get("/items/id/:id", getController.getItemById)
 router.get("/category", getController.getAllCategories)
