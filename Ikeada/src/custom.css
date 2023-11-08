@@ -299,6 +299,14 @@ background-color: #E2E3DEFF !important;
     margin: 10px;
     height: 100%;
     width: 150px;
-    color: none;
+    color: var(--deep--onyx) !important;
+    background-color: var(--bs--white) !important;
 }
+
+.form--submit--btn:hover {
+    --bs-btn-hover-color: var(--fossil--grey);
+    --bs-btn-hover-bg: #E2E3DEFF;
+    --bs-btn-hover-border-color: #E2E3DEFF;
+}
+
 /* Contact form style ends */

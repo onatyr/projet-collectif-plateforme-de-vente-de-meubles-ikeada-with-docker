@@ -39,10 +39,9 @@ export default function ContactForm() {
       <Form.Group className="mb-3" controlId="formBasicCheckbox">
         <Form.Check type="checkbox" label="En cochant cette case, j'accepte les conditions générales d'utilisation." />
       </Form.Group>
-      <Button className="d-flex btn btn-outline-custom rounded-0 form--submit--btn align-items-center justify-content-center" type="button">
+      <Button className="btn form--submit--btn d-flex justify-content-center btn-outline-custom rounded-0" type="button">
         Submit
       </Button>
-      <Button type="button" className="btn btn-outline-custom rounded-0 home--subtitle--btn d-flex align-items-center justify-content-center">Envoyer </Button>
     </Form>
     
     </>
