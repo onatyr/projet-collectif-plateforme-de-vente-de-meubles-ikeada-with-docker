@@ -1,7 +1,7 @@
 export default function App() {
   return (
     <footer className="text-center text-lg-start text-muted blockquote-footer">
-      <section className="container">
+      <section className="container footer--container">
         <div className="text-center text-md-start mt-5">
           <div className="mt-3 row">
             {/* Première colonne */}
@@ -18,12 +18,12 @@ export default function App() {
             <div className="col-md-4 mb-4">
               <h6 className="text-uppercase fw-bold mb-4">Liens</h6>
               <p>
-                <a href="accueil" className="text-reset">
+                <a href="home" className="text-reset">
                   Accueil
                 </a>
               </p>
               <p>
-                <a href="accueil#/accueil" className="text-reset">
+                <a href="#/shop" className="text-reset">
                   Produits
                 </a>
               </p>

@@ -17,6 +17,24 @@ export const getAllItems = async (req, res) => {
   }
 };
 
+export const getItemsByCateg = async (req, res) => {
+  const categ = req.params.categ
+  let { data, error} = await supabase
+  .from("ITEM")
+  .select("*,sub_categ:SUB_CATEG(name, room:CATEG(name))")
+
+  data = data.filter((e) => e.sub_categ.room.name == categ)
+  if (await checkAdmin(req) == false) {
+    data = data.filter((e) => e.status == true && e.archived == false)
+  }
+
+  if(error) {
+    res.status(500).json({error})
+  } else {
+    res.status(200).json(data)
+  }
+}
+
 // SEARCH BY NAME OR DESC
 export const searchByNameDesc = async (req, res) => {
 
