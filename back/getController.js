@@ -58,6 +58,11 @@ export const searchByNameDesc = async (req, res) => {
     .textSearch("desc", searchRequest.map((e) => `'${e}'`).join(" | "));
   data = data.concat(descData);
 
+  // console.log(data)
+  const uniq = new Set(data.map(e => JSON.stringify(e)));
+
+  data = Array.from(uniq).map(e => JSON.parse(e));
+
   if (await checkAdmin(req) == false) {
     data = data.filter((e) => e.status == true)
   }
