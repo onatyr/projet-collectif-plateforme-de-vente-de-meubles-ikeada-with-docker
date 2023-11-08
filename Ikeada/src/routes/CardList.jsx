@@ -31,7 +31,7 @@ const CardList = observer(() => {
   return (
     <div className="d-flex justify-content-around flex-wrap">
       {items.length === 0
-        ? "Oups... Cet article n'existe pas !"
+        ? "Oups... Il n'y a rien à voir ici !"
         : items.map((item) => <ProductCard key={item.name} item={item} />)}
     </div>
   );
