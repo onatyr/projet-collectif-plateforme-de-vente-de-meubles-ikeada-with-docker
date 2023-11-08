@@ -9,7 +9,7 @@ const BackOffice = observer(() => {
     const items = itemsStore.items
     // si y'en a pas, màj
     if (!items[1]) {
-        itemsStore.getItems()
+        itemsStore.getAdminItems()
     }
 
     return (

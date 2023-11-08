@@ -10,8 +10,19 @@ class InterfaceBackEnd {
   // récupère tous les items
   async fetchItems() {
     return await fetch("/api/ikeada/items", {
+      method: "GET"
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        return data;
+      })
+      .catch((error) => console.error("Erreur de chargement du JSON :", error));
+  }
+  async fetchAdminItems() {
+    return await fetch("/api/ikeada/items", {
       method: "GET",
-      headers:{ 'Authorization': `Bearer ${this.#sessionStore.token}`}
+      headers: { 'Authorization': `Bearer ${this.#sessionStore.token}` }
     })
       .then((response) => response.json())
       .then((data) => {
@@ -26,12 +37,12 @@ class InterfaceBackEnd {
     return await fetch(`/api/ikeada/itemscateg/${query}`, {
       method: "GET",
     })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data)
-      return data
-    })
-    .catch((error) => console.error("Erreur de chargement du JSON :", error))
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+        return data
+      })
+      .catch((error) => console.error("Erreur de chargement du JSON :", error))
   }
 
   // récupère un item grace à son nom complet, pas terrible pour la recherche mais certainement pour d'autres choses, comme la page produit
@@ -81,7 +92,7 @@ class InterfaceBackEnd {
       headers: {
         "Content-Type": "Application/json"
       },
-      body: {'item': itemData},
+      body: { 'item': itemData },
     })
       .then((response) => response.json())
       .then((data) => {

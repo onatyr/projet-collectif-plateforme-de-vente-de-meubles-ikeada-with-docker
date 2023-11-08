@@ -27,6 +27,10 @@ class itemStore {
     const data = await this.#service.fetchItems();
     this.setItems(data);
   }
+  async getAdminItems() {
+    const data = await this.#service.fetchAdminItems();
+    this.setItems(data);
+  }
   async getItemsByCateg(query) {
     const data = await this.#service.fetchItemsByCateg(query)
     this.setItems(data);
