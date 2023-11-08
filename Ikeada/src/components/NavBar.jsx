@@ -40,7 +40,7 @@ export function NavBar() {
             onChange={(e) => setQuery(e.target.value)}
           />
           {/* on insère le contenu du champ ici pour accèder à la page correspondante via une Route */}
-          <Link to={`../search/${query}`}>
+          <Link to={`../shop/search/${query}`}>
             <Button variant="outline-success" className="navbar--search--btn">
               Search
             </Button>
