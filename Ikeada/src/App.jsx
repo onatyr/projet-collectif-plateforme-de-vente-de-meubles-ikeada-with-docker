@@ -9,9 +9,8 @@ import Home from "./routes/Home";
 import ScrollToTop from "./components/ScrollToTop";
 
 import "./custom.css";
-
-import './custom.css'
 import ContactForm from "./components/ContactPage";
+import Shop from "./routes/Shop";
 
 export default function App() {
   return (
@@ -23,14 +22,14 @@ export default function App() {
           {/* Routes vers le contenu */}
           <Route path="/" element={<Home />} />
           {/* Route dynamique vers un résultat de recherche, pour l'instant il faut le nom complet du produit */}
-          <Route path="accueil" element={<CardList />} />
+          <Route path="shop" element={<Shop />} />
           {/* Route dynamique vers un résultat de recherche, pour l'instant il faut le nom complet du produit */}
           <Route path="search/:query" element={<CardList />} />
           {/* Route dynamique vers tous les items d'une catégorie*/}
           <Route path="itemscateg/:query" element={<CardList />} />
           {/* Route dynamique vers chaque page produit selon l'id */}
           <Route path=":productId" element={<ProductPage />} />
-          {/* Route dynamique vers la page de contact */ }
+          {/* Route dynamique vers la page de contact */}
           <Route path="contact" element={<ContactForm />} />
           {/* route vers le back office avec un "tampon" protectedroute qui vérifie les données de session*/}
           <Route

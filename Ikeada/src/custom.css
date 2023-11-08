@@ -47,6 +47,18 @@ background-color: #fff;
     padding-bottom: 1px;
   }
   
+  .navbar--text--link {
+    color: var(--deep--onyx);
+    text-decoration: none;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
+.navbar--search--textfield {
+    border-radius: 0 !important;
+    border: 1px solid var(--deep--onyx) !important; 
+}
+
   .navbar--border--bottom {
     width: 99%;
     margin: 0 auto; 
@@ -256,16 +268,20 @@ opacity: 1;
 /* Footer Style Start */
 
 .blockquote-footer {
-    background-color: var(--fossil--grey) ;
-    font-family: 'Hanken Grotesk', sans-serif;
+    background-color: var(--stone--white) !important;
+    margin-bottom: 0 !important;
 }
 
 .text-reset, .text-uppercase {
     color: var(--deep--onyx);
 }
 
+.footer--container {
+    padding-left: 50px;
+}
+
 .footer--copyright--container {
-background-color: var(--stone--white);
+background-color: #E2E3DEFF !important;
 }
 
 /* Footer Style Ends */
