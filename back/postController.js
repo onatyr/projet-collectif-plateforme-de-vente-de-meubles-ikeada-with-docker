@@ -1,9 +1,9 @@
 import { supabase } from "./app.js"
 import { supabaseAd } from "./app.js"
 import jwt from 'jsonwebtoken';
+import { addItemColors } from "./insertItemController.js";
 // Check en premier si jeton JWT valide et si c'est le jeton de l'admin
 export const checkAuthAdmin = async (req, res, next) => {
-
   if (req.headers.authorization) {
     const token = req.headers.authorization.split(" ")[1];
     try {
@@ -28,7 +28,10 @@ export const checkAuthAdmin = async (req, res, next) => {
 // MODIFICATION
 export const editItem = async (req, res) => {
   const jsonData = req.body;
-  if (jsonData.archived) {
+  const itemData = jsonData.item
+  const colorsData = jsonData.colors
+
+  if (itemData.archived) {
     return res
       .status(403)
       .send(
@@ -37,19 +40,23 @@ export const editItem = async (req, res) => {
   } else {
     const { data, error } = await supabaseAd
       .from("ITEM")
-      .update([jsonData])
-      .eq("id", jsonData.id);
+      .update([itemData])
+      .select()
+      .eq("id", itemData.id)
 
     if (error) {
+      console.log(error)
       return res.status(403)
-        .send(`Echec de la modification de l'item (nom :'${jsonData.name}', prix :'${jsonData.price}'), Supabase_error: ${error.message}
+        .send(`Echec de la modification de l'item (nom :'${itemData.name}', prix :'${itemData.price}'), Supabase_error: ${error.message}
       `);
     }
 
+    const colorRes = await addItemColors(colorsData, itemData.id)
+   
     return res
       .status(201)
       .send(
-        "Données enregistrées avec succès. Item modifié : " + jsonData.name
+        " Item modifié : " + data + ", couleurs : " + colorRes
       );
   }
 };
@@ -61,7 +68,9 @@ export const archiveItem = async (req, res) => {
   const { data, error } = await supabaseAd
     .from("ITEM")
     .update([jsonData])
-    .eq("id", jsonData.id);
+    .select()
+    .eq("id", jsonData.id)
+
   if (!jsonData.archived) {
     return res.status(403).send("La propriété 'archived' doit être modifiée");
   } else {
@@ -76,7 +85,7 @@ export const archiveItem = async (req, res) => {
 
     return res
       .status(201)
-      .send("Données enregistrées avec succès. Archivé : " + jsonData.name);
+      .send("Données enregistrées avec succès. Archivé : " + data);
   }
 };
 
@@ -87,6 +96,7 @@ export const restoreItem = async (req, res) => {
   const { data, error } = await supabaseAd
     .from("ITEM")
     .update([jsonData])
+    .select()
     .eq("id", jsonData.id);
   if (jsonData.archived) {
     return res.status(403).send("La propriété 'archived' doit être modifiée");
@@ -102,7 +112,7 @@ export const restoreItem = async (req, res) => {
 
     return res
       .status(201)
-      .send("Données enregistrées avec succès. Restauré : " + jsonData.name);
+      .send("Données enregistrées avec succès. Restauré : " + data);
   }
 };
 
@@ -138,7 +148,7 @@ export const deleteItem = async (req, res) => {
 export const postColor = async (req, res) => {
   const jsonData = req.body;
 
-  const { data, error } = await supabase.from("COLOR").insert([jsonData]);
+  const { data, error } = await supabase.from("COLOR").insert([jsonData]).select()
 
   if (error) {
     return res
@@ -147,7 +157,7 @@ export const postColor = async (req, res) => {
   }
 
   return res.send(
-    "Données enregistrées avec succès dans Supabase. Nouvelle couleur ajoutée dans le BackOffice."
+    "Données enregistrées avec succès. Couleur ajoutée : " + data
   );
 };
 
@@ -155,33 +165,32 @@ export const postColor = async (req, res) => {
 export const postCategory = async (req, res) => {
   const jsonData = req.body;
 
-  const { data, error } = await supabase.from("CATEG").insert([jsonData]);
+  const { data, error } = await supabase.from("CATEG").insert([jsonData]).select()
 
   if (error) {
     return res
       .status(500)
-      .send("Erreur lors de l'enregistrement des données dans Supabase.");
+      .send("Erreur lors de l'enregistrement des données dans Supabase.")
   }
 
   return res.send(
-    "Données enregistrées avec succès dans Supabase. Nouvelle catégorie ajoutée dans le BackOffice."
+    "Données enregistrées avec succès. Catégorie ajoutée : " + data
   );
 };
 
 // CREATE SUB_CAT
 export const postSubcategory = async (req, res) => {
   const jsonData = req.body;
-
-  const { data, error } = await supabase.from("SUB_CATEG").insert([jsonData]);
+  const { data, error } = await supabase.from("SUB_CATEG").insert([jsonData]).select()
 
   if (error) {
     return res
       .status(500)
-      .send("Erreur lors de l'enregistrement des données dans Supabase.");
+      .send("Erreur : " + error);
   }
 
   return res.send(
-    "Données enregistrées avec succès dans Supabase. Nouvelle sous-catégorie ajoutée dans le BackOffice."
+    "Données enregistrées avec succès. Sous-catégorie ajoutée : " + data
   );
 };
 

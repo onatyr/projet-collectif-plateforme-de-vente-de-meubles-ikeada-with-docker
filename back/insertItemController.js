@@ -20,7 +20,7 @@ export const insertItem = async (itemData) => {
 
 export const addItemColors = async (colorIds, itemId) => {
     const { data, error } = await supabaseAd.from("ITEM_COLOR")
-        .insert([{ item_id: itemId, color_id: colorIds[0] }, { item_id: itemId, color_id: colorIds[1] }]).select()
+        .upsert([{ item_id: itemId, color_id: colorIds[0] }, { item_id: itemId, color_id: colorIds[1] }]).select()
     if (error) {
         return error
     } else {
