@@ -4,7 +4,7 @@ import { supabaseAd } from "./app.js"
 export const archiveItem = async (req, res) => {
   const jsonData = req.body
   console.log(req.headers)
-  const { data, error } = await supabaseAd.from("ITEM").update([jsonData]).eq("id", jsonData.id)
+  const { data, error } = await supabaseAd.from("ITEM").update([jsonData]).select().eq("id", jsonData.id)
 
   if (error) {
     return res.status(403)
@@ -14,13 +14,13 @@ export const archiveItem = async (req, res) => {
         Supabase_error: ${error.message}
         `});
   } else {
-    return res.status(201).send(data)
+    return res.status(201).send(JSON.stringify(data))
   }
 };
 
 // RESTORATION
 export const restoreItem = async (req, res) => {
-  const jsonData = req.body.json();
+  const jsonData = req.body;
 
   const { data, error } = await supabaseAd
     .from("ITEM")
@@ -38,7 +38,7 @@ export const restoreItem = async (req, res) => {
 
     return res
       .status(201)
-      .send(data);
+      .send(data.json());
   }
 };
 

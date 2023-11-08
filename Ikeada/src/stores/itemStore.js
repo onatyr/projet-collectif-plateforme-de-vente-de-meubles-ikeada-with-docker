@@ -83,27 +83,27 @@ class Item {
     await this.#store.getItems()
   }
   async archiveSelf() {
-    await this.#service.archiveItem({ id: this.id, archived: true })
+    await this.#service.archiveItem(this.id)
     this.#store.getItems()
   }
   async restoreSelf() {
-    await this.#service.restoreItem({ id: this.id, archived: false })
+    await this.#service.restoreItem(this.id)
     this.#store.getItems()
   }
   async stashSelf() {
-    await this.#service.changeItemStatus({ id: this.id, status: false })
+    await this.#service.changeItemStatus(this.id, false)
     this.#store.getItems()
   }
   async publishSelf() {
-    await this.#service.changeItemStatus({ id: this.id, status: true })
+    await this.#service.changeItemStatus(this.id, true)
     this.#store.getItems()
   }
   async setUnavailable() {
-    await this.#service.changeItemStatus({ id: this.id, available: false })
+    await this.#service.changeItemAv(this.id, true)
     this.#store.getItems()
   }
   async setAvailable() {
-    await this.#service.changeItemStatus({ id: this.id, available: true })
+    await this.#service.changeItemAv(this.id, false)
     this.#store.getItems()
   }
 }

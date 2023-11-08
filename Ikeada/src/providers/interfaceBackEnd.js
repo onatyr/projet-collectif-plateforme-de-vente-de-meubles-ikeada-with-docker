@@ -59,12 +59,13 @@ class InterfaceBackEnd {
       .catch((error) => console.error("Erreur de chargement du JSON :", error));
   }
 
-  async archiveItem(itemData) {
+  async archiveItem(id) {
     fetch('/api/ikeada/admin/archiveItem', {
       method: "POST",
       headers: {
-        body: JSON.stringify(itemData),
+        "Content-Type": "Application/json"
       },
+      body: JSON.stringify({ id: id, archived: true }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -77,41 +78,62 @@ class InterfaceBackEnd {
     fetch('/api/ikeada/admin/editItem', {
       method: "POST",
       headers: {
-        body: JSON.stringify(itemData),
+        "Content-Type": "Application/json"
       },
+      body: {'item': itemData},
     })
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
       })
       .catch((error) => {
-        console.error("Erreur : ",error)
+        console.error("Erreur : ", error)
       });
   }
 
-  async changeItemStatus(itemData) {
-    console.log(itemData)
+  async changeItemStatus(id, status) {
+    console.log(id)
     fetch('/api/ikeada/admin/changeItemStatus', {
       method: "POST",
       headers: {
-        body: JSON.stringify(itemData),
+        "Content-Type": "Application/json"
       },
+      body: JSON.stringify({ id: id, status: status }),
     })
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
       })
       .catch((error) => {
-        console.error("Erreur : ",error)
+        console.error("Erreur : ", error)
       });
   }
 
 
-  async deleteItem(itemData) {
+  async changeItemAv(id, aval) {
+    console.log(id)
+    fetch('/api/ikeada/admin/changeItemStatus', {
+      method: "POST",
+      headers: {
+        "Content-Type": "Application/json"
+      },
+      body: JSON.stringify({ id: id, available: aval }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Erreur : ", error)
+      });
+  }
+
+
+  async deleteItem(id) {
     fetch('/api/ikeada/admin/archiveItem', {
       method: "POST",
       headers: {
-        body: JSON.stringify(itemData),
+        body: JSON.stringify(id),
       },
     })
       .then((response) => response.json())
@@ -119,26 +141,26 @@ class InterfaceBackEnd {
         console.log(data);
       })
       .catch((error) => {
-        console.error("Erreur : ",error)
+        console.error("Erreur : ", error)
       });
   }
 
 
   // ajout d'un item dans la BDD
-  async addItem(item) {
-    const itemData = { item: item }
+  async addItem(itemData) {
     fetch(`/api/ikeada/admin/postItem`, {
       method: "POST",
       headers: {
-        body: JSON.stringify(itemData),
+        "Content-Type": "Application/json",
       },
+      body: JSON.stringify(itemData)
     })
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
       })
       .catch((error) => {
-        console.error("Erreur : ",error)
+        console.error("Erreur : ", error)
       });
   }
 
