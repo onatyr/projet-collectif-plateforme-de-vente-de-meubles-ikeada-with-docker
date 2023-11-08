@@ -20,22 +20,30 @@ export function NavBar() {
         ></Nav>
         <Nav className="mx-auto d-flex gap-4">
           {/* on peut naviguer vers différentes pages grace aux Routes */}
-          <Link to={`/accueil`}>Shop</Link>
-          <Link to={`/back-office`}>À Propos</Link>
-          <Link to={`/contact`}>Contact</Link>
+          <Link to={`/shop`} className="navbar--text--link">
+            Shop
+          </Link>
+          <Link to={`/back-office`} className="navbar--text--link">
+            À Propos
+          </Link>
+          <Link to={`/contact`} className="navbar--text--link">
+            Contact
+          </Link>
         </Nav>
         <Form className="d-flex">
           <Form.Control
             type="search"
-            placeholder="Search"
-            className="me-2"
-            aria-label="Search"
+            placeholder="Un møbl à trouver ?"
+            className="me-2 navbar--search--textfield"
+            aria-label="Un møbl à trouver ?"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
           {/* on insère le contenu du champ ici pour accèder à la page correspondante via une Route */}
           <Link to={`../search/${query}`}>
-            <Button variant="outline-success">Search</Button>
+            <Button variant="outline-success" className="navbar--search--btn">
+              Search
+            </Button>
           </Link>
         </Form>
         <BorderBottom />

@@ -13,6 +13,7 @@ import {
   Modal,
 } from "react-bootstrap";
 import { observer } from "mobx-react-lite";
+import MainTitle from "../components/atoms/MainTitle";
 const ProductPage = observer(() => {
   // on récupère l'id depuis l'URL créée par le routeur
   const itemId = useParams().productId;
@@ -63,7 +64,7 @@ const ProductPage = observer(() => {
   return (
     <>
       <Container
-        className="d-flex flex-column justify-content-center align-items-center"
+        className="d-flex flex-column justify-content-between align-items-center"
         style={{ minHeight: "90vh", width: "90vw" }}
         fluid
       >
