@@ -33,6 +33,18 @@ class InterfaceBackEnd {
       .catch((error) => console.error("Erreur de chargement du JSON :", error));
   }
 
+  async searchItemsByCateg(query) {
+    return await fetch(`/api/ikeada/itemscateg/${query}`, {
+      method: "GET",
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data)
+      return data
+    })
+    .catch((error) => console.error("Erreur de chargement du JSON :", error))
+  }
+
   // recherche par id
   async searchItemById(id) {
     return await fetch(`/api/ikeada/items/id/${id}`, {
