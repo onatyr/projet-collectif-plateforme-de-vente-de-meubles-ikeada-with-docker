@@ -1,12 +1,13 @@
 import { supabase } from "./app.js"
 import { checkAdmin } from "./postController.js";
-//affiche tous les meubles
+
+// GET ALL
 export const getAllItems = async (req, res) => {
   let { data, error } = await supabase
     .from("ITEM")
     .select()
   if (await checkAdmin(req) == false) {
-    data = data.filter((e) => e.status == true)
+    data = data.filter((e) => e.status == true && e.archived == false)
   }
 
   if (error) {
@@ -16,8 +17,7 @@ export const getAllItems = async (req, res) => {
   }
 };
 
-//affiche les meubles selon le nom du produit ou sa description
-
+// SEARCH BY NAME OR DESC
 export const searchByNameDesc = async (req, res) => {
 
   let searchRequest = req.params.name.split(" ");
@@ -51,8 +51,7 @@ export const searchByNameDesc = async (req, res) => {
   }
 };
 
-//affiche les meubles selon l'id du produit
-
+// GET BY ID
 export const getItemById = async (req, res) => {
   const itemId = req.params.id;
 
@@ -79,7 +78,7 @@ export const getItemById = async (req, res) => {
   }
 };
 
-// Affiche toutes les catégories de mobilier
+// GET ALL CATS
 export const getAllCategories = async (req, res) => {
   const { data, error } = await supabase.from("CATEG").select();
   // .eq('name', 'Cuisine') // Permet d'affiner l'affichage par catégorie.
@@ -90,7 +89,7 @@ export const getAllCategories = async (req, res) => {
   }
 };
 
-// Affiche toutes les catégories de mobilier
+// GET ALL COLORS
 export const getColorList = async (req, res) => {
   const { data, error } = await supabase.from("COLOR").select();
   if (error) {
@@ -100,7 +99,7 @@ export const getColorList = async (req, res) => {
   }
 };
 
-// Affiche toutes les sous-catégories de mobilier
+// GET ALL SUB_CATS
 export const getAllSubcategories = async (req, res) => {
   const { data, error } = await supabase.from("SUB_CATEG").select();
   // .eq('name', 'Canapés') // Permet d'affiner l'affichage par sous catégorie.
@@ -111,7 +110,7 @@ export const getAllSubcategories = async (req, res) => {
   }
 };
 
-//Recherche une catégorie
+// SEARCH CAT BY KEYWORD
 export const searchCategory = async (req, res) => {
   const motCle = req.params.motcle;
   console.log(motCle);
@@ -129,7 +128,7 @@ export const searchCategory = async (req, res) => {
   }
 };
 
-// Recherche une sous catégorie
+// SEARCH SUB_CAT BY KEYWORD
 export const searchSubcategory = async (req, res) => {
   const motCle = req.params.motcle;
   console.log(motCle);
