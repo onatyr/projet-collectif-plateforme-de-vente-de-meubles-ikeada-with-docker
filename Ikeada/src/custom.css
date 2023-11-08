@@ -53,8 +53,17 @@ background-color: #fff;
     padding-left: 20px;
     padding-right: 20px;
   }
+
+  .navbar--form--wrapper {
+    padding-left: 50px;
+  }
   
+.navbar--search--btn {
+ border-radius: 0px !important;
+}
+
 .navbar--search--textfield {
+    min-width: 180% !important;
     border-radius: 0 !important;
     border: 1px solid var(--deep--onyx) !important; 
 }
@@ -243,9 +252,6 @@ opacity: 1;
     background-color: #f1f1f1 !important; 
   transition: background-color 0.3s ease !important; 
 }
-
-
-
 
 .portrait-image {
     display: flex !important;
