@@ -1,9 +1,8 @@
 import { supabase } from "./app.js"
 import { checkAdmin } from "./postController.js";
-
-// GET ALL
+//affiche tous les meubles
 export const getAllItems = async (req, res) => {
-  const { data, error } = await supabase
+  let { data, error } = await supabase
     .from("ITEM")
     .select()
   if (await checkAdmin(req) == false) {
@@ -17,22 +16,24 @@ export const getAllItems = async (req, res) => {
   }
 };
 
-// SEARCH ITEM BY NAME OR DESC
+//affiche les meubles selon le nom du produit ou sa description
+
 export const searchByNameDesc = async (req, res) => {
 
-  const searchRequest = req.params.name.split(" ");
+  let searchRequest = req.params.name.split(" ");
+  console.log("Requête avec name:", searchRequest);
 
-  const data = [];
-  const error = "";
+  let data = [];
+  let error = "";
 
-  const { data: nameData, error: nameError } = await supabase
+  let { data: nameData, error: nameError } = await supabase
     .from("ITEM")
     .select()
     .ilikeAnyOf("name", searchRequest.map((e) => `%${e}%`))
 
   data = data.concat(nameData);
 
-  const { data: descData, error: descErr } = await supabase
+  let { data: descData, error: descErr } = await supabase
     .from("ITEM")
     .select()
     .textSearch("desc", searchRequest.map((e) => `'${e}'`).join(" | "));
@@ -50,8 +51,8 @@ export const searchByNameDesc = async (req, res) => {
   }
 };
 
+//affiche les meubles selon l'id du produit
 
-// GET BY ID
 export const getItemById = async (req, res) => {
   const itemId = req.params.id;
 
@@ -65,6 +66,8 @@ export const getItemById = async (req, res) => {
     .eq("id", itemId);
 
   if (error) {
+    console.error(error);
+
     res.status(500).json({ error: "Une erreur s'est produite", message: error.message });
   } else if (
     data.filter((e) => e.status == false).length > 0 &&
@@ -76,8 +79,8 @@ export const getItemById = async (req, res) => {
   }
 };
 
-// GET ALL CATS
-export const getAllCategories = async ( res) => {
+// Affiche toutes les catégories de mobilier
+export const getAllCategories = async (req, res) => {
   const { data, error } = await supabase.from("CATEG").select();
   // .eq('name', 'Cuisine') // Permet d'affiner l'affichage par catégorie.
   if (error) {
@@ -87,17 +90,17 @@ export const getAllCategories = async ( res) => {
   }
 };
 
-// GET COLOR LIST
+// Affiche toutes les catégories de mobilier
 export const getColorList = async (req, res) => {
   const { data, error } = await supabase.from("COLOR").select();
   if (error) {
-    res.status(500).send("Erreur lors de la récupération de la liste des couleurs" + error);
+    res.status(500).send("Erreur lors de la récupération de la liste des couleurs");
   } else {
-    res.status(200).send(data);
+    res.status(200).json(data);
   }
 };
 
-// GET SUB_CATS
+// Affiche toutes les sous-catégories de mobilier
 export const getAllSubcategories = async (req, res) => {
   const { data, error } = await supabase.from("SUB_CATEG").select();
   // .eq('name', 'Canapés') // Permet d'affiner l'affichage par sous catégorie.
@@ -108,7 +111,7 @@ export const getAllSubcategories = async (req, res) => {
   }
 };
 
-// SEARCH CAT BY KEYWORD
+//Recherche une catégorie
 export const searchCategory = async (req, res) => {
   const motCle = req.params.motcle;
   console.log(motCle);
@@ -126,7 +129,7 @@ export const searchCategory = async (req, res) => {
   }
 };
 
-// SEARCH SUB_CAT BY ID
+// Recherche une sous catégorie
 export const searchSubcategory = async (req, res) => {
   const motCle = req.params.motcle;
   console.log(motCle);
@@ -139,9 +142,7 @@ export const searchSubcategory = async (req, res) => {
       .from("SUB_CATEG")
       .select()
       .textSearch("name", motCle);
-    if(error) {
-      return res.status(404).send("Erreur : " + error)
-    }
-    res.status(200).send(data);
+    console.log("resultat:", data);
+    res.status(200).json(data);
   }
 };
