@@ -62,7 +62,7 @@ background-color: #fff;
 }
 .btn-outline-custom {
     padding: 5px;
-    border: 2px solid black;
+    border: 1px solid var(--deep--onyx) !important; 
 }
 
 .btn-outline-custom:hover {
@@ -92,6 +92,7 @@ background-color: #fff;
 .home--main--img > img {
     max-width: 100%;
     padding-top: 10px;
+    margin: 0 auto;
 }
 
 .home--subtitle--content {
@@ -107,6 +108,11 @@ background-color: #fff;
 width: 33%;
 text-align: end;
 font-family: 'Hanken Grotesk', sans-serif;
+padding-bottom: 5px;
+}
+
+.home--subtitle--btn {
+    margin-bottom: 5px;
 }
 
 .home--border {
@@ -144,16 +150,17 @@ height: 100%;
 padding-top: 30px;
 }
 
-.home--categ--container-list {
-    width: 100%;
-}
-
-.home--categ--list {
-    width: 100%;
+.home--categ--list, .home--categ--container-list  {
+    width: 95%;
 }
 
 .list-group-item {
    width: 100%;
+}
+
+.list-group-item:hover {
+    color: var(--bs-white);
+    background-color: #E2E3DEFF;
 }
 
 .custom-link {
@@ -161,6 +168,90 @@ padding-top: 30px;
     text-decoration: none;
   }
 /* Home Style End */
+
+/* Card Style Start */
+
+.btn--card--fade {
+    padding: 5px;
+    border: 1px solid var(--deep--onyx) !important; 
+    background: var(--fossil--grey) !important;
+}
+    
+.btn--card--fade:hover {
+    --bs-btn-hover-color: var(--bs-white);
+    --bs-btn-hover-bg: #E2E3DEFF;
+    --bs-btn-hover-border-color: #E2E3DEFF;
+}
+
+.fade-link {
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease-in-out;
+
+    z-index: 1 !important;
+}
+
+.fade-link:hover {
+opacity: 1;
+}
+
+.card--wrapper {
+    border: none !important;
+    border-radius: 0 !important;
+    width: fit-content !important;
+    padding: 10px !important;
+    min-width: 250px;
+    position: relative;
+    overflow: hidden;
+
+}
+
+.card--wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Couleur de fond avec une opacité pour le grisage */
+    opacity: 0;
+    transition: opacity 0.3s ease; /* Transition pour une animation fluide */
+    z-index: 0 !important;
+  }
+
+  .card--wrapper:hover::after {
+    opacity: 0.5;
+  }
+
+.card--wrapper:hover .fade-link {
+    opacity: 0.9;
+    background-color: #f1f1f1 !important; 
+  transition: background-color 0.3s ease !important; 
+}
+
+
+
+
+.portrait-image {
+    display: flex !important;
+    align-items: center !important;
+    height: 300px !important;
+    width: 200px !important;
+}
+
+.card--price {
+    background-color: #fff !important;
+    border: none !important;
+}
+
+
+.card--body {
+    padding: 0 !important;
+} */
+/* Card Style End */
 
 /* Footer Style Start */
 

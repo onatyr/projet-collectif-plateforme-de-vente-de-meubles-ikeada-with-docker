@@ -1,7 +1,6 @@
 import MainTitle from "../components/atoms/MainTitle";
 import CardListBS from "../components/Home/CardListBestSell";
 import { Link } from "react-router-dom";
-import { ArrowUpRight } from "react-bootstrap-icons";
 import CategList from "../components/Home/CategList";
 
 export default function Home() {
@@ -22,7 +21,7 @@ export default function Home() {
         </p>
       </div>
       <hr className="home--border" />
-      <div className="home--main--img">
+      <div className="home--main--img  d-flex justify-content-center align-items-center">
         <img
           src="https://www.ikea.com/images/salon-lumineux-domine-par-un-canape-deux-places-paerup-en-ve-669c47233a051d4c168983630fd4ff1d.jpg?f=sg"
           alt="home image"
@@ -46,13 +45,13 @@ export default function Home() {
       </div>
 
       <div className="home--categ--container d-flex justify-content-between align-items-center">
-        <div className="d-flex flex-column bd-highlight mb-3">
+        <div className="d-flex flex-column bd-highlight mb-3 w-100">
           <h2 className="home--title display-4 h2 fw-bold">
             Achetez par pièces
           </h2>
 
           <div className="home--categ--container-list p-2 bd-highlight">
-            <CategList className="home--categ--list w-100" />
+            <CategList className="home--categ--list" />
           </div>
         </div>
 

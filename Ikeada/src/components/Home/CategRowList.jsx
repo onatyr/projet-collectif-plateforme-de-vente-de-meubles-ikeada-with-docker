@@ -9,7 +9,7 @@ export default function CategRowList({ categ }) {
       as={Link}
       to={`/accueil`}
     >
-      <p className="categ--text--list">{categ.name}</p> <ArrowUpRight />
+      <p className="categ--text--list fs-3">{categ.name}</p> <ArrowUpRight />
     </ListGroup.Item>
   );
 }
