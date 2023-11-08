@@ -1,8 +1,25 @@
 import { supabase } from "./app.js"
+import { supabaseAd } from "./app.js"
+
 import { checkAdmin } from "./postController.js";
+import jwt from 'jsonwebtoken';
+
+
+function decodeJWT(req) {
+  if (req.headers.authorization) {
+    const token = req.headers.authorization.split(" ")[1];
+
+    // Verifie le token avec la clef secrète
+    const decoded = jwt.verify(token, process.env.SUPABASE_TOKEN);
+    return decoded;
+  }
+}
 
 // GET ALL
 export const getAllItems = async (req, res) => {
+  const decoded = decodeJWT(req)
+  console.log(decoded)
+  if (decoded) { req.userData = decoded }
   let { data, error } = await supabase
     .from("ITEM")
     .select()
@@ -19,9 +36,9 @@ export const getAllItems = async (req, res) => {
 
 export const getItemsByCateg = async (req, res) => {
   const categ = req.params.categ
-  let { data, error} = await supabase
-  .from("ITEM")
-  .select("*,sub_categ:SUB_CATEG(name, room:CATEG(name))")
+  let { data, error } = await supabase
+    .from("ITEM")
+    .select("*,sub_categ:SUB_CATEG(name, room:CATEG(name))")
 
   data = data.filter((e) => e.sub_categ.room.name == categ)
   if (await checkAdmin(req) == false) {
@@ -29,8 +46,8 @@ export const getItemsByCateg = async (req, res) => {
   }
 
 
-  if(error) {
-    res.status(500).json({error})
+  if (error) {
+    res.status(500).json({ error })
   } else {
     res.status(200).json(data)
   }

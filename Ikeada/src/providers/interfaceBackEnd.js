@@ -11,6 +11,7 @@ class InterfaceBackEnd {
   async fetchItems() {
     return await fetch("/api/ikeada/items", {
       method: "GET",
+      headers:{ 'Authorization': `Bearer ${this.#sessionStore.token}`}
     })
       .then((response) => response.json())
       .then((data) => {
