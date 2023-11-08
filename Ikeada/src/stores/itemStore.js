@@ -83,37 +83,28 @@ class Item {
     await this.#store.getItems()
   }
   async archiveSelf() {
-    const data = { id: this.id, archived: true }
-    await this.#service.archiveItem(data)
-    await this.#store.getItems()
+    await this.#service.archiveItem({ id: this.id, archived: true })
+    this.#store.getItems()
   }
   async restoreSelf() {
-    const data = { id: this.id, archived: true }
-    console.log(this)
-    await this.#service.restoreItem(data)
-    await this.#store.getItems()
+    await this.#service.restoreItem({ id: this.id, archived: false })
+    this.#store.getItems()
   }
   async stashSelf() {
-    const data = { id: this.id, status: false }
-    console.log(this)
-
-    await this.#service.changeItemStatus(data)
-    await this.#store.getItems()
+    await this.#service.changeItemStatus({ id: this.id, status: false })
+    this.#store.getItems()
   }
   async publishSelf() {
-    const data = { id: this.id, status: true }
-    await this.#service.changeItemStatus(data)
-    await this.#store.getItems()
+    await this.#service.changeItemStatus({ id: this.id, status: true })
+    this.#store.getItems()
   }
   async setUnavailable() {
-    const data = { id: this.id, available: false }
-    await this.#service.changeItemStatus(data)
-    await this.#store.getItems()
+    await this.#service.changeItemStatus({ id: this.id, available: false })
+    this.#store.getItems()
   }
   async setAvailable() {
-    const data = { id: this.id, available: true }
-    await this.#service.changeItemStatus(data)
-    await this.#store.getItems()
+    await this.#service.changeItemStatus({ id: this.id, available: true })
+    this.#store.getItems()
   }
 }
 
