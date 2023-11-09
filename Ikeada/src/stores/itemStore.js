@@ -88,7 +88,7 @@ class Item {
     this.status = data.status;
     this.dimensions = data.dimensions;
     this.archived = data.archived
-    this.colors = data.colors
+    this.colors = data.item_colors
     this.#service = service
   }
   async delSelf() {

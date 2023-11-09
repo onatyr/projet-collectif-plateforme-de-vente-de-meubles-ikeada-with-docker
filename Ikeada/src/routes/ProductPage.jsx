@@ -11,9 +11,11 @@ import {
   Stack,
   Badge,
   Modal,
+  Figure,
 } from "react-bootstrap";
 import { observer } from "mobx-react-lite";
 import MainTitle from "../components/atoms/MainTitle";
+import { FileX } from "react-bootstrap-icons";
 const ProductPage = observer(() => {
   // on récupère l'id depuis l'URL créée par le routeur
   const itemId = useParams().productId;
@@ -32,14 +34,31 @@ const ProductPage = observer(() => {
       setMaterials(
         item.materials.map((material) => {
           return (
-            <Badge pill bg="secondary" key={material}>
+            <ListGroup.Item pill bg="secondary" key={material}>
               {material}
-            </Badge>
+            </ListGroup.Item>
           );
         })
       );
     }
   }, [item.materials]);
+  const [colors, setColors] = useState([]);
+  useEffect(() => {
+    if (item.colors) {
+      setColors(
+        item.colors.map((color) => {
+          return (
+            <>
+              <ListGroup.Item key={color} className="d-flex flex-row grow-0" >
+                <p style={{ lineClamp: "1" }}>{color.name}</p>
+                ></div>
+              </ListGroup.Item>
+            </>
+          );
+        })
+      );
+    }
+  }, [item.colors]);
   const [dimensions, setDimensions] = useState([]);
   useEffect(() => {
     if (item.dimensions) {
@@ -61,15 +80,64 @@ const ProductPage = observer(() => {
   const picSrc =
     item.picture ||
     "https://www.arqueselectrodiesel.fr/wp-content/uploads/2022/08/photo-non-disponible-1.jpg";
+
+
+
   return (
 
-    <>
-      <Container
-        className="d-flex flex-column justify-content-between align-items-center"
-        style={{ minHeight: "90vh", width: "90vw" }}
-        fluid
-      >
-        <Row>
+    <Row style={{ padding: "32px 0" }}>
+      <Col style={{ width: "40%", padding: "0 16px" }}>
+        <Image fluid
+          src={picSrc}
+        />
+      </Col>
+      <Col className="d-flex flex-column justify-content-center">
+        <Container className="text-center">
+          <h3 >{item.name}</h3>
+          <p>{item.desc}</p>
+        </Container>
+        <Container fluid className="d-flex flex-column justify-content-between">
+          <Row>
+            <Col>
+              <h4>Matériaux</h4>
+              <ListGroup>
+                {materials}
+              </ListGroup>
+            </Col>
+            <Col>
+              <h4>Dimensions</h4>
+              <ListGroup>
+                {item.dimensions
+                  ? item.dimensions.map((dimension, index) => (
+                    <ListGroup.Item key={index}>
+                      {`${dimension * 0.1} cm`}
+                      {index < item.dimensions.length - 1 ? " x " : ""}
+                    </ListGroup.Item>
+                  ))
+                  : "Aucune dimension disponible"}
+              </ListGroup>
+            </Col>
+            <Col>
+              <h4>Couleurs</h4>
+              <ListGroup className='d-flex flex-column justify-content-center align-items-center'>
+                {colors}
+              </ListGroup>
+            </Col>
+          </Row>
+        </Container>
+      </Col>
+    </Row >
+  );
+});
+
+export default ProductPage;
+{/*<>
+        <Container
+          className="d-flex flex-column justify-content-between align-items-center"
+          style={{ minHeight: "90vh", width: "90vw" }}
+          fluid
+        >
+         <Row>
           <Col>
             <Image
               src={picSrc}
@@ -85,7 +153,7 @@ const ProductPage = observer(() => {
             <h4>{item.name}</h4>
             <p>{item.desc}</p>
 
-            {/* Afficher les matériaux du produit */}
+            {/* Afficher les matériaux du produit *
 
             <ListGroup>
               <ListGroup.Item className="d-flex flex-column justify-content-center align-items-center">
@@ -99,7 +167,7 @@ const ProductPage = observer(() => {
                 </Stack>
               </ListGroup.Item>
 
-              {/* Afficher la disponibilité du produit */}
+              {/* Afficher la disponibilité du produit *
 
               <ListGroup.Item className="d-flex flex-column justify-content-center align-items-center">
                 Disponibilité :
@@ -114,7 +182,7 @@ const ProductPage = observer(() => {
                 )}
               </ListGroup.Item>
 
-              {/* Afficher la dimension du produit conversion mm vers cm */}
+              {/* Afficher la dimension du produit conversion mm vers cm *
               <ListGroup.Item className="d-flex flex-row justify-content-evenly align-items-center">
                 Dimensions :
                 {item.dimensions
@@ -128,14 +196,14 @@ const ProductPage = observer(() => {
               </ListGroup.Item>
 
               {/* Afficher la couleur du produit */}
-              {/* <ListGroup.Item className='d-flex flex-column justify-content-center align-items-center'>
+{/* <ListGroup.Item className='d-flex flex-column justify-content-center align-items-center'>
                 Couleurs :
                 <Stack direction="horizontal" gap={2} className="d-flex flex-row justify-content-center">
                   {item.colors.map((color) => (
                     <Badge pill style={bgColor} key={color.name}>{color.name}</Badge>
                   ))}
                 </Stack>
-              </ListGroup.Item> */}
+              </ListGroup.Item> *
             </ListGroup>
           </Col>
           <Col
@@ -160,8 +228,4 @@ const ProductPage = observer(() => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </>
-  );
-});
-
-export default ProductPage;
+    </> */}

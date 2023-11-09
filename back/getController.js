@@ -22,7 +22,9 @@ export const getAllItems = async (req, res) => {
   if (decoded) { req.userData = decoded }
   let { data, error } = await supabase
     .from("ITEM")
-    .select()
+    .select(`*, 
+      item_colors: COLOR(*),
+      sub_categ: SUB_CATEG(name, room: CATEG(name))`)
   if (await checkAdmin(req) == false) {
     data = data.filter((e) => e.status == true && e.archived == false)
   }
