@@ -1,5 +1,4 @@
 import Layout from "./routes/Layout";
-import CardList from "./routes/CardList";
 import ProductPage from "./routes/ProductPage.jsx";
 import BackOffice from "./routes/BackOffice.jsx";
 import Login from "./routes/Login";
