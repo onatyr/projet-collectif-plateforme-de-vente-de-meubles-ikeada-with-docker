@@ -4,6 +4,7 @@ import { interfaceBackEnd } from "../providers/interfaceBackEnd";
 // store qui va contenir les données de session
 class itemStore {
   items = [];
+  adminItems = [];
   currentItem = {};
 
   // c'est une propriété "privée", on ne peux y accéder qu'à l'intérieur même de la classe
@@ -16,8 +17,10 @@ class itemStore {
     this.#service = service;
     makeObservable(this, {
       items: observable,
+      adminItems: observable,
       currentItem: observable,
       setItems: action,
+      setAdminItems: action,
       addItem: action,
       setCurrentItem: action,
     });
@@ -29,7 +32,7 @@ class itemStore {
   }
   async getAdminItems() {
     const data = await this.#service.fetchAdminItems();
-    this.setItems(data);
+    this.setAdminItems(data);
   }
   async getItemsByCateg(query) {
     const data = await this.#service.fetchItemsByCateg(query)
@@ -49,6 +52,12 @@ class itemStore {
 
   setItems(data) {
     this.items = data.map((el) => {
+      return new Item(el, interfaceBackEnd, this);
+    });
+  }
+
+  setAdminItems(data) {
+    this.adminItems = data.map((el) => {
       return new Item(el, interfaceBackEnd, this);
     });
   }

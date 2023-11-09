@@ -9,13 +9,13 @@ import { sessionStore } from "../auth/session";
 const BackOffice = observer(() => {
     const token = sessionStore.token
     // récupère les items stockés dans le store 
-    const items = itemsStore.items
+    const items = itemsStore.adminItems
     // si y'en a pas, màj
     useEffect(() => {
-        if (sessionStore.token) {
+        if (items.length < 1) {
             itemsStore.getAdminItems()
         }
-    }, [token])
+    }, [token, items.length])
 
 
     return (
