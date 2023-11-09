@@ -32,7 +32,9 @@ Le projet doit être réalisé en deux semaines, avec l'utilisation de Bootstrap
 
 ## Maquette 
 
-Screenshot à ajouter en fin de projet 
+![Texte alternatif](https://github.com/adatechschool/projet-collectif-plateforme-de-vente-de-meubles-ikeada/blob/master/images/ikeada_homepage.png)
+![Texte alternatif](https://github.com/adatechschool/projet-collectif-plateforme-de-vente-de-meubles-ikeada/blob/master/images/ikeada_homepage2.png)
+
 
 ## Organisation des Équipes
 Pour assurer une progression fluide du projet, l'organisation suivante est recommandée :
