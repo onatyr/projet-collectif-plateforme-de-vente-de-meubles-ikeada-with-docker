@@ -12,10 +12,11 @@ import {
   Badge,
   Modal,
   Figure,
+  Card
 } from "react-bootstrap";
 import { observer } from "mobx-react-lite";
 import MainTitle from "../components/atoms/MainTitle";
-import { FileX } from "react-bootstrap-icons";
+import { FileX, Hr } from "react-bootstrap-icons";
 const ProductPage = observer(() => {
   // on récupère l'id depuis l'URL créée par le routeur
   const itemId = useParams().productId;
@@ -34,7 +35,7 @@ const ProductPage = observer(() => {
       setMaterials(
         item.materials.map((material) => {
           return (
-            <ListGroup.Item pill bg="secondary" key={material}>
+            <ListGroup.Item disabled pill bg="secondary" key={material} style={{ color: 'black', textTransform: 'uppercase', borderColor: '#464543', textAlign: 'center' }}>
               {material}
             </ListGroup.Item>
           );
@@ -45,29 +46,32 @@ const ProductPage = observer(() => {
   const [colors, setColors] = useState([]);
   useEffect(() => {
     if (item.colors) {
+
       setColors(
         item.colors.map((color) => {
           return (
             <>
-              <ListGroup.Item key={color} className="d-flex flex-row grow-0" >
-                <p style={{ lineClamp: "1" }}>{color.name}</p>
-                ></div>
-              </ListGroup.Item>
+              <ListGroup horizontal key={color} style={{ width: '100%' }}  >
+                <ListGroup.Item disabled style={{ marginBottom: '8px', color: 'black', border: `1px solid black` }}>{color.name}
+                </ListGroup.Item>
+                <div style={{ marginBottom: '8px', backgroundColor: color.rgb, width: '20%', border: `1px solid black`, borderLeft: 'none', borderRadius: '0 0.375rem 0.375rem 0' }}></div>
+              </ListGroup>
             </>
           );
         })
       );
     }
   }, [item.colors]);
+
   const [dimensions, setDimensions] = useState([]);
   useEffect(() => {
     if (item.dimensions) {
       setDimensions(
         item.dimensions.map((dimension) => {
           return (
-            <Badge pill bg="secondary" key={dimension}>
+            <ListGroup.Item disabled bg="secondary" key={dimension} style={{ color: 'black', borderColor: '#464543', textAlign: 'center' }}>
               {dimension}
-            </Badge>
+            </ListGroup.Item>
           );
         })
       );
@@ -84,46 +88,40 @@ const ProductPage = observer(() => {
 
 
   return (
-
-    <Row style={{ padding: "32px 0" }}>
-      <Col style={{ width: "40%", padding: "0 16px" }}>
-        <Image fluid
+    <Row fluid style={{ padding: "32px 0", alignItems: 'center', margin: '50px 0 50px 0' }}>
+      <Col fluid style={{ maxWidth: "50%", padding: "0 16px" }}>
+        <Image fluid style={{ border: '1px solid #464543' }}
           src={picSrc}
         />
       </Col>
-      <Col className="d-flex flex-column justify-content-center">
-        <Container className="text-center">
-          <h3 >{item.name}</h3>
-          <p>{item.desc}</p>
-        </Container>
-        <Container fluid className="d-flex flex-column justify-content-between">
-          <Row>
-            <Col>
-              <h4>Matériaux</h4>
-              <ListGroup>
-                {materials}
-              </ListGroup>
-            </Col>
-            <Col>
-              <h4>Dimensions</h4>
-              <ListGroup>
-                {item.dimensions
-                  ? item.dimensions.map((dimension, index) => (
-                    <ListGroup.Item key={index}>
-                      {`${dimension * 0.1} cm`}
-                      {index < item.dimensions.length - 1 ? " x " : ""}
-                    </ListGroup.Item>
-                  ))
-                  : "Aucune dimension disponible"}
-              </ListGroup>
-            </Col>
-            <Col>
-              <h4>Couleurs</h4>
-              <ListGroup className='d-flex flex-column justify-content-center align-items-center'>
-                {colors}
-              </ListGroup>
-            </Col>
-          </Row>
+      <Col className="d-flex flex-column justify-content-center" style={{ border: '1px solid #464543', padding: '16px' }}>
+        <Row className="text-center">
+          <h2>{item.name}</h2>
+          <p style={{ fontSize: 'large' }}>{item.desc}</p>
+        </Row>
+        <Row>
+          <Col>
+            <h4 style={{ fontSize: 'larger', textAlign: 'center', marginTop: '16px' }}>Matériaux</h4>
+            <ListGroup horizontal>
+              {materials}
+            </ListGroup>
+          </Col>
+          <Col>
+            <h4 style={{ fontSize: 'larger', textAlign: 'center', marginTop: '16px' }} >Dimensions</h4>
+            <ListGroup horizontal>
+              {dimensions}
+            </ListGroup>
+          </Col>
+          <Col>
+            <h4 style={{ fontSize: 'larger', textAlign: 'center', marginTop: '16px' }}>Couleurs</h4>
+            {colors}
+          </Col>
+        </Row>
+        <Container style={{ marginTop: '32px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', }}>
+
+          <Button style={{ whiteSpace: 'nowrap', padding: '0', display: 'flex', border: '2px solid #1F7A8C', backgroundColor: 'transparent', borderRadius: '0', color: '#1F7A8C', height: 'fit-content', width: 'fit-content', fontSize: '24px', textTransform: 'uppercase', alignItems: 'center' }}>
+            <span style={{ padding: '2px 16px', fontSize: '32px', height: '100%', backgroundColor: '#1F7A8C', color: 'white' }}>{item.price / 100} €</span><span style={{ padding: '2px 16px' }}>Ajouter au panier</span>
+          </Button>
         </Container>
       </Col>
     </Row >
@@ -206,15 +204,7 @@ export default ProductPage;
               </ListGroup.Item> *
             </ListGroup>
           </Col>
-          <Col
-            className="d-flex flex-column align-items-center justify-content-center"
-            style={{ width: "25vw" }}
-          >
-            <h1>{item.price / 100}€</h1>
-            <Button variant="primary" size="lg">
-              Acheter
-            </Button>
-          </Col>
+          
         </Row>
       </Container>
 

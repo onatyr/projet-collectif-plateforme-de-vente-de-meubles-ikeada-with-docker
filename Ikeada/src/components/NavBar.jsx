@@ -22,7 +22,7 @@ export function NavBar() {
           style={{ maxHeight: "100px" }}
           navbarScroll
         ></Nav>
-        <Nav className="mx-auto d-flex flew-row justify-content-around gap-4">
+        <Nav className="mx-auto d-flex flew-row justify-content-around nowrap gap-4">
           {/* on peut naviguer vers différentes pages grace aux Routes */}
           <Link to={`/shop`} className="navbar--text--link p-2">
             Shop

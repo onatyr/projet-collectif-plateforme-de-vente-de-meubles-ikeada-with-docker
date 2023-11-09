@@ -26,9 +26,7 @@ p, h1, h2, h3, h4, li {
     background-color: #E2E3DEFF;
     width: 100%;
     height: 100%;
-    padding-top: 3%;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding: 0 5%;
     font-family: 'Hanken Grotesk', sans-serif;
 }
 
