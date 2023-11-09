@@ -2,15 +2,21 @@ import { Table } from "react-bootstrap";
 import { itemsStore } from "../stores/itemStore";
 import BackOfficeItem from "../components/BackOfficeItem"
 import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
+import { sessionStore } from "../auth/session";
 
 // observer met à jour le rendu si items change
 const BackOffice = observer(() => {
+    const token = sessionStore.token
     // récupère les items stockés dans le store 
     const items = itemsStore.items
     // si y'en a pas, màj
-    if (!items[1]) {
-        itemsStore.getAdminItems()
-    }
+    useEffect(() => {
+        if (sessionStore.token) {
+            itemsStore.getAdminItems()
+        }
+    }, [token])
+
 
     return (
         <>
