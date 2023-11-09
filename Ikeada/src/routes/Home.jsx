@@ -9,7 +9,7 @@ export default function Home() {
       <MainTitle />
       <div className="home--subtitle--content">
         <Link
-          to={`/accueil`}
+          to={`/shop`}
           className="btn btn-outline-custom rounded-0 home--subtitle--btn d-flex align-items-center justify-content-center"
           type="button"
         >
@@ -35,7 +35,7 @@ export default function Home() {
         </div>
         <div className="btn--container d-flex justify-content-center align-items-center home--bestsell--btn--container">
           <Link
-            to={`/accueil`}
+            to={`/shop`}
             type="button"
             className="btn btn-outline-custom rounded-0 home--bestsell--btn d-flex align-items-center justify-content-center"
           >
