@@ -1,0 +1,48 @@
+Bien sûr, voici votre documentation mise en forme avec quelques conseils supplémentaires :
+
+---
+
+## Installation de Docker pour WSL sur Windows
+
+### Vérifier la version de WSL depuis PowerShell
+```powershell
+wsl --list --verbose
+```
+Assurez-vous que la version affichée correspond à la V2.
+
+### Installer Docker Desktop depuis un compte administrateur Windows
+Lors de l'installation, sélectionnez "Use WSL 2 instead of Hyper-V".
+Si vous rencontrez l'erreur "Component CommunityInstaller.ExecAction failed", supprimez les répertoires suivants :
+- C:\ProgramData\Docker
+- C:\Program Files\Docker
+
+### Installer l'extension Dev Containers sur Visual Studio Code
+Utilisez l'extension Dev Containers pour faciliter la configuration des environnements de développement.
+
+### Créer un nouvel environnement dans Dev Environnement
+Suivez les étapes nécessaires pour créer un nouvel environnement de développement dans Visual Studio Code.
+
+### Ressources supplémentaires
+- [Vidéo YouTube explicative](https://www.youtube.com/watch?v=gAkwW2tuIqE&ab_channel=Fireship)
+- [Mise à jour d'une image Docker avec un nouveau code](https://stackoverflow.com/questions/50300812/updating-docker-image-with-new-code)
+- Pour exposer localement un port vers l'extérieur, utilisez la commande suivante :
+  ```bash
+  ssh -R 80:localhost:8080 localhost.run
+  ```
+
+---
+
+### Problème rencontré : [server internal] load metadata for docker.io/library/node:18.16.0-alpine
+
+**Erreur**:
+```plaintext
+failed to solve: node:18.16.0-alpine: failed to authorize: failed to fetch oauth token: Post "https://auth.docker.io/token": EOF
+```
+
+**Solution proposée**:
+- [Stack Overflow - Erreur Docker : internal load metadata for docker.io](https://stackoverflow.com/questions/73812700/docker-error-internal-load-metadata-for-docker-io)
+- Exécutez la commande `docker login` pour vous authentifier (voir la documentation Docker [ici](https://docs.docker.com/engine/reference/commandline/login/)).
+
+---
+
+Ces conseils devraient vous aider à résoudre certains problèmes fréquemment rencontrés lors de l'installation de Docker pour WSL sur Windows. N'hésitez pas à consulter les ressources supplémentaires pour plus d'informations.
