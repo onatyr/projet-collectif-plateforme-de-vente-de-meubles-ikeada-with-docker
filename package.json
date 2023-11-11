@@ -1,0 +1,12 @@
+{
+  "name": "projet-collectif-plateforme-de-vente-de-meubles-ikeada-with-docker",
+  "version": "1.0.0",
+  "description": "Claire, Louis, Onat",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

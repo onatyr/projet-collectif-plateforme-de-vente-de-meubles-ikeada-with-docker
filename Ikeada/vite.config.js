@@ -8,8 +8,9 @@ export default defineConfig({
     port: 3006,
     proxy: {
       '/api': {
+        target: 'https://a4fdc905d8828d.lhr.life/',
         // target: 'http://90.3.112.97:3000/',
-        target: 'http://Localhost:3000/',
+        // target: 'http://localhost:3000/',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
